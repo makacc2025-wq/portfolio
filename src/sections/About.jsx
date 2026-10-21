@@ -8,6 +8,7 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { Icon, Reveal, RevealItem, SplitHeading, useMediaQuery } from "../shared";
+import { motion, useReducedMotion } from "motion/react";
 import Lanyard from "../vendor/Lanyard";
 
 /* ═══ About — the section  ·  was components/About.jsx ═════════════════════ */
@@ -16,28 +17,24 @@ const company = {
   name: "Maktech",
   url: "https://www.maktechgroup.com",
   duration: "2 years",
-  summary: "Web apps, mobile apps, SaaS and e-commerce for ambitious businesses."
+  summary: "Web, mobile, SaaS and e-commerce projects."
 };
 
-/* Deliberately not repeating the role or department — those are already
-   stated in the panel above. These add what the panel does not. */
-const facts = [
-  { label: "Experience", value: "3 years on the web" },
-  { label: "Platforms", value: "Shopify · WordPress" },
-  { label: "Stack", value: "Liquid · PHP · React" },
-  { label: "Based in", value: "Dhaka, Bangladesh" }
+const skills = [
+  { mark: "SH", label: "Shopify Development", level: "Expert", score: 94 },
+  { mark: "WP", label: "WordPress & Woo", level: "Expert", score: 90 },
+  { mark: "LI", label: "Liquid & Theme Dev", level: "Strong", score: 88 },
+  { mark: "JS", label: "JavaScript & React", level: "Strong", score: 78 },
+  { mark: "UI", label: "Responsive UI / UX", level: "Strong", score: 88 },
+  { mark: "AN", label: "Motion & Animation", level: "Strong", score: 82 }
 ];
-
-/* Highlighted phrase inside a paragraph. */
-const Hl = ({ children }) => (
-  <strong className="font-semibold text-link">{children}</strong>
-);
 
 export function About() {
   /* Not a visibility switch — the card needs different framing on a phone.
      It hangs from the right and overlaps the copy on desktop; on a narrow
      screen it sits centred below the text at a smaller size. */
   const wide = useMediaQuery("(min-width: 1024px)");
+  const reduceMotion = useReducedMotion();
 
   return (
     <section id="about" className="relative overflow-hidden bg-surface py-section">
@@ -60,11 +57,9 @@ export function About() {
           </SplitHeading>
 
           <Reveal as="p" delay={.16}
-            className="mt-5 max-w-[52ch] text-[13.5px] leading-[1.7] text-muted sm:text-[14.5px] sm:leading-[1.75]">
-            I’m a <Hl>Shopify and WordPress developer</Hl> and team lead, building
-            custom, high-performing websites from concept to launch — tailored
-            Shopify themes and advanced animation, <Hl>WooCommerce</Hl> and custom
-            plugins. Solutions that fit the project, not projects forced into templates.
+            className="mt-5 max-w-[42ch] text-[13.5px] leading-[1.7] text-muted sm:text-[14.5px] sm:leading-[1.75]">
+            I lead web projects and build custom Shopify themes, WordPress
+            sites, WooCommerce stores, and plugins.
           </Reveal>
 
           {/* the spine */}
@@ -83,20 +78,20 @@ export function About() {
               <article className="overflow-hidden rounded-2xl border border-line-strong bg-surface-raised">
                 {/* status strip */}
                 <div className="flex flex-wrap items-center justify-between gap-3
-                                border-b border-line bg-accent/[.07] px-4 py-2.5 sm:px-5 sm:py-3">
-                  <p className="flex items-center gap-2.5 font-mono text-[12px]
+                                border-b border-line bg-accent/[.07] px-3.5 py-2 sm:px-4 sm:py-2.5">
+                  <p className="flex items-center gap-2 font-mono text-[10px]
                                 uppercase tracking-[.18em] text-accent-hi">
                     <i className="dot" />Currently · Full-time
                   </p>
-                  <p className="font-mono text-[12px] tracking-[.14em] text-muted">
+                  <p className="font-mono text-[10px] tracking-[.14em] text-muted">
                     {company.duration.toUpperCase()}
                   </p>
                 </div>
 
-                <div className="px-4 py-4 sm:px-5 sm:py-5">
+                <div className="px-3.5 py-3 sm:px-4 sm:py-3.5">
                   <a href={company.url} target="_blank" rel="noreferrer"
                      className="group inline-flex items-baseline gap-2.5 font-display
-                                text-[clamp(24px,3vw,38px)] font-semibold leading-none
+                                text-[clamp(21px,2.5vw,30px)] font-semibold leading-none
                                 tracking-[-0.03em] text-primary transition-colors duration-300
                                 hover:text-accent-hi">
                     {company.name}
@@ -105,20 +100,20 @@ export function About() {
                                  group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </a>
 
-                  <p className="mt-2.5 text-[13.5px] font-medium leading-snug text-body sm:mt-3 sm:text-[14.5px]">
+                  <p className="mt-2 text-[12px] font-medium leading-snug text-body sm:text-[13px]">
                     Team Leader &amp; Project Coordinator
                     <span className="text-muted"> — Web Development</span>
                   </p>
 
-                  <p className="mt-2 max-w-[46ch] text-[12.5px] leading-relaxed text-muted sm:mt-2.5 sm:text-[13.5px]">
+                  <p className="mt-1.5 max-w-[46ch] text-[11.5px] leading-relaxed text-muted sm:text-[12.5px]">
                     {company.summary}
                   </p>
 
-                  <div className="mt-4 flex flex-wrap gap-1.5">
+                  <div className="mt-3 flex flex-wrap gap-1.5">
                     {["Brief to launch", "Leading the web team", "Client-facing"].map(t => (
                       <span key={t}
-                        className="rounded-pill border border-line px-2.5 py-1 font-mono
-                                   text-[11.5px] tracking-[.06em] text-muted">
+                        className="rounded-pill border border-line px-2 py-0.5 font-mono
+                                   text-[10px] tracking-[.05em] text-muted">
                         {t}
                       </span>
                     ))}
@@ -127,23 +122,79 @@ export function About() {
               </article>
             </Reveal>
 
-            {/* ---- node 2: the spec sheet ---- */}
-            <Reveal stagger delay={.32} className="relative mt-4 grid gap-px overflow-hidden sm:mt-5
-                                                   rounded-2xl border border-line bg-line sm:grid-cols-2">
+            {/* ---- node 2: core skills ---- */}
+            <div className="relative mt-5 sm:mt-6">
               <span aria-hidden="true"
-                className="absolute -left-5 top-6 size-[7px] -translate-x-[3px] rounded-full bg-line-strong sm:-left-7 sm:top-7" />
-              {facts.map(f => (
-                <RevealItem key={f.label} y={14}
-                  className="bg-surface-sunken px-4 py-3.5 transition-colors duration-500 hover:bg-surface-raised sm:px-5 sm:py-4">
-                  <p className="font-mono text-[11.5px] uppercase tracking-[.16em] text-muted">
-                    {f.label}
+                className="absolute -left-5 top-3 size-[7px] -translate-x-[3px] rounded-full bg-line-strong sm:-left-7 sm:top-4" />
+              <Reveal delay={.32} className="mb-3 flex items-end justify-between gap-3 sm:mb-4">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[.18em] text-accent-hi">
+                    What I work with
                   </p>
-                  <p className="mt-1 text-[13px] font-semibold leading-snug text-primary sm:mt-1.5 sm:text-[14px]">
-                    {f.value}
-                  </p>
-                </RevealItem>
-              ))}
-            </Reveal>
+                  <h3 className="mt-1 font-display text-[20px] font-semibold leading-tight tracking-[-.025em] text-primary sm:text-[23px]">
+                    Core skills<span className="text-link">.</span>
+                  </h3>
+                </div>
+                <p className="pb-1 font-mono text-[9px] tracking-[.13em] text-muted sm:text-[10px]">
+                  01 — 06 / TOOLKIT
+                </p>
+              </Reveal>
+
+              <Reveal stagger delay={.08} className="grid gap-2 sm:grid-cols-2 sm:gap-2.5">
+                {skills.map(skill => (
+                  <RevealItem key={skill.label} y={16}
+                    className={`group relative isolate overflow-hidden rounded-xl border border-line-strong
+                      bg-surface-raised/70 p-3 sm:p-3.5 ${
+                        reduceMotion ? "" : "hover:border-accent/45 hover:bg-surface-raised"
+                      }`}
+                    style={{ transformPerspective: 850 }}
+                    whileHover={reduceMotion ? undefined : {
+                      y: -3,
+                      rotateX: 2.5,
+                      rotateY: -2.5,
+                      scale: 1.015,
+                      transition: { duration: .28, ease: [.16, 1, .3, 1] }
+                    }}
+                    whileTap={reduceMotion ? undefined : { scale: .99 }}>
+                    {!reduceMotion && (
+                      <span aria-hidden="true"
+                        className="pointer-events-none absolute -inset-y-8 -left-1/2 z-0 w-1/2 skew-x-[-18deg]
+                                   bg-linear-to-r from-transparent via-white/[.06] to-transparent
+                                   transition-transform duration-700 ease-out group-hover:translate-x-[300%]" />
+                    )}
+                    <div className="relative z-10 flex min-w-0 items-center gap-2.5">
+                      <motion.span aria-hidden="true"
+                        className={`grid size-7 flex-none place-items-center rounded-lg border border-accent/25
+                          bg-accent/[.08] font-mono text-[9px] font-semibold text-accent-hi ${
+                            reduceMotion ? "" : "transition-transform duration-500 ease-out group-hover:rotate-[360deg] group-hover:scale-110"
+                          }`}>
+                        {skill.mark}
+                      </motion.span>
+                      <p className="min-w-0 flex-1 truncate font-display text-[12px] font-semibold leading-tight text-primary sm:text-[13px]">
+                        {skill.label}
+                      </p>
+                      <span className="flex-none font-mono text-[9px] text-muted sm:text-[10px]">
+                        {skill.level}
+                      </span>
+                    </div>
+                    <div className="relative z-10 mt-2.5 h-[3px] overflow-hidden rounded-full bg-line-strong">
+                      <motion.span
+                        aria-hidden="true"
+                        className={`block h-full origin-left rounded-full bg-linear-to-r from-accent to-accent-hi ${
+                          reduceMotion ? "" : "transition-[filter] duration-500 group-hover:brightness-125"
+                        }`}
+                        style={{ width: `${skill.score}%` }}
+                        initial={reduceMotion ? false : { scaleX: 0 }}
+                        animate={reduceMotion ? { scaleX: skill.score / 100 } : undefined}
+                        whileInView={!reduceMotion ? { scaleX: skill.score / 100 } : undefined}
+                        viewport={{ once: true, amount: 0.8 }}
+                        transition={{ duration: .9, delay: .12, ease: [.16, 1, .3, 1] }}
+                      />
+                    </div>
+                  </RevealItem>
+                ))}
+              </Reveal>
+            </div>
           </div>
         </div>
 

@@ -14,7 +14,7 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useEffect, useRef, useState } from 'react';
-import { Reveal, SplitHeading, Accent, injectCss } from '../shared';
+import { Icon, Reveal, SplitHeading, Accent, injectCss } from '../shared';
 
 /* ═══ Content ═══════════════════════════════════════════════════════════
    Keep `blurb` to one line — it sits on a 350px card. Anything longer
@@ -22,40 +22,40 @@ import { Reveal, SplitHeading, Accent, injectCss } from '../shared';
 
 const shopifyProjects = [
   {
-    title: 'Product-led storefront',
-    blurb: 'Rebuilt the catalogue around how people actually shop: filters that narrow fast, quick view, and a checkout that gets out of the way.',
-    result: 'Average order value up 34%',
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=85',
-    type: 'Shopify · Ecommerce',
-    tags: ['Liquid', 'Checkout', 'Filters', 'CRO'],
+    title: 'Custom Theme Design',
+    blurb: 'Crafted a custom Shopify theme with personalized T-shirt designs and an integrated music system, delivering a unique brand experience.',
+    result: 'Custom Shopify Experience',
+    image: '/MIRΛI.png',
+    type: 'SHOPIFY · CUSTOM DESIGN',
+    icon: 'shopify',
+    tags: ['Shopify', 'T-Shirt Design', 'Music System', 'Responsive'],
+    href: 'https://mirailabstore.com',
+  },
+  {
+    title: 'Prestige Theme Design',
+    blurb: 'Built a luxury Shopify storefront using the Prestige theme, featuring premium product presentation and a seamless shopping experience. Developed a complex custom bundle system using Liquid code to deliver tailored bundle functionality.',
+    image: '/Prestige_Theme_Design_Showcase.png',
+    type: 'SHOPIFY · PREMIUM THEME',
+    icon: 'shopify',
+    tags: ['Prestige Theme', 'Custom Liquid', 'Bundle System', 'Subscriptions', 'Responsive Design'],
+    href: 'https://riosense.com',
+  },
+  {
+    title: 'Storefronts built around the brand, not the template.',
+    blurb: 'An animated entrance for a luxury weaves label — a wardrobe that opens on tap to reveal its contents only as shadows. Turns Shopify’s password page into a first-access waitlist.',
+    image: '/Luxury-E-Commerce-Showcase.png',
+    type: 'SHOPIFY · LUXURY',
+    tags: ['Shopify Liquid', 'Motion Design', 'Email Capture', 'Luxury UX'],
     href: '#',
   },
   {
-    title: 'Dropshipping automation',
-    blurb: 'A custom API layer keeping stock in step across several suppliers, with one admin view for orders, margins and fulfilment.',
-    result: '2,000+ SKUs, synced every 15 minutes',
-    image: 'https://images.unsplash.com/photo-1491888508695-c5a46a4d4e54?auto=format&fit=crop&w=1200&q=85',
-    type: 'Shopify · Dropshipping',
-    tags: ['REST API', 'Webhooks', 'Admin UI', 'Sync'],
-    href: '#',
-  },
-  {
-    title: 'Performance rebuild',
-    blurb: 'Stripped an inherited theme back to what it needed, moved every image to WebP and cut the JavaScript bundle by two thirds.',
-    result: 'Lighthouse 42 to 91',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=85',
-    type: 'Shopify · Performance',
-    tags: ['Web Vitals', 'WebP', 'Lazy load', 'Audit'],
-    href: '#',
-  },
-  {
-    title: 'Custom OS 2.0 theme',
-    blurb: 'Twelve section types the merchant rearranges themselves, with scroll-triggered galleries and an animated product builder.',
-    result: '45% faster than the theme it replaced',
-    image: 'https://images.unsplash.com/photo-1522869635100-ce306e08924d?auto=format&fit=crop&w=1200&q=85',
+    title: 'Cafe order-ahead menu',
+    blurb: 'A coffee menu rebuilt as a storefront. Size, hot or iced, and nine tea add-ins chosen without leaving the grid.',
+    result: 'Custom Product Add-ons',
+    image: '/The_Honeypot_Coffee_Shop_Showcase.png',
     type: 'Shopify · Custom Design',
-    tags: ['OS 2.0', 'Sections', 'Metafields', 'Motion'],
-    href: '#',
+    tags: ['Shopify', 'Liquid', 'Metafields', 'Add-ons', 'Pickup'],
+    href: 'https://cq3kjk-w4.myshopify.com',
   },
 ];
 
@@ -64,7 +64,7 @@ const wordpressProjects = [
     title: 'Modern business website',
     blurb: 'Custom blocks for team, case studies and testimonials, put together so the client can add a page without calling anyone.',
     result: 'First page for eight target terms',
-    image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85',
+    image: '/wordpress-business-preview.svg',
     type: 'WordPress · Business',
     tags: ['Gutenberg', 'Schema', 'SEO', 'ACF'],
     href: '#',
@@ -73,7 +73,7 @@ const wordpressProjects = [
     title: 'WooCommerce store',
     blurb: 'Multi-vendor marketplace with custom payment gateways, bulk import tooling and subscription products.',
     result: '500+ products across 15k customers',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=85',
+    image: '/woocommerce-store-preview.svg',
     type: 'WordPress · WooCommerce',
     tags: ['WooCommerce', 'PHP', 'Gateways', 'Subs'],
     href: '#',
@@ -82,7 +82,7 @@ const wordpressProjects = [
     title: 'Creative portfolio',
     blurb: 'Filterable case studies and animated galleries on a custom child theme, built to survive the client adding work to it.',
     result: 'Enquiries up 156%',
-    image: 'https://images.unsplash.com/photo-1537432376769-a50e9e745c62?auto=format&fit=crop&w=1200&q=85',
+    image: '/wordpress-portfolio-preview.svg',
     type: 'WordPress · Portfolio',
     tags: ['Child theme', 'Filters', 'Motion', 'CPT'],
     href: '#',
@@ -91,7 +91,7 @@ const wordpressProjects = [
     title: 'Custom plugin platform',
     blurb: 'Four plugins handling team workflow, client records and automated reporting, wired to the CRM they already used.',
     result: 'Saves 20+ hours a month per client',
-    image: 'https://images.unsplash.com/photo-1518611505867-48e2b5b6b94f?auto=format&fit=crop&w=1200&q=85',
+    image: '/wordpress-plugin-preview.svg',
     type: 'WordPress · Custom Plugin',
     tags: ['PHP', 'REST API', 'CRM', 'Cron'],
     href: '#',
@@ -203,6 +203,9 @@ injectCss('work-fan', `
     .work-card__type {
       position: absolute;
       z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       left: 14px; top: 14px;
       border-radius: 999px;
       padding: 8px 11px;
@@ -292,6 +295,25 @@ injectCss('work-fan', `
     .work-nav button { transition: border-color var(--dur-2) ease, color var(--dur-2) ease, transform var(--dur-2) ease; }
     .work-nav button:hover { transform: translateY(-2px); }
 
+    .work-progress {
+      width: 72px;
+      height: 3px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--c-line);
+    }
+    .work-progress__fill {
+      display: block;
+      width: 100%;
+      height: 100%;
+      transform: scaleX(0);
+      transform-origin: left center;
+      background: var(--c-accent-soft);
+      animation: work-progress var(--work-delay) linear forwards;
+    }
+    .work-block[data-paused="true"] .work-progress__fill { animation-play-state: paused; }
+    @keyframes work-progress { to { transform: scaleX(1); } }
+
     /* ── responsive ────────────────────────────────────────────────── */
 
     @media (max-width: 1100px) {
@@ -337,17 +359,39 @@ injectCss('work-fan', `
     @media (prefers-reduced-motion: reduce) {
       .work-card { transition: none; }
       .work-card.exit { transition: opacity var(--dur-2) ease; }
+      .work-progress__fill { animation: none; transform: scaleX(1); }
     }
   }
 `);
 
 /* ═══ ProjectCard ═══════════════════════════════════════════════════════ */
 
-const ProjectCard = ({ project, position, isExiting }) => (
-  <article className={`work-card pos-${position} ${isExiting ? 'exit' : ''}`}>
+const ProjectCard = ({ project, position, isExiting, onBringToFront }) => (
+  <article
+    className={`work-card pos-${position} ${isExiting ? 'exit' : ''}`}
+    tabIndex={0}
+    aria-label={`${project.title}. Select to bring this project to the front.`}
+    onClick={event => {
+      if (!event.target.closest('a, button')) onBringToFront();
+    }}
+    onKeyDown={event => {
+      if (event.target !== event.currentTarget) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        onBringToFront();
+      }
+    }}
+  >
     <div className="work-card__img">
-      <span className="work-card__type">{project.type}</span>
-      <img src={project.image} alt="" loading="lazy" />
+      <span className="work-card__type">
+        {project.icon && <Icon name={project.icon} className="size-[14px] flex-none" />}
+        {project.type}
+      </span>
+      <img
+        src={project.image}
+        alt=""
+        loading={project.image.startsWith('/') ? 'eager' : 'lazy'}
+      />
     </div>
 
     <div className="work-card__body">
@@ -364,7 +408,12 @@ const ProjectCard = ({ project, position, isExiting }) => (
             <span key={tag}>{tag}</span>
           ))}
         </div>
-        <a className="work-card__link" href={project.href}>
+        <a
+          className="work-card__link"
+          href={project.href}
+          target={project.href.startsWith('https://') ? '_blank' : undefined}
+          rel={project.href.startsWith('https://') ? 'noreferrer' : undefined}
+        >
           View &#8599;
         </a>
       </div>
@@ -374,56 +423,161 @@ const ProjectCard = ({ project, position, isExiting }) => (
 
 /* ═══ Fan ═══════════════════════════════════════════════════════════════ */
 
-const Fan = ({ projects, label, description, delay = 4800 }) => {
+const Fan = ({ projects, label, description, delay = 3000 }) => {
   const [order, setOrder] = useState(() => projects.map((_, i) => i));
+  const orderRef = useRef(order);
   const [exiting, setExiting] = useState(-1);
+  const [progressRun, setProgressRun] = useState(0);
+  const [paused, setPaused] = useState(false);
   const timer = useRef(null);
+  const advanceTimer = useRef(null);
+  const remaining = useRef(delay);
+  const deadline = useRef(0);
   const drag = useRef(null);
+  const suppressClick = useRef(false);
+  const suppressClickTimer = useRef(null);
+  const hovered = useRef(false);
+  const reduceMotion = useRef(
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
 
   const position = (i) => {
     const slot = order.indexOf(i);
     return slot < 4 ? slot : 'hidden';
   };
 
-  const next = () => {
-    setExiting(order[0]);
-    setTimeout(() => {
-      setOrder((o) => [...o.slice(1), o[0]]);
+  const changeOrder = (update) => {
+    const nextOrder = update(orderRef.current);
+    orderRef.current = nextOrder;
+    setOrder(nextOrder);
+  };
+
+  const next = (onComplete) => {
+    if (advanceTimer.current) return;
+    setExiting(orderRef.current[0]);
+    advanceTimer.current = setTimeout(() => {
+      changeOrder((current) => [...current.slice(1), current[0]]);
       setExiting(-1);
+      advanceTimer.current = null;
+      onComplete?.();
     }, 700);
   };
 
-  const prev = () => setOrder((o) => [o[o.length - 1], ...o.slice(0, -1)]);
+  const prev = () => changeOrder((current) => [current[current.length - 1], ...current.slice(0, -1)]);
 
   const play = () => {
-    clearInterval(timer.current);
-    timer.current = setInterval(next, delay);
+    clearTimeout(timer.current);
+    if (hovered.current || drag.current !== null || reduceMotion.current) return;
+    setPaused(false);
+    deadline.current = Date.now() + remaining.current;
+    timer.current = setTimeout(() => {
+      timer.current = null;
+      next(() => {
+        remaining.current = delay;
+        setProgressRun((run) => run + 1);
+        play();
+      });
+    }, remaining.current);
   };
-  const pause = () => clearInterval(timer.current);
+  const pause = () => {
+    if (timer.current !== null) {
+      remaining.current = Math.max(0, deadline.current - Date.now());
+    }
+    clearTimeout(timer.current);
+    timer.current = null;
+    setPaused(true);
+  };
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    remaining.current = delay;
+    if (reduceMotion.current) return;
     play();
-    return () => clearInterval(timer.current);
+    return () => {
+      clearTimeout(timer.current);
+      clearTimeout(advanceTimer.current);
+      clearTimeout(suppressClickTimer.current);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay]);
 
-  /* drag, mouse and touch sharing one threshold */
+  /* Pointer input shares one swipe threshold across mouse and touch. */
   const DRAG_MIN = 50;
-  const start = (x) => { drag.current = x; pause(); };
+  const start = (x) => {
+    clearTimeout(suppressClickTimer.current);
+    suppressClick.current = false;
+    drag.current = x;
+    pause();
+  };
+  const cancelDrag = () => {
+    drag.current = null;
+    remaining.current = delay;
+    setProgressRun((run) => run + 1);
+    play();
+  };
   const end = (x) => {
     if (drag.current === null) return;
     const moved = drag.current - x;
-    if (Math.abs(moved) > DRAG_MIN) (moved > 0 ? next : prev)();
     drag.current = null;
+    if (Math.abs(moved) > DRAG_MIN && moved > 0) {
+      suppressClick.current = true;
+      clearTimeout(suppressClickTimer.current);
+      suppressClickTimer.current = setTimeout(() => { suppressClick.current = false; }, 500);
+      remaining.current = delay;
+      next(() => {
+        setProgressRun((run) => run + 1);
+        play();
+      });
+      return;
+    }
+    if (Math.abs(moved) > DRAG_MIN) {
+      suppressClick.current = true;
+      clearTimeout(suppressClickTimer.current);
+      suppressClickTimer.current = setTimeout(() => { suppressClick.current = false; }, 500);
+      prev();
+    }
+    remaining.current = delay;
+    setProgressRun((run) => run + 1);
     play();
   };
 
-  const step = (fn) => { pause(); fn(); play(); };
-  const shown = order.indexOf(order[0]) + 1;
+  const stepNext = () => {
+    pause();
+    remaining.current = delay;
+    next(() => {
+      setProgressRun((run) => run + 1);
+      play();
+    });
+  };
+  const stepPrev = () => {
+    pause();
+    prev();
+    remaining.current = delay;
+    setProgressRun((run) => run + 1);
+    play();
+  };
+  const bringToFront = (index) => {
+    if (suppressClick.current) {
+      suppressClick.current = false;
+      clearTimeout(suppressClickTimer.current);
+      return;
+    }
+    pause();
+    clearTimeout(advanceTimer.current);
+    advanceTimer.current = null;
+    setExiting(-1);
+    changeOrder((current) => [index, ...current.filter((item) => item !== index)]);
+    remaining.current = delay;
+    setProgressRun((run) => run + 1);
+    play();
+  };
+  const shown = order[0] + 1;
 
   return (
-    <div className="work-block">
+    <div
+      className="work-block"
+      data-paused={paused ? 'true' : undefined}
+      style={{ '--work-delay': `${delay}ms` }}
+    >
       <div className="work-head">
         <div>
           <p className="label flex items-center gap-3">
@@ -436,7 +590,7 @@ const Fan = ({ projects, label, description, delay = 4800 }) => {
         <div className="work-nav">
           <button
             type="button"
-            onClick={() => step(prev)}
+            onClick={stepPrev}
             aria-label="Previous project"
             className="grid size-10 place-items-center rounded-full border border-line text-muted"
           >
@@ -444,18 +598,15 @@ const Fan = ({ projects, label, description, delay = 4800 }) => {
           </button>
           <button
             type="button"
-            onClick={() => step(next)}
+            onClick={stepNext}
             aria-label="Next project"
             className="grid size-10 place-items-center rounded-full border border-line text-muted"
           >
             &#8594;
           </button>
 
-          <div className="h-[3px] w-[72px] overflow-hidden rounded-full bg-line">
-            <span
-              className="block h-full bg-accent-soft transition-all duration-500"
-              style={{ width: `${(shown / projects.length) * 100}%` }}
-            />
+          <div className="work-progress" aria-hidden="true">
+            <span key={progressRun} className="work-progress__fill" />
           </div>
 
           <span className="font-mono text-[12px] text-faint">
@@ -466,12 +617,20 @@ const Fan = ({ projects, label, description, delay = 4800 }) => {
 
       <div
         className="work-stage"
-        onMouseEnter={pause}
-        onMouseLeave={play}
-        onMouseDown={(e) => start(e.clientX)}
-        onMouseUp={(e) => end(e.clientX)}
-        onTouchStart={(e) => start(e.touches[0].clientX)}
-        onTouchEnd={(e) => end(e.changedTouches[0].clientX)}
+        onMouseEnter={() => {
+          hovered.current = true;
+          pause();
+        }}
+        onMouseLeave={() => {
+          hovered.current = false;
+          play();
+        }}
+        onPointerDown={(e) => {
+          if (e.pointerType === 'mouse' && e.button !== 0) return;
+          start(e.clientX);
+        }}
+        onPointerUp={(e) => end(e.clientX)}
+        onPointerCancel={cancelDrag}
         style={{ userSelect: 'none', touchAction: 'pan-y' }}
       >
         <div className="work-fan">
@@ -481,6 +640,7 @@ const Fan = ({ projects, label, description, delay = 4800 }) => {
               project={project}
               position={position(i)}
               isExiting={exiting === i}
+              onBringToFront={() => bringToFront(i)}
             />
           ))}
         </div>
@@ -511,14 +671,12 @@ export function Work() {
           projects={shopifyProjects}
           label="Shopify · 200+ live stores"
           description="Custom themes, speed work and private apps, built on Liquid and OS 2.0."
-          delay={4800}
         />
 
         <Fan
           projects={wordpressProjects}
           label="WordPress · 200+ custom sites"
           description="Bespoke plugins, WooCommerce builds and design systems a client can run themselves."
-          delay={6000}
         />
       </div>
     </section>

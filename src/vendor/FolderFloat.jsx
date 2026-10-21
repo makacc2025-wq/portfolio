@@ -440,7 +440,7 @@ export default function FolderFloat({
       <div className="relative [width:var(--ff-w)] [height:var(--ff-h)]">
       <div
         ref={anchorRef}
-        className="absolute top-0 left-1/2 z-[4] h-0 w-0 group-data-[open]:before:absolute group-data-[open]:before:top-[calc(-1*(var(--ff-lift)+120px))] group-data-[open]:before:left-[calc(-1*(var(--ff-spread)+100px))] group-data-[open]:before:h-[calc(var(--ff-lift)+120px)] group-data-[open]:before:w-[calc(2*var(--ff-spread)+200px)] group-data-[open]:before:content-['']"
+        className="absolute top-0 left-1/2 z-[1] h-0 w-0 group-data-[open]:z-[4] group-data-[open]:before:absolute group-data-[open]:before:top-[calc(-1*(var(--ff-lift)+120px))] group-data-[open]:before:left-[calc(-1*(var(--ff-spread)+100px))] group-data-[open]:before:h-[calc(var(--ff-lift)+120px)] group-data-[open]:before:w-[calc(2*var(--ff-spread)+200px)] group-data-[open]:before:content-['']"
       >
         {list.map((item, i) => {
           const p = pos[i];
