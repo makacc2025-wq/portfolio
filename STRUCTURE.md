@@ -1,95 +1,143 @@
 # Project structure
 
-33 source files became 13. Everything for one section now lives in one file.
+This tree lists the repository's project files and excludes Git's internal
+`.git/` metadata. `node_modules/` and `dist/` currently exist locally, but
+they are generated/ignored and are not tracked source files.
 
+## Repository tree
+
+```text
+.
+├── .gitignore
+├── README.md
+├── STRUCTURE.md
+├── index.html
+├── package.json
+├── package-lock.json
+├── robots.txt
+├── vite.config.js
+├── public/
+│   ├── card-back.png
+│   ├── card-front.png
+│   ├── favicon.svg
+│   ├── Luxury-E-Commerce-Showcase.png
+│   ├── MIRΛI.png
+│   ├── Prestige_Theme_Design_Showcase.png
+│   ├── resume.pdf
+│   ├── shopify-os-theme-preview.svg
+│   ├── shopify-performance-preview.svg
+│   ├── site.webmanifest
+│   ├── The_Honeypot_Coffee_Shop_Showcase.png
+│   ├── woocommerce-store-preview.svg
+│   ├── wordpress-business-preview.svg
+│   ├── wordpress-plugin-preview.svg
+│   └── wordpress-portfolio-preview.svg
+└── src/
+    ├── content.js
+    ├── index.css
+    ├── main.jsx
+    ├── shared.jsx
+    ├── sections/
+    │   ├── About.jsx
+    │   ├── Contact.jsx
+    │   ├── Experience.jsx
+    │   ├── Footer.jsx
+    │   ├── Header.jsx
+    │   ├── Hero.jsx
+    │   ├── Services.jsx
+    │   └── Work.jsx
+    └── vendor/
+        ├── FolderFloat.jsx
+        └── Lanyard.jsx
 ```
-src/
-  main.jsx        entry point, the page order, smooth scrolling
-  index.css       colours and tokens (edit colours here) + the few styles shared by all sections
-  content.js      your name, email, links, menu: the facts used in more than one place
-  shared.jsx      Icon, Reveal, SplitHeading, useMediaQuery, injectCss
-  sections/
-    Header.jsx  Hero.jsx  Work.jsx  Services.jsx  About.jsx  Contact.jsx  Footer.jsx
-  vendor/
-    Lanyard.jsx  FolderFloat.jsx      <- React Bits code. Paste updates here, do not restyle.
+
+## Important files and import relationships
+
+- `index.html` is Vite's HTML entry. It provides the `#root` mount element,
+  loads `/src/main.jsx`, sets page metadata, and links the favicon and web
+  manifest.
+- `src/main.jsx` imports `index.css`, initializes React, configures Lenis
+  smooth scrolling, and composes the page in this order: Header, Hero, About,
+  Services, Work, Experience, Contact, Footer.
+- `src/content.js` exports the shared `profile` and `nav` data. Header and
+  Footer use both; Hero uses `profile`; Contact uses `profile`. Copy specific
+  to a section, such as project or service cards, is kept in that section's
+  file.
+- `src/shared.jsx` exports shared UI and utilities: `Icon`, `Monogram`,
+  `Reveal`, `RevealItem`, `Accent`, `SplitHeading`, `useMediaQuery`, and
+  `injectCss`. Sections import the pieces they use from here.
+- `src/index.css` imports Tailwind CSS and defines global styles, theme and
+  design tokens, and shared base styles. It is imported once by `main.jsx`
+  before the section components render.
+- `src/sections/` contains the page sections. Each file owns its markup and
+  section-specific content and styles; styles are injected at runtime with
+  the shared `injectCss` helper where used.
+  - `Header.jsx` — navigation, theme control, scroll progress, and mobile
+    menu; reads `nav` and `profile`.
+  - `Hero.jsx` — hero content and animated folder interaction; reads
+    `profile` and uses `vendor/FolderFloat.jsx`.
+  - `About.jsx` — about content and motion effects; uses `vendor/Lanyard.jsx`.
+  - `Services.jsx` — service cards and their interactive fan.
+  - `Work.jsx` — Shopify and WordPress project cards.
+  - `Experience.jsx` — experience timeline.
+  - `Contact.jsx` — contact section and its visual effects; reads `profile`.
+  - `Footer.jsx` — footer, shared profile/navigation links, and footer
+    interactions.
+- `src/vendor/FolderFloat.jsx` uses Matter.js for the interactive physics
+  folder used by Hero. `src/vendor/Lanyard.jsx` uses Three.js for the 3D
+  lanyard used by About.
+- `public/` contains static files served from the site root. Project-card
+  images are referenced by `Work.jsx`; `card-front.png` and `card-back.png`
+  are used by About; `resume.pdf` is referenced by the shared profile data.
+  `favicon.svg` and `site.webmanifest` are linked by `index.html`.
+- `vite.config.js` configures the React and Tailwind Vite plugins, relative
+  build paths, and `dist/` as the build output directory.
+- `package.json` and `package-lock.json` define and lock the dependencies and
+  npm scripts. `robots.txt` is a static crawler policy file.
+
+## Animation and styling architecture
+
+- React renders the page and manages discrete UI state. Continuous animation
+  is generally driven by browser animation frames, canvas/Three.js/Matter.js,
+  CSS custom properties, or Motion values rather than updating React state
+  on every frame.
+- Lenis is initialized once in `main.jsx` for smooth page scrolling and
+  intercepted in-page anchor navigation. It is skipped when the user prefers
+  reduced motion.
+- Motion-based transitions and reduced-motion handling use `motion/react`.
+  The Hero folder uses Matter.js; the About lanyard uses Three.js.
+- Global tokens and base styles belong in `index.css`. Section-specific
+  styles are colocated in section files and passed to `injectCss` where
+  applicable.
+
+## Setup and scripts
+
+```bash
+npm install
+npm run dev        # start the Vite development server
+npm run build      # build the site into dist/
+npm run preview    # serve the production build locally
 ```
 
-## How a section file is laid out (top to bottom)
+Deploy the generated `dist/` directory to a static host. `base: "./"` in
+`vite.config.js` allows the build to work from a subfolder.
 
-1. a table of contents
-2. imports
-3. **content**: the words for that section (edit text here)
-4. **the component**: the markup you see on the page
-5. helper components
-6. **behaviour**: hooks (animations, physics, canvas). Rarely edited.
-7. **styles**: that section's own CSS
+## Editing guide
 
-## Where do I edit...
-
-| I want to change | Open |
+| To change | Edit |
 |---|---|
-| my name, email, social links, the menu | `content.js` |
-| the hero stats and the folder tags | `sections/Hero.jsx` (content block at the top) |
-| the hero headline and paragraph | `sections/Hero.jsx`, in the Hero component (search for the words) |
-| the role line, tagline, "Team lead" badge, quote | `content.js` (`profile`) |
-| a service card or its bullets | `sections/Services.jsx` (content at the top) |
-| a project in Work | `sections/Work.jsx` (content at the top) |
-| a colour in either theme | `index.css` |
-| how the Services cards look | bottom of `sections/Services.jsx` |
-| how fast the cards hover | `MOVE_K` in the `useCardFan` block of `sections/Services.jsx` |
+| Name, contact details, profile links, resume path, shared navigation | `src/content.js` |
+| Global colors, theme tokens, base styles | `src/index.css` |
+| Hero, services, projects, about, experience, or contact section content | The corresponding file in `src/sections/` |
+| Shared icons, reveal components, heading helpers, media query hook, or CSS injection | `src/shared.jsx` |
+| Page order, app mounting, or Lenis setup | `src/main.jsx` |
+| Static images, favicon, manifest, or resume | `public/` |
+| Vite plugins and build settings | `vite.config.js` |
 
-## Old file to new file
+## Asset references to review
 
-| Old | New |
-|---|---|
-| `components/Icon.jsx` | `shared.jsx` |
-| `components/Reveal.jsx` | `shared.jsx` |
-| `components/SplitHeading.jsx` | `shared.jsx` |
-| `hooks/useMediaQuery.js` | `shared.jsx` |
-| `hooks/useTheme.js` | `sections/Header.jsx` |
-| `components/ThemeToggle.jsx` | `sections/Header.jsx` |
-| `hooks/useActiveSection.js` | `sections/Header.jsx` |
-| `hooks/useBodyScrollLock.js` | `sections/Header.jsx` |
-| `components/Header.jsx` | `sections/Header.jsx` |
-| `components/Counter.jsx` | `sections/Hero.jsx` |
-| `hooks/useAurora.js` | `sections/Hero.jsx` |
-| `components/Hero.jsx` | `sections/Hero.jsx` |
-| `data/site.js → stats` | `sections/Hero.jsx (top of file)` |
-| `data/site.js → heroPlatforms` | `sections/Hero.jsx (top of file)` |
-| `components/Work.jsx` | `sections/Work.jsx` |
-| `data/site.js → projects` | `sections/Work.jsx (top of file)` |
-| `hooks/useCardFan.js` | `sections/Services.jsx` |
-| `components/Services.jsx` | `sections/Services.jsx` |
-| `data/site.js → servicesIntro` | `sections/Services.jsx (top of file)` |
-| `data/site.js → serviceScenes` | `sections/Services.jsx (top of file)` |
-| `components/About.jsx` | `sections/About.jsx` |
-| `components/Contact.jsx` | `sections/Contact.jsx` |
-| `hooks/useClock.js` | `sections/Footer.jsx` |
-| `hooks/useCopy.js` | `sections/Footer.jsx` |
-| `hooks/useCursorGlow.js` | `sections/Footer.jsx` |
-| `hooks/useLiquidField.js` | `sections/Footer.jsx` |
-| `hooks/useWordmarkFit.js` | `sections/Footer.jsx` |
-| `hooks/useWordmarkReveal.js` | `sections/Footer.jsx` |
-| `components/Footer.jsx` | `sections/Footer.jsx` |
-| `components/Lanyard.jsx` | `vendor/Lanyard.jsx` |
-| `components/FolderFloat.jsx` | `vendor/FolderFloat.jsx` |
-| `data/site.js → profile, nav` | `content.js` |
-| `App.jsx, main.jsx, hooks/useLenis.js` | `main.jsx` |
-| `styles/theme.css + shared part of styles/app.css` | `index.css` |
-| `styles/app.css → hero / header / services / footer rules` | `inside each section file (bottom)` |
-| `hooks/useScrollProgress.js` | `DELETED — nothing used it` |
-| `data/site.js → platforms, aboutPoints, stack` | `DELETED — nothing used them` |
-
-## Applying it to your project
-
-1. **Back up first** (copy the project folder, or `git commit`).
-2. Delete your `src/` folder and put this `src/` in its place. Do not touch `public/`, `index.html`, `package.json` or `vite.config.js`.
-3. Open `content.js` and put your real email, links and resume path into `profile`. It holds placeholders.
-4. `npm install` then `npm run dev`.
-
-## Things worth knowing
-
-- **Section CSS is plain CSS inside the JS file.** A tiny helper (`injectCss` in `shared.jsx`) puts it in the page head, in the same cascade layer as before. To use a normal `.css` file instead: cut the text out of the backticks, save it as `Hero.css`, and `import "./Hero.css"` at the top of the section.
-- **Keyframe names must not match Tailwind's built-ins** (`ping`, `spin`, `pulse`, `bounce`). Tailwind injects its own over yours. The status dot's keyframes are called `dot-ping` for this reason.
-- **Adding a section:** create `sections/Name.jsx` exporting `Name`, then add it to the list in `main.jsx`.
-- **Delivery going forward:** a change to one section means replacing one file.
+The files above list assets that actually exist in the repository. Two current
+references point to files that are not present in `public/`: About passes
+`/band.svg` to the Lanyard component, and `site.webmanifest` declares three
+icons under `/assets/img/`. These are noted here rather than listed as
+existing files.
