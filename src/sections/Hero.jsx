@@ -106,7 +106,7 @@ function PlatformBadges({ reduce }) {
   const size = desktop
     /* A folder reads as a folder only if it is landscape — the square the
        badge used looked like a tile. Height comes off the width. */
-    ? { badge: 238, tall: 178, radius: 20, spread: wide ? 196 : 158, label: "text-[16px]" }
+    ? { badge: 238, tall: 178, radius: 20, spread: wide ? 196 : 158 }
     /* Same folder below desktop, because the sublabel is what sets the floor:
        at 176px it gets an 18-character column for a 23-character string, so it
        wrapped and the fixed-height flap clipped it. 230px gives ~26 characters
@@ -114,13 +114,13 @@ function PlatformBadges({ reduce }) {
        stacks, tablet sits side by side. */
     : phone
       ? compactPhone
-        ? { badge: 124, tall: 142, radius: 15, spread: 76, label: "text-[12px]" }
+        ? { badge: 124, tall: 142, radius: 15, spread: 76 }
         : !mediumPhone
-          ? { badge: 136, tall: 142, radius: 15, spread: 80, label: "text-[12px]" }
+          ? { badge: 136, tall: 142, radius: 15, spread: 80 }
           : widePhone
-            ? { badge: 174, tall: 150, radius: 17, spread: 96, label: "text-[14px]" }
-            : { badge: 154, tall: 146, radius: 16, spread: 88, label: "text-[13px]" }
-      : { badge: 230, tall: 172, radius: 18, spread: 110, label: "text-[15px]" };
+            ? { badge: 174, tall: 150, radius: 17, spread: 96 }
+            : { badge: 154, tall: 146, radius: 16, spread: 88 }
+      : { badge: 230, tall: 172, radius: 18, spread: 110 };
 
   return (
     <div className={desktop ? "relative h-[624px]" : (phone
@@ -163,17 +163,6 @@ function PlatformBadges({ reduce }) {
             paperColor="var(--folder-paper)" labelColor="var(--folder-label)"
             itemColor="var(--folder-pill)" itemTextColor="var(--folder-pill-ink)" subColor="var(--folder-sub)"
           />
-          </span>
-          {/* Wrapped in a full-width centring row on purpose. A w-full child
-              does not contribute to a shrink-to-fit box, so the folder's
-              declared width becomes the ONLY thing sizing this column — the
-              pill can no longer shrink-wrap the wrapper and leave the folder
-              overflowing to one side. Measured at 97px off before this. */}
-          <span className="mt-3.5 flex w-full justify-center">
-          <span className={"rounded-full border border-white/10 px-4 py-2 font-display font-semibold leading-none " +
-                           size.label + " [background:var(--folder-back)] [color:var(--folder-label)]"}>
-            {p.name}
-          </span>
           </span>
         </motion.div>
       ))}

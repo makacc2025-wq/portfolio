@@ -14,6 +14,7 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react';
 import { Icon, Reveal, SplitHeading, Accent, injectCss } from '../shared';
 
 /* ═══ Content ═══════════════════════════════════════════════════════════
@@ -30,6 +31,10 @@ const shopifyProjects = [
     icon: 'shopify',
     tags: ['Shopify', 'T-Shirt Design', 'Music System', 'Responsive'],
     href: 'https://mirailabstore.com',
+    brief: 'Create a distinctive Shopify storefront for a T-shirt label, with a visual identity that feels personal and a music experience built into the shopping journey.',
+    challenge: 'The storefront needed to make custom apparel feel expressive without making product discovery or shopping harder. The music feature also had to feel intentional rather than like a separate widget.',
+    solution: 'Designed a custom storefront around the brand artwork, then brought product presentation and the integrated music experience together in a responsive layout. Kept the shopping flow clear across desktop and mobile.',
+    technologies: ['Shopify', 'Liquid', 'Custom theme design', 'Responsive UI'],
   },
   {
     title: 'Prestige Theme Design',
@@ -39,6 +44,10 @@ const shopifyProjects = [
     icon: 'shopify',
     tags: ['Prestige Theme', 'Custom Liquid', 'Bundle System', 'Subscriptions', 'Responsive Design'],
     href: 'https://riosense.com',
+    brief: 'Build a premium storefront using the Prestige theme, with polished product storytelling and flexible bundles that fit the brand’s catalog.',
+    challenge: 'The standard theme experience did not cover the tailored bundle behavior the store needed. The bundle flow had to work naturally with product variants and subscriptions without disrupting the premium shopping experience.',
+    solution: 'Customized the Prestige theme and extended it with Liquid-based bundle functionality. Refined product presentation and responsive layouts so shoppers could understand and configure their options with less friction.',
+    technologies: ['Shopify', 'Prestige theme', 'Liquid', 'Subscriptions', 'Responsive UI'],
   },
   {
     title: 'Storefronts built around the brand, not the template.',
@@ -47,6 +56,10 @@ const shopifyProjects = [
     type: 'SHOPIFY · LUXURY',
     tags: ['Shopify Liquid', 'Motion Design', 'Email Capture', 'Luxury UX'],
     href: '#',
+    brief: 'Create a memorable first-access experience for a luxury weaving label, turning a simple pre-launch page into a branded moment.',
+    challenge: 'The experience needed to build anticipation and collect interest while keeping the products hidden until visitors chose to reveal them.',
+    solution: 'Built an animated wardrobe-style entrance that opens on tap, revealing the collection through a shadow-led visual treatment. Used Shopify’s password page as a branded waitlist and email-capture experience.',
+    technologies: ['Shopify', 'Liquid', 'Motion design', 'Email capture'],
   },
   {
     title: 'Cafe order-ahead menu',
@@ -56,6 +69,10 @@ const shopifyProjects = [
     type: 'Shopify · Custom Design',
     tags: ['Shopify', 'Liquid', 'Metafields', 'Add-ons', 'Pickup'],
     href: 'https://cq3kjk-w4.myshopify.com',
+    brief: 'Make a café menu work like an order-ahead storefront, so customers can customize drinks without leaving the product grid.',
+    challenge: 'Drink choices such as size, temperature, and tea add-ins create a lot of options. The ordering experience needed to keep those choices easy to scan and quick to make.',
+    solution: 'Reworked the menu into a product-grid experience with custom add-ons for size, hot or iced preparation, and tea extras. Used Shopify product data to keep options manageable and support pickup ordering.',
+    technologies: ['Shopify', 'Liquid', 'Metafields', 'Product add-ons', 'Pickup'],
   },
 ];
 
@@ -68,6 +85,10 @@ const wordpressProjects = [
     type: 'WordPress · Business',
     tags: ['Gutenberg', 'Schema', 'SEO', 'ACF'],
     href: '#',
+    brief: 'Give a business a modern website that clearly presents its team, case studies, and customer testimonials—and that the client can update independently.',
+    challenge: 'The content needed to stay consistent across multiple page types while remaining simple for non-technical editors to maintain.',
+    solution: 'Created reusable Gutenberg blocks and structured content fields for team profiles, case studies, and testimonials. Added schema and SEO foundations to support discoverability.',
+    technologies: ['WordPress', 'Gutenberg', 'ACF', 'Schema', 'SEO'],
   },
   {
     title: 'WooCommerce store',
@@ -77,6 +98,10 @@ const wordpressProjects = [
     type: 'WordPress · WooCommerce',
     tags: ['WooCommerce', 'PHP', 'Gateways', 'Subs'],
     href: '#',
+    brief: 'Build a WooCommerce marketplace that can support multiple vendors, subscription products, and a large product catalog.',
+    challenge: 'The store needed to handle high-volume product management and specialized payment flows without making day-to-day operations cumbersome.',
+    solution: 'Extended WooCommerce with custom payment gateway integrations and bulk-import tooling, and configured subscription products to support recurring purchases.',
+    technologies: ['WordPress', 'WooCommerce', 'PHP', 'Payment gateways', 'Subscriptions'],
   },
   {
     title: 'Creative portfolio',
@@ -86,6 +111,10 @@ const wordpressProjects = [
     type: 'WordPress · Portfolio',
     tags: ['Child theme', 'Filters', 'Motion', 'CPT'],
     href: '#',
+    brief: 'Create a creative portfolio that makes case studies easy to discover and stays maintainable as the client publishes new work.',
+    challenge: 'A visually rich gallery can become difficult to browse and even harder to keep consistent when every new project requires custom page work.',
+    solution: 'Built a custom child theme with structured case studies, filterable project browsing, and animated galleries. Set up the content model so new work can be added without rebuilding the layout.',
+    technologies: ['WordPress', 'PHP', 'Custom post types', 'Child theme', 'Motion'],
   },
   {
     title: 'Custom plugin platform',
@@ -95,6 +124,10 @@ const wordpressProjects = [
     type: 'WordPress · Custom Plugin',
     tags: ['PHP', 'REST API', 'CRM', 'Cron'],
     href: '#',
+    brief: 'Connect client records, team workflows, and automated reporting to the CRM the business already uses.',
+    challenge: 'Several separate operational tasks needed to work together reliably, while keeping the existing CRM as the source of truth.',
+    solution: 'Developed a set of custom plugins for workflow and client data, connected them to the CRM through its API, and used scheduled jobs for automated reporting.',
+    technologies: ['WordPress', 'PHP', 'REST API', 'CRM integration', 'Cron'],
   },
 ];
 
@@ -163,6 +196,11 @@ injectCss('work-fan', `
       transition: transform var(--dur-4) var(--ease-out-expo),
                   opacity .65s ease,
                   filter .65s ease;
+      cursor: pointer;
+    }
+    .work-card:focus-visible {
+      outline: 3px solid var(--c-accent-soft);
+      outline-offset: 5px;
     }
 
     /* fan positions, driven by the vars above rather than hard-coded px */
@@ -199,6 +237,42 @@ injectCss('work-fan', `
       transition: transform var(--dur-4);
     }
     .work-card:hover .work-card__img img { transform: scale(1.06); }
+    .work-cursor {
+      position: fixed;
+      z-index: 90;
+      top: 0;
+      left: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 15px 10px 10px;
+      border: 1px solid rgba(140, 255, 198, .42);
+      border-radius: 999px;
+      background: rgba(5, 25, 17, .92);
+      color: #f2fff6;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .08);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .01em;
+      white-space: nowrap;
+      pointer-events: none;
+      backdrop-filter: blur(12px);
+      will-change: transform, opacity;
+    }
+    .work-cursor__mark {
+      display: grid;
+      width: 22px;
+      height: 22px;
+      place-items: center;
+      border-radius: 50%;
+      background: #8cffc6;
+      color: #063d2d;
+      font-size: 13px;
+      line-height: 1;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .work-card, .work-card a { cursor: none; }
+    }
 
     .work-card__type {
       position: absolute;
@@ -295,6 +369,173 @@ injectCss('work-fan', `
     .work-nav button { transition: border-color var(--dur-2) ease, color var(--dur-2) ease, transform var(--dur-2) ease; }
     .work-nav button:hover { transform: translateY(-2px); }
 
+    .project-dialog {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: clamp(12px, 3vw, 36px);
+      background: rgba(2, 8, 5, .78);
+      backdrop-filter: blur(0);
+      overflow-y: auto;
+    }
+    .project-dialog__panel {
+      position: relative;
+      transform-style: preserve-3d;
+      width: min(100%, 980px);
+      max-height: min(850px, calc(100dvh - 32px));
+      display: grid;
+      grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
+      overflow: hidden;
+      border: 1px solid var(--c-line-strong);
+      border-radius: 28px;
+      background: var(--c-surface-raised);
+      color: var(--c-text-body);
+      box-shadow: 0 32px 100px rgba(0, 0, 0, .48), 0 0 0 1px rgba(91, 228, 155, .08);
+    }
+    .project-dialog__visual {
+      min-height: 100%;
+      position: relative;
+      overflow: hidden;
+      background: var(--c-paper-media);
+    }
+    .project-dialog__visual::after {
+      content: "";
+      position: absolute;
+      inset: 35% 0 0;
+      background: linear-gradient(transparent, rgba(3, 18, 12, .76));
+      pointer-events: none;
+    }
+    .project-dialog__visual img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .project-dialog__visual-copy {
+      position: absolute;
+      z-index: 1;
+      inset: auto 28px 30px;
+      color: #f2fff6;
+    }
+    .project-dialog__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 12px;
+      color: #a8e7bd;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .project-dialog__visual h2 {
+      margin: 0;
+      font-size: clamp(27px, 3vw, 40px);
+      line-height: 1.12;
+      letter-spacing: -.04em;
+    }
+    .project-dialog__content {
+      min-width: 0;
+      overflow-y: auto;
+      padding: clamp(24px, 4vw, 42px);
+      scrollbar-color: var(--c-line-strong) transparent;
+    }
+    .project-dialog__close {
+      position: absolute;
+      z-index: 2;
+      top: 16px;
+      right: 16px;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: 50%;
+      background: rgba(5, 15, 10, .62);
+      color: #fff;
+      font-size: 25px;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform var(--dur-2) var(--ease-out-expo), background var(--dur-2) ease;
+    }
+    .project-dialog__close:hover { transform: rotate(90deg); background: rgba(5, 15, 10, .9); }
+    .project-dialog__close:focus-visible,
+    .project-dialog__link:focus-visible { outline: 2px solid var(--c-accent-soft); outline-offset: 4px; }
+    .project-dialog__intro {
+      margin: 10px 0 26px;
+      color: var(--c-text-secondary);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+    .project-dialog__section {
+      padding: 18px 0;
+      border-top: 1px solid var(--c-line);
+    }
+    .project-dialog__section h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 8px;
+      color: var(--c-text-primary);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+    .project-dialog__section h3 span {
+      display: grid;
+      width: 25px;
+      height: 25px;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(91, 228, 155, .12);
+      color: var(--c-accent-soft);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .project-dialog__section p {
+      margin: 0;
+      color: var(--c-text-secondary);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+    .project-dialog__stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 13px;
+    }
+    .project-dialog__stack span {
+      padding: 7px 10px;
+      border: 1px solid var(--c-line);
+      border-radius: 999px;
+      color: var(--c-text-body);
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+    .project-dialog__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 22px;
+      padding: 12px 17px;
+      border: 1px solid var(--c-accent-soft);
+      border-radius: 999px;
+      color: var(--c-accent-hi);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background var(--dur-2) ease, color var(--dur-2) ease, transform var(--dur-2) var(--ease-out-expo);
+    }
+    .project-dialog__link:hover {
+      transform: translateY(-2px);
+      background: var(--c-accent-soft);
+      color: var(--c-text-invert);
+    }
+    .project-dialog__link--disabled { opacity: .55; cursor: default; }
+
     .work-progress {
       width: 72px;
       height: 3px;
@@ -339,6 +580,16 @@ injectCss('work-fan', `
       .work-card__body { padding: 13px 10px 10px; }
       .work-head { gap: 16px; align-items: flex-start; }
       .work-head__desc { font-size: 14px; max-width: none; }
+      .project-dialog { padding: 10px; }
+      .project-dialog__panel {
+        grid-template-columns: 1fr;
+        max-height: calc(100dvh - 20px);
+        border-radius: 22px;
+      }
+      .project-dialog__visual { min-height: 230px; }
+      .project-dialog__visual-copy { inset: auto 22px 22px; }
+      .project-dialog__content { padding: 24px 22px; }
+      .project-dialog__close { top: 12px; right: 12px; }
     }
 
     /* below 480 the blurb goes and the result stays — the number is the
@@ -349,6 +600,7 @@ injectCss('work-fan', `
       .work-fan { --card-h: clamp(316px, 98vw, 376px); }
       .work-card__blurb { display: none; }
       .work-card__result { margin-top: 11px; }
+      .project-dialog__visual { min-height: 190px; }
     }
 
     @media (max-width: 380px) {
@@ -366,11 +618,24 @@ injectCss('work-fan', `
 
 /* ═══ ProjectCard ═══════════════════════════════════════════════════════ */
 
-const ProjectCard = ({ project, position, isExiting, onBringToFront }) => (
+const ProjectCard = ({ project, position, isExiting, onBringToFront, onCursorMove, onCursorChange }) => (
   <article
     className={`work-card pos-${position} ${isExiting ? 'exit' : ''}`}
     tabIndex={0}
-    aria-label={`${project.title}. Select to bring this project to the front.`}
+    aria-label={`${project.title}. Open project details.`}
+    aria-haspopup="dialog"
+    onPointerEnter={(event) => {
+      if (event.pointerType === 'mouse') onCursorChange(true);
+    }}
+    onPointerMove={(event) => {
+      if (event.pointerType === 'mouse') {
+        const label = event.target.closest('a') ? 'Visit' : 'Click to view';
+        onCursorMove(event.clientX, event.clientY, label);
+      }
+    }}
+    onPointerLeave={(event) => {
+      if (event.pointerType === 'mouse') onCursorChange(false);
+    }}
     onClick={event => {
       if (!event.target.closest('a, button')) onBringToFront();
     }}
@@ -421,9 +686,177 @@ const ProjectCard = ({ project, position, isExiting, onBringToFront }) => (
   </article>
 );
 
+const ProjectDialog = ({ project, onClose }) => {
+  const closeButtonRef = useRef(null);
+  const dialogRef = useRef(null);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!project) return undefined;
+
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        onClose(null);
+        return;
+      }
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+
+      const focusable = dialogRef.current.querySelectorAll(
+        'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+      if (previousFocus instanceof HTMLElement) previousFocus.focus();
+    };
+  }, [project, onClose]);
+
+  return (
+    <AnimatePresence>
+      {project && (
+        <motion.div
+          className="project-dialog"
+          role="presentation"
+          initial={reduceMotion ? false : { opacity: 0, backdropFilter: 'blur(0px)' }}
+          animate={{ opacity: 1, backdropFilter: 'blur(14px)' }}
+          exit={reduceMotion ? undefined : { opacity: 0, backdropFilter: 'blur(0px)' }}
+          transition={{ duration: reduceMotion ? 0 : 0.48, ease: [0.22, 1, 0.36, 1] }}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) onClose(null);
+          }}
+        >
+          <motion.div
+            ref={dialogRef}
+            className="project-dialog__panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-dialog-title"
+            initial={reduceMotion ? false : {
+              opacity: 0,
+              y: 34,
+              scale: 0.94,
+              rotateX: 7,
+              rotateY: -2,
+              filter: 'blur(10px)',
+            }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0, rotateY: 0, filter: 'blur(0px)' }}
+            exit={reduceMotion ? undefined : {
+              opacity: 0,
+              y: 18,
+              scale: 0.97,
+              rotateX: -3,
+              filter: 'blur(5px)',
+            }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.72,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            style={{ transformPerspective: 1200, transformOrigin: '50% 35%' }}
+          >
+            <div className="project-dialog__visual">
+              <motion.img
+                src={project.image}
+                alt=""
+                initial={reduceMotion ? false : { scale: 1.12 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: reduceMotion ? 0 : 1.1, delay: reduceMotion ? 0 : 0.08, ease: [0.16, 1, 0.3, 1] }}
+              />
+              <motion.div
+                className="project-dialog__visual-copy"
+                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.2, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <p className="project-dialog__eyebrow">
+                  {project.icon && <Icon name={project.icon} className="size-[15px]" />}
+                  {project.type}
+                </p>
+                <h2 id="project-dialog-title">{project.title}</h2>
+              </motion.div>
+            </div>
+
+            <motion.div
+              className="project-dialog__content"
+              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.48, delay: reduceMotion ? 0 : 0.12, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <button
+                ref={closeButtonRef}
+                className="project-dialog__close"
+                type="button"
+                onClick={() => onClose(null)}
+                aria-label="Close project details"
+              >
+                &times;
+              </button>
+              <p className="label">Project breakdown</p>
+              <p className="project-dialog__intro">{project.blurb}</p>
+
+              <motion.div className="project-dialog__section" initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.42, delay: reduceMotion ? 0 : 0.22 }}>
+                <h3><span>01</span> The brief</h3>
+                <p>{project.brief}</p>
+              </motion.div>
+              <motion.div className="project-dialog__section" initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.42, delay: reduceMotion ? 0 : 0.3 }}>
+                <h3><span>02</span> The challenge</h3>
+                <p>{project.challenge}</p>
+              </motion.div>
+              <motion.div className="project-dialog__section" initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.42, delay: reduceMotion ? 0 : 0.38 }}>
+                <h3><span>03</span> The solution</h3>
+                <p>{project.solution}</p>
+              </motion.div>
+              <motion.div className="project-dialog__section" initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.42, delay: reduceMotion ? 0 : 0.46 }}>
+                <h3><span>04</span> Tools &amp; technology</h3>
+                <div className="project-dialog__stack">
+                  {project.technologies.map((technology) => (
+                    <span key={technology}>{technology}</span>
+                  ))}
+                </div>
+              </motion.div>
+
+              {project.href.startsWith('https://') ? (
+                <a
+                  className="project-dialog__link"
+                  href={project.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Visit live project <span aria-hidden="true">&#8599;</span>
+                </a>
+              ) : (
+                <span className="project-dialog__link project-dialog__link--disabled">
+                  Live project not available
+                </span>
+              )}
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 /* ═══ Fan ═══════════════════════════════════════════════════════════════ */
 
-const Fan = ({ projects, label, description, delay = 3000 }) => {
+const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialogOpen, onCursorMove, onCursorChange }) => {
   const [order, setOrder] = useState(() => projects.map((_, i) => i));
   const orderRef = useRef(order);
   const [exiting, setExiting] = useState(-1);
@@ -467,7 +900,7 @@ const Fan = ({ projects, label, description, delay = 3000 }) => {
 
   const play = () => {
     clearTimeout(timer.current);
-    if (hovered.current || drag.current !== null || reduceMotion.current) return;
+    if (hovered.current || drag.current !== null || reduceMotion.current || dialogOpen) return;
     setPaused(false);
     deadline.current = Date.now() + remaining.current;
     timer.current = setTimeout(() => {
@@ -499,6 +932,12 @@ const Fan = ({ projects, label, description, delay = 3000 }) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay]);
+
+  useEffect(() => {
+    if (dialogOpen) pause();
+    else play();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dialogOpen]);
 
   /* Pointer input shares one swipe threshold across mouse and touch. */
   const DRAG_MIN = 50;
@@ -555,7 +994,7 @@ const Fan = ({ projects, label, description, delay = 3000 }) => {
     setProgressRun((run) => run + 1);
     play();
   };
-  const bringToFront = (index) => {
+  const bringToFront = (index, project) => {
     if (suppressClick.current) {
       suppressClick.current = false;
       clearTimeout(suppressClickTimer.current);
@@ -568,7 +1007,7 @@ const Fan = ({ projects, label, description, delay = 3000 }) => {
     changeOrder((current) => [index, ...current.filter((item) => item !== index)]);
     remaining.current = delay;
     setProgressRun((run) => run + 1);
-    play();
+    onOpenProject(project);
   };
   const shown = order[0] + 1;
 
@@ -640,7 +1079,9 @@ const Fan = ({ projects, label, description, delay = 3000 }) => {
               project={project}
               position={position(i)}
               isExiting={exiting === i}
-              onBringToFront={() => bringToFront(i)}
+              onBringToFront={() => bringToFront(i, project)}
+              onCursorMove={onCursorMove}
+              onCursorChange={onCursorChange}
             />
           ))}
         </div>
@@ -652,6 +1093,18 @@ const Fan = ({ projects, label, description, delay = 3000 }) => {
 /* ═══ Work ══════════════════════════════════════════════════════════════ */
 
 export function Work() {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [cursorVisible, setCursorVisible] = useState(false);
+  const [cursorLabel, setCursorLabel] = useState('Click to view');
+  const cursorX = useSpring(useMotionValue(-100), { stiffness: 650, damping: 45, mass: 0.25 });
+  const cursorY = useSpring(useMotionValue(-100), { stiffness: 650, damping: 45, mass: 0.25 });
+  const moveCursor = (x, y, label) => {
+    cursorX.set(x);
+    cursorY.set(y);
+    setCursorLabel(label);
+  };
+  const setCursorActive = (visible) => setCursorVisible(visible && !selectedProject);
+
   return (
     <section id="work" className="relative bg-surface py-section">
       <div className="mx-auto w-full max-w-site px-gutter">
@@ -663,7 +1116,8 @@ export function Work() {
           <p className="mt-6 max-w-[54ch] text-[16px] leading-[1.8] text-secondary">
             Storefronts that had to sell, and sites that had to keep working long
             after launch. Here is a selection from both platforms, with the
-            problem each one was built to solve.
+            problem each one was built to solve. Select any project to explore
+            the brief, challenge, solution, and tools behind it.
           </p>
         </Reveal>
 
@@ -671,14 +1125,33 @@ export function Work() {
           projects={shopifyProjects}
           label="Shopify · 200+ live stores"
           description="Custom themes, speed work and private apps, built on Liquid and OS 2.0."
+          onOpenProject={setSelectedProject}
+          dialogOpen={Boolean(selectedProject)}
+          onCursorMove={moveCursor}
+          onCursorChange={setCursorActive}
         />
 
         <Fan
           projects={wordpressProjects}
           label="WordPress · 200+ custom sites"
           description="Bespoke plugins, WooCommerce builds and design systems a client can run themselves."
+          onOpenProject={setSelectedProject}
+          dialogOpen={Boolean(selectedProject)}
+          onCursorMove={moveCursor}
+          onCursorChange={setCursorActive}
         />
       </div>
+      <motion.div
+        className="work-cursor"
+        aria-hidden="true"
+        style={{ x: cursorX, y: cursorY, translateX: 16, translateY: 16 }}
+        animate={{ opacity: cursorVisible && !selectedProject ? 1 : 0, scale: cursorVisible && !selectedProject ? 1 : 0.85 }}
+        transition={{ opacity: { duration: 0.16 }, scale: { duration: 0.2, ease: [0.16, 1, 0.3, 1] } }}
+      >
+        <span className="work-cursor__mark">{cursorLabel === 'Visit' ? '↗' : '+'}</span>
+        {cursorLabel}
+      </motion.div>
+      <ProjectDialog project={selectedProject} onClose={setSelectedProject} />
     </section>
   );
 }
