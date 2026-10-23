@@ -614,9 +614,10 @@ injectCss('work-fan', `
 
     /* Keep a compact project summary visible on phone-sized cards. */
     @media (max-width: 480px) {
-      .work-fan { --card-h: clamp(340px, 98vw, 380px); }
+      .work-fan { --card-h: clamp(400px, 112vw, 460px); }
       .work-card__blurb {
         display: -webkit-box;
+        flex: none;
         -webkit-line-clamp: 2;
         font-size: 11px;
         line-height: 1.4;
