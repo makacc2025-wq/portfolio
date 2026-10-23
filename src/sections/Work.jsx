@@ -14,7 +14,7 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Icon, Reveal, SplitHeading, Accent, injectCss } from '../shared';
 
 /* ═══ Content ═══════════════════════════════════════════════════════════
@@ -24,41 +24,41 @@ import { Icon, Reveal, SplitHeading, Accent, injectCss } from '../shared';
 const shopifyProjects = [
   {
     title: 'Custom Theme Design',
-    blurb: 'Crafted a custom Shopify theme with personalized T-shirt designs and an integrated music system, delivering a unique brand experience.',
+    blurb: 'A custom Shopify theme for a T-shirt label, with its artwork and music built into the storefront.',
     result: 'Custom Shopify Experience',
     image: '/MIRΛI.png',
     type: 'SHOPIFY · CUSTOM DESIGN',
     icon: 'shopify',
     tags: ['Shopify', 'T-Shirt Design', 'Music System', 'Responsive'],
     href: 'https://mirailabstore.com',
-    brief: 'Create a distinctive Shopify storefront for a T-shirt label, with a visual identity that feels personal and a music experience built into the shopping journey.',
+    brief: 'Build a Shopify storefront for a T-shirt label, with its artwork and music at the center.',
     challenge: 'The storefront needed to make custom apparel feel expressive without making product discovery or shopping harder. The music feature also had to feel intentional rather than like a separate widget.',
-    solution: 'Designed a custom storefront around the brand artwork, then brought product presentation and the integrated music experience together in a responsive layout. Kept the shopping flow clear across desktop and mobile.',
+    solution: 'I built the storefront around the brand artwork and integrated music without getting in the way of browsing products on desktop or mobile.',
     technologies: ['Shopify', 'Liquid', 'Custom theme design', 'Responsive UI'],
   },
   {
     title: 'Prestige Theme Design',
-    blurb: 'Built a luxury Shopify storefront using the Prestige theme, featuring premium product presentation and a seamless shopping experience. Developed a complex custom bundle system using Liquid code to deliver tailored bundle functionality.',
+    blurb: 'Customized Shopify’s Prestige theme for Riosense and built a Liquid bundle flow for products and subscriptions.',
     image: '/Prestige_Theme_Design_Showcase.png',
     type: 'SHOPIFY · PREMIUM THEME',
     icon: 'shopify',
     tags: ['Prestige Theme', 'Custom Liquid', 'Bundle System', 'Subscriptions', 'Responsive Design'],
     href: 'https://riosense.com',
-    brief: 'Build a premium storefront using the Prestige theme, with polished product storytelling and flexible bundles that fit the brand’s catalog.',
-    challenge: 'The standard theme experience did not cover the tailored bundle behavior the store needed. The bundle flow had to work naturally with product variants and subscriptions without disrupting the premium shopping experience.',
-    solution: 'Customized the Prestige theme and extended it with Liquid-based bundle functionality. Refined product presentation and responsive layouts so shoppers could understand and configure their options with less friction.',
+    brief: 'Customize Prestige for Riosense and add bundles that work with its products and subscriptions.',
+    challenge: 'The theme did not support the bundle options the store needed. They also had to work with product variants and subscriptions.',
+    solution: 'I customized the theme and added the bundle logic in Liquid, keeping product and subscription options together in the same flow.',
     technologies: ['Shopify', 'Prestige theme', 'Liquid', 'Subscriptions', 'Responsive UI'],
   },
   {
-    title: 'Storefronts built around the brand, not the template.',
+    title: 'Luxury label pre-launch',
     blurb: 'An animated entrance for a luxury weaves label — a wardrobe that opens on tap to reveal its contents only as shadows. Turns Shopify’s password page into a first-access waitlist.',
     image: '/Luxury-E-Commerce-Showcase.png',
     type: 'SHOPIFY · LUXURY',
     tags: ['Shopify Liquid', 'Motion Design', 'Email Capture', 'Luxury UX'],
     href: '#',
-    brief: 'Create a memorable first-access experience for a luxury weaving label, turning a simple pre-launch page into a branded moment.',
+    brief: 'Turn a luxury weaving label’s Shopify password page into a pre-launch waitlist.',
     challenge: 'The experience needed to build anticipation and collect interest while keeping the products hidden until visitors chose to reveal them.',
-    solution: 'Built an animated wardrobe-style entrance that opens on tap, revealing the collection through a shadow-led visual treatment. Used Shopify’s password page as a branded waitlist and email-capture experience.',
+    solution: 'I made the wardrobe open on tap to reveal the collection in shadow, then used the password page to collect waitlist signups.',
     technologies: ['Shopify', 'Liquid', 'Motion design', 'Email capture'],
   },
   {
@@ -73,6 +73,32 @@ const shopifyProjects = [
     challenge: 'Drink choices such as size, temperature, and tea add-ins create a lot of options. The ordering experience needed to keep those choices easy to scan and quick to make.',
     solution: 'Reworked the menu into a product-grid experience with custom add-ons for size, hot or iced preparation, and tea extras. Used Shopify product data to keep options manageable and support pickup ordering.',
     technologies: ['Shopify', 'Liquid', 'Metafields', 'Product add-ons', 'Pickup'],
+  },
+  {
+    title: 'Shopify Demo Store 01',
+    blurb: 'Demo project card. Replace this copy with the real store details.',
+    image: '/shopify-os-theme-preview.svg',
+    type: 'DEMO · SHOPIFY',
+    icon: 'shopify',
+    tags: ['Demo placeholder', 'Shopify', 'Replace details'],
+    href: '#',
+    brief: 'Placeholder for a Shopify project brief.',
+    challenge: 'Replace this placeholder with the real project challenge.',
+    solution: 'Replace this placeholder with the work and outcome.',
+    technologies: ['Shopify', 'Replace with actual tools'],
+  },
+  {
+    title: 'Shopify Demo Store 02',
+    blurb: 'Demo project card. Replace this copy with the real store details.',
+    image: '/shopify-performance-preview.svg',
+    type: 'DEMO · SHOPIFY',
+    icon: 'shopify',
+    tags: ['Demo placeholder', 'Shopify', 'Replace details'],
+    href: '#',
+    brief: 'Placeholder for a Shopify project brief.',
+    challenge: 'Replace this placeholder with the real project challenge.',
+    solution: 'Replace this placeholder with the work and outcome.',
+    technologies: ['Shopify', 'Replace with actual tools'],
   },
 ];
 
@@ -129,6 +155,30 @@ const wordpressProjects = [
     solution: 'Developed a set of custom plugins for workflow and client data, connected them to the CRM through its API, and used scheduled jobs for automated reporting.',
     technologies: ['WordPress', 'PHP', 'REST API', 'CRM integration', 'Cron'],
   },
+  {
+    title: 'WordPress Demo Site 01',
+    blurb: 'Demo project card. Replace this copy with the real website details.',
+    image: '/wordpress-business-preview.svg',
+    type: 'DEMO · WORDPRESS',
+    tags: ['Demo placeholder', 'WordPress', 'Replace details'],
+    href: '#',
+    brief: 'Placeholder for a WordPress project brief.',
+    challenge: 'Replace this placeholder with the real project challenge.',
+    solution: 'Replace this placeholder with the work and outcome.',
+    technologies: ['WordPress', 'Replace with actual tools'],
+  },
+  {
+    title: 'WordPress Demo Site 02',
+    blurb: 'Demo project card. Replace this copy with the real website details.',
+    image: '/wordpress-portfolio-preview.svg',
+    type: 'DEMO · WORDPRESS',
+    tags: ['Demo placeholder', 'WordPress', 'Replace details'],
+    href: '#',
+    brief: 'Placeholder for a WordPress project brief.',
+    challenge: 'Replace this placeholder with the real project challenge.',
+    solution: 'Replace this placeholder with the work and outcome.',
+    technologies: ['WordPress', 'Replace with actual tools'],
+  },
 ];
 
 /* ═══ CSS ═══════════════════════════════════════════════════════════════
@@ -160,22 +210,21 @@ injectCss('work-fan', `
     .work-fan {
       --card-w: 330px;   /* fixed card footprint */
       --card-h: 450px;
-      --fan-x: 175px;    /* horizontal offset per card behind the front */
+      --fan-x: 125px;    /* horizontal offset per card behind the front */
       --fan-z: -35px;    /* depth offset per card */
       position: relative;
-      width: calc(var(--card-w) + (var(--fan-x) * 3));
-      max-width: 100%;
+      width: calc(var(--card-w) + (var(--fan-x) * 5));
       height: var(--card-h);
       margin-inline: auto;
       perspective: 1200px;
     }
+    @media (min-width: 1200px) {
+      .work-fan { --fan-x: 165px; }
+    }
 
     .work-stage {
-      cursor: grab;
-      overflow-x: clip;
-      overflow-y: visible;
+      overflow: visible;
     }
-    .work-stage:active { cursor: grabbing; }
 
     .work-card {
       position: absolute;
@@ -198,18 +247,21 @@ injectCss('work-fan', `
                   filter .65s ease;
       cursor: pointer;
     }
+    .work-card * { cursor: pointer; }
     .work-card:focus-visible {
       outline: 3px solid var(--c-accent-soft);
       outline-offset: 5px;
     }
 
     /* fan positions, driven by the vars above rather than hard-coded px */
-    .work-card.pos-0 { transform: translate3d(0, 0, 0) scale(1); z-index: 5; }
-    .work-card.pos-1 { transform: translate3d(var(--fan-x), 0, var(--fan-z)) scale(.98); z-index: 4; filter: saturate(.9); }
-    .work-card.pos-2 { transform: translate3d(calc(var(--fan-x) * 2), 0, calc(var(--fan-z) * 2)) scale(.96); z-index: 3; filter: saturate(.82); }
-    .work-card.pos-3 { transform: translate3d(calc(var(--fan-x) * 3), 0, calc(var(--fan-z) * 3)) scale(.94); z-index: 2; filter: saturate(.75); }
+    .work-card.pos-0 { transform: translate3d(0, 0, 0) scale(1); z-index: 7; }
+    .work-card.pos-1 { transform: translate3d(var(--fan-x), 0, var(--fan-z)) scale(.98); z-index: 6; filter: saturate(.9); }
+    .work-card.pos-2 { transform: translate3d(calc(var(--fan-x) * 2), 0, calc(var(--fan-z) * 2)) scale(.96); z-index: 5; filter: saturate(.82); }
+    .work-card.pos-3 { transform: translate3d(calc(var(--fan-x) * 3), 0, calc(var(--fan-z) * 3)) scale(.94); z-index: 4; filter: saturate(.75); }
+    .work-card.pos-4 { transform: translate3d(calc(var(--fan-x) * 4), 0, calc(var(--fan-z) * 4)) scale(.92); z-index: 3; filter: saturate(.7); }
+    .work-card.pos-5 { transform: translate3d(calc(var(--fan-x) * 5), 0, calc(var(--fan-z) * 5)) scale(.9); z-index: 2; filter: saturate(.65); }
     .work-card.pos-hidden {
-      transform: translate3d(calc(var(--fan-x) * 4), 0, calc(var(--fan-z) * 4)) scale(.9);
+      transform: translate3d(calc(var(--fan-x) * 6), 0, calc(var(--fan-z) * 6)) scale(.88);
       z-index: 1; opacity: 0; pointer-events: none;
     }
 
@@ -237,43 +289,6 @@ injectCss('work-fan', `
       transition: transform var(--dur-4);
     }
     .work-card:hover .work-card__img img { transform: scale(1.06); }
-    .work-cursor {
-      position: fixed;
-      z-index: 90;
-      top: 0;
-      left: 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 10px 15px 10px 10px;
-      border: 1px solid rgba(140, 255, 198, .42);
-      border-radius: 999px;
-      background: rgba(5, 25, 17, .92);
-      color: #f2fff6;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .08);
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: .01em;
-      white-space: nowrap;
-      pointer-events: none;
-      backdrop-filter: blur(12px);
-      will-change: transform, opacity;
-    }
-    .work-cursor__mark {
-      display: grid;
-      width: 22px;
-      height: 22px;
-      place-items: center;
-      border-radius: 50%;
-      background: #8cffc6;
-      color: #063d2d;
-      font-size: 13px;
-      line-height: 1;
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .work-card, .work-card a { cursor: none; }
-    }
-
     .work-card__type {
       position: absolute;
       z-index: 1;
@@ -558,19 +573,19 @@ injectCss('work-fan', `
     /* ── responsive ────────────────────────────────────────────────── */
 
     @media (max-width: 1100px) {
-      .work-fan { --fan-x: 130px; }
+      .work-fan { --fan-x: 105px; }
     }
 
     @media (max-width: 860px) {
-      .work-fan { --fan-x: 64px; --fan-z: -26px; }
+      .work-fan { --fan-x: 48px; --fan-z: -26px; }
     }
 
     @media (max-width: 640px) {
       .work-fan {
-        /* card + 3 fan steps must stay inside the gutter, capped so a
+        /* card + 5 fan steps must stay inside the gutter, capped so a
            640px device does not get a 520px card */
-        --card-w: min(330px, calc(100% - (var(--fan-x) * 3)));
-        --fan-x: 18px;
+        --fan-x: 16px;
+        --card-w: min(330px, calc(100% - (var(--fan-x) * 5)));
         --fan-z: -16px;
         --card-h: 444px;
       }
@@ -618,24 +633,12 @@ injectCss('work-fan', `
 
 /* ═══ ProjectCard ═══════════════════════════════════════════════════════ */
 
-const ProjectCard = ({ project, position, isExiting, onBringToFront, onCursorMove, onCursorChange }) => (
+const ProjectCard = ({ project, position, isExiting, onBringToFront }) => (
   <article
     className={`work-card pos-${position} ${isExiting ? 'exit' : ''}`}
     tabIndex={0}
     aria-label={`${project.title}. Open project details.`}
     aria-haspopup="dialog"
-    onPointerEnter={(event) => {
-      if (event.pointerType === 'mouse') onCursorChange(true);
-    }}
-    onPointerMove={(event) => {
-      if (event.pointerType === 'mouse') {
-        const label = event.target.closest('a') ? 'Visit' : 'Click to view';
-        onCursorMove(event.clientX, event.clientY, label);
-      }
-    }}
-    onPointerLeave={(event) => {
-      if (event.pointerType === 'mouse') onCursorChange(false);
-    }}
     onClick={event => {
       if (!event.target.closest('a, button')) onBringToFront();
     }}
@@ -856,7 +859,7 @@ const ProjectDialog = ({ project, onClose }) => {
 
 /* ═══ Fan ═══════════════════════════════════════════════════════════════ */
 
-const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialogOpen, onCursorMove, onCursorChange }) => {
+const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialogOpen }) => {
   const [order, setOrder] = useState(() => projects.map((_, i) => i));
   const orderRef = useRef(order);
   const [exiting, setExiting] = useState(-1);
@@ -876,7 +879,7 @@ const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialog
 
   const position = (i) => {
     const slot = order.indexOf(i);
-    return slot < 4 ? slot : 'hidden';
+    return slot < 6 ? slot : 'hidden';
   };
 
   const changeOrder = (update) => {
@@ -1080,8 +1083,6 @@ const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialog
               position={position(i)}
               isExiting={exiting === i}
               onBringToFront={() => bringToFront(i, project)}
-              onCursorMove={onCursorMove}
-              onCursorChange={onCursorChange}
             />
           ))}
         </div>
@@ -1094,16 +1095,6 @@ const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialog
 
 export function Work() {
   const [selectedProject, setSelectedProject] = useState(null);
-  const [cursorVisible, setCursorVisible] = useState(false);
-  const [cursorLabel, setCursorLabel] = useState('Click to view');
-  const cursorX = useSpring(useMotionValue(-100), { stiffness: 650, damping: 45, mass: 0.25 });
-  const cursorY = useSpring(useMotionValue(-100), { stiffness: 650, damping: 45, mass: 0.25 });
-  const moveCursor = (x, y, label) => {
-    cursorX.set(x);
-    cursorY.set(y);
-    setCursorLabel(label);
-  };
-  const setCursorActive = (visible) => setCursorVisible(visible && !selectedProject);
 
   return (
     <section id="work" className="relative bg-surface py-section">
@@ -1127,8 +1118,6 @@ export function Work() {
           description="Custom themes, speed work and private apps, built on Liquid and OS 2.0."
           onOpenProject={setSelectedProject}
           dialogOpen={Boolean(selectedProject)}
-          onCursorMove={moveCursor}
-          onCursorChange={setCursorActive}
         />
 
         <Fan
@@ -1137,20 +1126,8 @@ export function Work() {
           description="Bespoke plugins, WooCommerce builds and design systems a client can run themselves."
           onOpenProject={setSelectedProject}
           dialogOpen={Boolean(selectedProject)}
-          onCursorMove={moveCursor}
-          onCursorChange={setCursorActive}
         />
       </div>
-      <motion.div
-        className="work-cursor"
-        aria-hidden="true"
-        style={{ x: cursorX, y: cursorY, translateX: 16, translateY: 16 }}
-        animate={{ opacity: cursorVisible && !selectedProject ? 1 : 0, scale: cursorVisible && !selectedProject ? 1 : 0.85 }}
-        transition={{ opacity: { duration: 0.16 }, scale: { duration: 0.2, ease: [0.16, 1, 0.3, 1] } }}
-      >
-        <span className="work-cursor__mark">{cursorLabel === 'Visit' ? '↗' : '+'}</span>
-        {cursorLabel}
-      </motion.div>
       <ProjectDialog project={selectedProject} onClose={setSelectedProject} />
     </section>
   );

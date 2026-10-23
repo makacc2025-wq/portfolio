@@ -87,8 +87,7 @@ export function Footer() {
               {nav.filter(n => n.id !== "experience").map(n => (
                 <li key={n.id}>
                   <a href={`#${n.id}`}
-                     className="link-sweep text-[14.5px] text-body transition-colors
-                                duration-500 hover:text-accent-hi">
+                     className="text-[14.5px] text-body transition-colors duration-500 hover:text-accent-hi">
                     {n.label}
                   </a>
                 </li>
@@ -102,7 +101,7 @@ export function Footer() {
 
               <div className="group flex items-center gap-2.5">
                 <a href={`mailto:${profile.email}`}
-                   className="link-sweep inline-flex items-center gap-1.5 font-mono text-[15px] text-primary">
+                   className="inline-flex items-center gap-1.5 font-mono text-[15px] text-primary">
                   {profile.email}
                   <Icon name="arrow" className="size-[11px] transition-transform duration-500 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
@@ -127,7 +126,7 @@ export function Footer() {
               </div>
 
               <a href={profile.statusUrl} target="_blank" rel="noreferrer"
-                className="link-sweep inline-flex items-center gap-2.5 text-[13px] text-secondary">
+                className="inline-flex items-center gap-2.5 text-[13px] text-secondary">
                 <i className="dot" />{profile.status}
               </a>
               <p className="flex items-center gap-2 font-mono text-[12.5px] text-muted">
@@ -664,6 +663,7 @@ injectCss("footer", `
     clip-path: inset(0 0 -10% 0);
     opacity: .24;
   }
+  :root[data-theme="light"] .wordmark.is-in { opacity: .5; }
   /* The three layers share one set of type metrics. Order, back to front:
 
        .wordmark-depth   a solid, dark copy pushed down and slightly right by

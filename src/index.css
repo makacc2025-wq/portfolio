@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+html {
+  scrollbar-color: var(--c-accent-soft) var(--c-surface);
+  scrollbar-width: thin;
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--c-surface);
+}
+
+html::-webkit-scrollbar-thumb {
+  border: 3px solid var(--c-surface);
+  border-radius: 999px;
+  background: var(--c-accent-soft);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--c-accent-hi);
+}
+
 /* ==========================================================================
    theme.css — palette, semantic roles, and the two themes.
 
@@ -339,15 +362,15 @@
   --fx-wordmark-2: rgba(15, 26, 21, .04);
   --fx-wordmark-lit: rgba(0, 150, 105, .45);
 
-  --wm-1: #016a4e;
-  --wm-2: #00a878;
-  --wm-3: #3fe0a8;
-  --wm-4: #0e8fc2;
-  --wm-shine: rgba(255, 255, 255, .42);
-  --wm-shade: rgba(0, 40, 28, .38);
-  --wm-ext-1: #0a5a41;
-  --wm-ext-2: #04382a;
-  --wm-cast: rgba(0, 70, 48, .30);
+  --wm-1: #07543e;
+  --wm-2: #087e59;
+  --wm-3: #2b9a73;
+  --wm-4: #087ea4;
+  --wm-shine: rgba(255, 255, 255, .32);
+  --wm-shade: rgba(0, 30, 20, .42);
+  --wm-ext-1: #06432f;
+  --wm-ext-2: #032d20;
+  --wm-cast: rgba(0, 45, 30, .34);
 
   --rig-core: rgba(0, 210, 148, .30);
   --rig-key: rgba(0, 180, 128, .36);
@@ -606,6 +629,73 @@
     animation: dot-ping 2.6s ease-out infinite;
   }
 
+  .cursor-feedback {
+    position: fixed;
+    z-index: 80;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--c-accent-soft);
+    box-shadow: 0 0 8px rgba(40, 230, 150, .72);
+    pointer-events: none;
+    animation: dot-ping 1.8s ease-out infinite;
+    will-change: transform, opacity;
+  }
+
+  .scroll-top {
+    position: fixed;
+    right: max(20px, env(safe-area-inset-right, 0px));
+    bottom: max(20px, env(safe-area-inset-bottom, 0px));
+    z-index: 70;
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 1px solid var(--c-line-strong);
+    border-radius: 50%;
+    color: var(--c-text-primary);
+    background: var(--c-surface-glass-stuck);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    transition: color var(--dur-2) ease, border-color var(--dur-2) ease, background-color var(--dur-2) ease;
+  }
+  .scroll-top:hover {
+    color: var(--c-text-accent);
+    border-color: var(--c-accent-soft);
+  }
+  .scroll-top:focus-visible {
+    outline: 2px solid var(--c-accent-soft);
+    outline-offset: 4px;
+  }
+  .scroll-top__progress {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    transform: rotate(-90deg);
+  }
+  .scroll-top__track,
+  .scroll-top__fill {
+    fill: none;
+    stroke-width: 1.5;
+  }
+  .scroll-top__track { stroke: var(--c-line-strong); }
+  .scroll-top__fill {
+    stroke: var(--c-accent-soft);
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+  }
+  .scroll-top__icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
   @keyframes dot-ping {
     0% {
       box-shadow: 0 0 0 0 var(--c-accent-soft);
@@ -691,6 +781,7 @@
   .dot {
     animation: none;
   }
+  .cursor-feedback { animation: none; }
 
   *,
   *::before,

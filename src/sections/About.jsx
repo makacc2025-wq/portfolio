@@ -9,7 +9,9 @@
 
 import { Icon, Reveal, RevealItem, SplitHeading, useMediaQuery } from "../shared";
 import { motion, useReducedMotion } from "motion/react";
-import Lanyard from "../vendor/Lanyard";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+
+const Lanyard = lazy(() => import("../vendor/Lanyard"));
 
 /* ═══ About — the section  ·  was components/About.jsx ═════════════════════ */
 /* Move this into data/site.js if you like. */
@@ -35,6 +37,26 @@ export function About() {
      screen it sits centred below the text at a smaller size. */
   const wide = useMediaQuery("(min-width: 1024px)");
   const reduceMotion = useReducedMotion();
+  const lanyardSlotRef = useRef(null);
+  const [showLanyard, setShowLanyard] = useState(false);
+
+  useEffect(() => {
+    const slot = lanyardSlotRef.current;
+    if (!slot) return undefined;
+    if (!("IntersectionObserver" in window)) {
+      setShowLanyard(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      setShowLanyard(true);
+      observer.disconnect();
+    }, { rootMargin: "400px 0px" });
+
+    observer.observe(slot);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section id="about" className="relative overflow-hidden bg-surface py-section">
@@ -202,29 +224,33 @@ export function About() {
              The canvas is the clipping box, so on desktop it is pulled wide
              of its column to let the card swing over the copy. On a phone
              there is nothing to overlap, so it simply fills its own row. */}
-        <div className="relative mt-8 h-[330px] w-full self-center sm:mt-10 sm:h-[420px] lg:mt-0 lg:h-[700px]">
+        <div ref={lanyardSlotRef} className="relative mt-8 h-[330px] w-full self-center sm:mt-10 sm:h-[420px] lg:mt-0 lg:h-[700px]">
           <div className="absolute inset-0 z-20
                           lg:-left-[140px] lg:-right-[40px] lg:top-1/2 lg:h-[700px] lg:-translate-y-1/2">
-            <Lanyard
-              frontImage="/card-front.png"
-              backImage="/card-back.png"
-              strapImage="/band.svg"
-              cardColor="var(--n-850)"
-              finish="metallic"
-              metal="graphite"
-              /* a phone has no room for the overlap, so the card is smaller
-                 and hangs from the middle */
-              size={wide ? 0.71 : 0.8}
-              anchor={wide ? "right" : "center"}
-              strapLength={wide ? 0.2 : 0.08}
-              strapWidth={0.8}
-              cornerRadius={0.34}
-              gravity={0.9}
-              damping={0.55}
-              elasticity={0.45}
-              breeze={0.35}
-              intro={wide}
-            />
+            {showLanyard && (
+              <Suspense fallback={null}>
+                <Lanyard
+                  frontImage="/card-front.png"
+                  backImage="/card-back.png"
+                  strapImage="/band.svg"
+                  cardColor="var(--n-850)"
+                  finish="metallic"
+                  metal="graphite"
+                  /* a phone has no room for the overlap, so the card is smaller
+                     and hangs from the middle */
+                  size={wide ? 0.71 : 0.8}
+                  anchor={wide ? "right" : "center"}
+                  strapLength={wide ? 0.2 : 0.08}
+                  strapWidth={0.8}
+                  cornerRadius={0.34}
+                  gravity={0.9}
+                  damping={0.55}
+                  elasticity={0.45}
+                  breeze={0.35}
+                  intro={wide}
+                />
+              </Suspense>
+            )}
           </div>
         </div>
 

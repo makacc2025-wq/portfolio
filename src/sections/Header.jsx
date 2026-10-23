@@ -13,7 +13,7 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence, useScroll, useSpring, useMotionValueEvent, useReducedMotion } from "motion/react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion } from "motion/react";
 import { Icon, Monogram, injectCss } from "../shared";
 import { nav, profile } from "../content";
 
@@ -53,8 +53,7 @@ export function Header() {
 
   useBodyScrollLock(open);
 
-  const { scrollYProgress, scrollY } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 180, damping: 30, mass: .35 });
+  const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", y => setStuck(y > 24));
 
   useEffect(() => {
@@ -81,14 +80,6 @@ export function Header() {
 
   return (
     <header className="header-safe fixed inset-x-0 top-0 z-50 pt-[calc(16px+env(safe-area-inset-top,0px))]">
-
-      {/* reading progress */}
-      <div className="pointer-events-none fixed inset-x-0 top-[env(safe-area-inset-top,0px)] z-60 h-0.5 bg-accent-hi/7">
-        <motion.i
-          className="block h-full bg-linear-to-r from-accent via-accent-soft to-[var(--g-100)] shadow-[0_0_12px_rgba(91,228,155,.55)]"
-          style={{ scaleX: progress, transformOrigin: "0 50%" }}
-        />
-      </div>
 
       <div className="mx-auto flex w-full max-w-site justify-center px-gutter">
         <motion.div

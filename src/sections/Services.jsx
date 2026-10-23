@@ -636,7 +636,7 @@ injectCss("services", `
 
   .scene__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .scene__ctrl { display: flex; align-items: center; gap: 8px; }
-  .scene__count { margin-right: 4px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; color: var(--stage-label); }
+  .scene__count { flex: none; margin-right: 4px; white-space: nowrap; font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; color: var(--stage-label); }
   .scene__count b { font-weight: 700; color: var(--stage-title); }
   /* the hook writes --n on the scene; a CSS counter turns it into "01", "02"… */
   .scene__count b::before { counter-reset: n var(--n, 1); content: counter(n, decimal-leading-zero); }

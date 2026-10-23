@@ -2,6 +2,7 @@
 
 import "./index.css";                  /* before the sections, so their own CSS lands after it */
 import React, { useEffect, useRef } from "react";
+import { motion, useMotionValue, useMotionValueEvent, useReducedMotion, useSpring, useScroll, useTransform } from "motion/react";
 import Lenis from "lenis";
 import { Header } from "./sections/Header";
 import { Hero } from "./sections/Hero";
@@ -76,6 +77,93 @@ function useLenis() {
   return lenis;
 }
 
+function CursorFeedback() {
+  const [active, setActive] = React.useState(false);
+  const reduceMotion = useReducedMotion();
+  const x = useSpring(useMotionValue(-100), { stiffness: 650, damping: 45, mass: 0.25 });
+  const y = useSpring(useMotionValue(-100), { stiffness: 650, damping: 45, mass: 0.25 });
+
+  useEffect(() => {
+    const interactiveSelector = 'a[href], button:not(:disabled), [role="button"], [role="link"], summary, [tabindex]:not([tabindex="-1"])';
+    const updatePointer = event => {
+      if (event.pointerType !== "mouse") return;
+
+      x.set(event.clientX - 3);
+      y.set(event.clientY - 3);
+
+      const target = event.target instanceof Element
+        ? event.target.closest(interactiveSelector)
+        : null;
+      setActive(Boolean(target));
+    };
+    const hidePointer = event => {
+      if (event.pointerType === "mouse" && !event.relatedTarget) setActive(false);
+    };
+    const hideOnBlur = () => setActive(false);
+
+    document.addEventListener("pointermove", updatePointer, { passive: true });
+    document.addEventListener("pointerout", hidePointer);
+    window.addEventListener("blur", hideOnBlur);
+    return () => {
+      document.removeEventListener("pointermove", updatePointer);
+      document.removeEventListener("pointerout", hidePointer);
+      window.removeEventListener("blur", hideOnBlur);
+    };
+  }, [x, y]);
+
+  return (
+    <motion.i
+      className="cursor-feedback"
+      data-active={active ? "true" : undefined}
+      aria-hidden="true"
+      style={{ x, y }}
+      animate={{ opacity: active ? 1 : 0 }}
+      transition={reduceMotion ? { duration: 0 } : { opacity: { duration: 0.16 } }}
+    />
+  );
+}
+
+function ScrollToTop() {
+  const { scrollY, scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 180, damping: 30, mass: .35 });
+  const progressOffset = useTransform(progress, value => 1 - value);
+  const reduceMotion = useReducedMotion();
+  const [visible, setVisible] = React.useState(() => window.scrollY > 300);
+
+  useMotionValueEvent(scrollY, "change", y => setVisible(y > 300));
+
+  return (
+    <motion.a
+      href="#top"
+      aria-label="Scroll to top"
+      className="scroll-top"
+      initial={false}
+      animate={{
+        opacity: visible ? 1 : 0,
+        scale: visible ? 1 : .8,
+        y: visible ? 0 : 10
+      }}
+      transition={reduceMotion ? { duration: 0 } : { duration: .24, ease: [.16, 1, .3, 1] }}
+      style={{ pointerEvents: visible ? "auto" : "none" }}
+    >
+      <svg className="scroll-top__progress" viewBox="0 0 48 48" aria-hidden="true">
+        <circle className="scroll-top__track" cx="24" cy="24" r="21" pathLength="1" />
+        <motion.circle
+          className="scroll-top__fill"
+          cx="24"
+          cy="24"
+          r="21"
+          pathLength="1"
+          style={{ strokeDashoffset: progressOffset }}
+        />
+      </svg>
+      <svg className="scroll-top__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 19V5m0 0 6 6m-6-6-6 6" />
+      </svg>
+    </motion.a>
+  );
+}
+
 /* ═══ App — the page, section by section ═══════════════════════════════════ */
 function App() {
   useLenis();   // smooth scrolling, and it takes over anchor jumps
@@ -93,6 +181,8 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <CursorFeedback />
+      <ScrollToTop />
     </>
   );
 }
