@@ -7,9 +7,9 @@
      1. About
    ══════════════════════════════════════════════════════════════════════════ */
 
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Icon, Reveal, RevealItem, SplitHeading, useMediaQuery } from "../shared";
 import { motion, useReducedMotion } from "motion/react";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 const Lanyard = lazy(() => import("../vendor/Lanyard"));
 
@@ -23,12 +23,12 @@ const company = {
 };
 
 const skills = [
-  { mark: "SH", label: "Shopify Development", level: "Expert", score: 94 },
-  { mark: "WP", label: "WordPress & Woo", level: "Expert", score: 90 },
-  { mark: "LI", label: "Liquid & Theme Dev", level: "Strong", score: 88 },
-  { mark: "JS", label: "JavaScript & React", level: "Strong", score: 78 },
-  { mark: "UI", label: "Responsive UI / UX", level: "Strong", score: 88 },
-  { mark: "AN", label: "Motion & Animation", level: "Strong", score: 82 }
+  { mark: "SH", label: "Shopify Development" },
+  { mark: "WP", label: "WordPress & Woo" },
+  { mark: "LI", label: "Liquid & Theme Dev" },
+  { mark: "JS", label: "JavaScript & React" },
+  { mark: "UI", label: "Responsive UI / UX" },
+  { mark: "AN", label: "Motion & Animation" }
 ];
 
 export function About() {
@@ -80,8 +80,8 @@ export function About() {
 
           <Reveal as="p" delay={.16}
             className="mt-5 max-w-[42ch] text-[13.5px] leading-[1.7] text-muted sm:text-[14.5px] sm:leading-[1.75]">
-            I lead web projects and build custom Shopify themes, WordPress
-            sites, WooCommerce stores, and plugins.
+            I joined Maktech as an intern in 2025 and now lead web projects. I
+            still build Shopify themes, WooCommerce stores, and WordPress plugins.
           </Reveal>
 
           {/* the spine */}
@@ -157,9 +157,6 @@ export function About() {
                     Core skills<span className="text-link">.</span>
                   </h3>
                 </div>
-                <p className="pb-1 font-mono text-[9px] tracking-[.13em] text-muted sm:text-[10px]">
-                  01 — 06 / TOOLKIT
-                </p>
               </Reveal>
 
               <Reveal stagger delay={.08} className="grid gap-2 sm:grid-cols-2 sm:gap-2.5">
@@ -171,47 +168,19 @@ export function About() {
                       }`}
                     style={{ transformPerspective: 850 }}
                     whileHover={reduceMotion ? undefined : {
-                      y: -3,
-                      rotateX: 2.5,
-                      rotateY: -2.5,
-                      scale: 1.015,
-                      transition: { duration: .28, ease: [.16, 1, .3, 1] }
+                    y: -2,
+                    transition: { duration: .2, ease: [.16, 1, .3, 1] }
                     }}
                     whileTap={reduceMotion ? undefined : { scale: .99 }}>
-                    {!reduceMotion && (
-                      <span aria-hidden="true"
-                        className="pointer-events-none absolute -inset-y-8 -left-1/2 z-0 w-1/2 skew-x-[-18deg]
-                                   bg-linear-to-r from-transparent via-white/[.06] to-transparent
-                                   transition-transform duration-700 ease-out group-hover:translate-x-[300%]" />
-                    )}
                     <div className="relative z-10 flex min-w-0 items-center gap-2.5">
-                      <motion.span aria-hidden="true"
-                        className={`grid size-7 flex-none place-items-center rounded-lg border border-accent/25
-                          bg-accent/[.08] font-mono text-[9px] font-semibold text-accent-hi ${
-                            reduceMotion ? "" : "transition-transform duration-500 ease-out group-hover:rotate-[360deg] group-hover:scale-110"
-                          }`}>
-                        {skill.mark}
-                      </motion.span>
-                      <p className="min-w-0 flex-1 truncate font-display text-[12px] font-semibold leading-tight text-primary sm:text-[13px]">
-                        {skill.label}
-                      </p>
-                      <span className="flex-none font-mono text-[9px] text-muted sm:text-[10px]">
-                        {skill.level}
-                      </span>
-                    </div>
-                    <div className="relative z-10 mt-2.5 h-[3px] overflow-hidden rounded-full bg-line-strong">
-                      <motion.span
-                        aria-hidden="true"
-                        className={`block h-full origin-left rounded-full bg-linear-to-r from-accent to-accent-hi ${
-                          reduceMotion ? "" : "transition-[filter] duration-500 group-hover:brightness-125"
-                        }`}
-                        style={{ width: `${skill.score}%` }}
-                        initial={reduceMotion ? false : { scaleX: 0 }}
-                        animate={reduceMotion ? { scaleX: skill.score / 100 } : undefined}
-                        whileInView={!reduceMotion ? { scaleX: skill.score / 100 } : undefined}
-                        viewport={{ once: true, amount: 0.8 }}
-                        transition={{ duration: .9, delay: .12, ease: [.16, 1, .3, 1] }}
-                      />
+                    <span aria-hidden="true"
+                      className="grid size-7 flex-none place-items-center rounded-lg border border-accent/25
+                                 bg-accent/[.08] font-mono text-[9px] font-semibold text-accent-hi">
+                      {skill.mark}
+                    </span>
+                    <p className="min-w-0 flex-1 truncate font-display text-[12px] font-semibold leading-tight text-primary sm:text-[13px]">
+                      {skill.label}
+                    </p>
                     </div>
                   </RevealItem>
                 ))}

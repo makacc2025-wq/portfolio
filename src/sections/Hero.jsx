@@ -1,28 +1,20 @@
 /* ══════════════════════════════════════════════════════════════════════════
    Hero.jsx
 
-   Everything for this section: the opening screen: headline, stats, the aurora background and the two platform folders.
+   Everything for this section: the opening screen, aurora background, and platform folders.
 
    In this file, top to bottom:
      1. content
      2. Hero
-     3. Counter
-     4. useAurora
+     3. useAurora
      5. styles
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { useEffect, useRef, useState, useLayoutEffect } from "react";
-import { motion, useReducedMotion, animate, useInView } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { Icon, Reveal, SplitHeading, useMediaQuery, injectCss } from "../shared";
 import { profile } from "../content";
 import FolderFloat from "../vendor/FolderFloat";
-
-/* ═══ content — the words on this section; edit them here ══════════════════ */
-const stats = [
-  { to: 40, suffix: "+",    label: "sites shipped" },
-  { to: 6,  suffix: " yrs", label: "building for the web" },
-  { to: 2,  suffix: "",     label: "platforms, in depth" }
-];
 
 /* the two platform cards in the hero */
 const heroPlatforms = [
@@ -225,9 +217,8 @@ export function Hero() {
           </Reveal>
 
           <Reveal as="p" delay={.26} data-copy-block className="mt-4 max-w-[48ch] text-[13.5px] leading-relaxed text-muted sm:text-step-0">
-            I lead web projects from first brief to launch — tailored themes and
-            advanced animation on Shopify, WooCommerce and custom plugins on
-            WordPress. Built for the project, not bent out of a template.
+            At Maktech, I take projects from planning through launch. I also
+            build Shopify themes, WooCommerce stores, and WordPress plugins.
           </Reveal>
 
           <Reveal delay={.32} data-copy-block className="mt-6 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap sm:gap-3.5">
@@ -243,19 +234,6 @@ export function Hero() {
             </a>
           </Reveal>
 
-          <Reveal delay={.38} data-copy-block
-            className="mt-[clamp(26px,4vw,52px)] grid grid-cols-3 gap-x-4 gap-y-5
-                       border-t border-line pt-5
-                       sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-6 sm:pt-6">
-            {stats.map(s => (
-              <div key={s.label}>
-                <Counter to={s.to} suffix={s.suffix}
-                  className="block font-display text-[clamp(22px,4vw,42px)] font-bold
-                             leading-none tracking-[-.01em] text-primary" />
-                <span className="mt-1.5 block font-mono text-[11px] leading-tight text-secondary sm:mt-2 sm:text-[12px]">{s.label}</span>
-              </div>
-            ))}
-          </Reveal>
         </div>
 
         {/* ---- the two platforms, as folders ---- */}
@@ -266,68 +244,7 @@ export function Hero() {
   );
 }
 
-/* ═══ Counter — component  ·  was components/Counter.jsx ═══════════════════ */
-/* ==========================================================================
-   <Counter to={40} suffix="+" />
 
-   animate() works on plain numbers, not just elements. Counting is done in
-   a ref and written to the DOM directly — putting it in state would
-   re-render this component sixty times a second for the whole count.
-
-   The final value is rendered as real text on first paint, so a crawler or
-   a reader with JS off still sees "40+", not "0".
-   ========================================================================== */
-
-function Counter({
-  to,
-  from = 0,
-  duration = 1.6,
-  decimals = 0,
-  prefix = "",
-  suffix = "",
-  className = "",
-  ...rest
-}) {
-  const ref = useRef(null);
-  /* 0.5, not the site's REVEAL_AT: a number that counts up should be
-     properly on screen before it starts, or it finishes off the bottom. */
-  const inView = useInView(ref, { once: true, amount: 0.5 });
-  const reduce = useReducedMotion();
-  const [done, setDone] = useState(false);
-
-  /* The markup renders the final value so a crawler, or a reader with JS
-     off, sees "40+" rather than "0". Once JS is confirmed running, reset to
-     the start value before the browser paints — useEffect would be a frame
-     too late and the number would visibly flicker down. */
-  useLayoutEffect(() => {
-    if (reduce || done) return;
-    const el = ref.current;
-    if (el) el.textContent = prefix + from.toFixed(decimals) + suffix;
-  }, [reduce, done, from, decimals, prefix, suffix]);
-
-  useEffect(() => {
-    if (!inView || done) return;
-    const el = ref.current;
-    if (!el) return;
-
-    if (reduce) { setDone(true); return; }
-
-    const controls = animate(from, to, {
-      duration,
-      ease: [.16, 1, .3, 1],
-      // round here, or forty-one decimal places flicker past
-      onUpdate: v => { el.textContent = prefix + v.toFixed(decimals) + suffix; },
-      onComplete: () => setDone(true)
-    });
-    return () => controls.stop();
-  }, [inView, done, from, to, duration, decimals, prefix, suffix, reduce]);
-
-  return (
-    <span ref={ref} className={className} {...rest}>
-      {prefix}{to.toFixed(decimals)}{suffix}
-    </span>
-  );
-}
 
 /* ═══ useAurora — behaviour  ·  was hooks/useAurora.js ═════════════════════ */
 /* ==========================================================================
