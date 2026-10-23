@@ -454,7 +454,10 @@ injectCss('work-fan', `
     }
     .project-dialog__content {
       min-width: 0;
+      min-height: 0;
       overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
       padding: clamp(24px, 4vw, 42px);
       scrollbar-color: var(--c-line-strong) transparent;
     }
@@ -598,24 +601,28 @@ injectCss('work-fan', `
       .project-dialog { padding: 10px; }
       .project-dialog__panel {
         grid-template-columns: 1fr;
+        grid-template-rows: clamp(160px, 28dvh, 230px) minmax(0, 1fr);
+        height: calc(100dvh - 20px);
         max-height: calc(100dvh - 20px);
         border-radius: 22px;
       }
-      .project-dialog__visual { min-height: 230px; }
+      .project-dialog__visual { min-height: 0; }
       .project-dialog__visual-copy { inset: auto 22px 22px; }
       .project-dialog__content { padding: 24px 22px; }
       .project-dialog__close { top: 12px; right: 12px; }
     }
 
-    /* below 480 the blurb goes and the result stays — the number is the
-       part worth reading on a 300px card */
+    /* Keep a compact project summary visible on phone-sized cards. */
     @media (max-width: 480px) {
-      /* the card only starts shrinking below ~432px, so the height tracks
-         the viewport from there down */
-      .work-fan { --card-h: clamp(316px, 98vw, 376px); }
-      .work-card__blurb { display: none; }
-      .work-card__result { margin-top: 11px; }
-      .project-dialog__visual { min-height: 190px; }
+      .work-fan { --card-h: clamp(340px, 98vw, 380px); }
+      .work-card__blurb {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        font-size: 11px;
+        line-height: 1.4;
+        margin-top: 5px;
+      }
+      .work-card__result { margin-top: 8px; padding-top: 8px; }
     }
 
     @media (max-width: 380px) {
