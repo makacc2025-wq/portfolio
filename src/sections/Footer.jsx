@@ -64,7 +64,7 @@ export function Footer() {
 
             <p className="mt-5.5 max-w-[44ch] text-sm text-secondary">
               {profile.bio}<br />
-              Currently open to new work —{" "}
+              Currently open to new work :  {" "}
               <a className="link-sweep text-link" href="#work">see recent builds</a>
             </p>
 

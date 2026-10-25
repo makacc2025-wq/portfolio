@@ -18,7 +18,7 @@ export const profile = {
   statusUrl: "https://www.maktechgroup.com",
   resume: "/resume.pdf",
   bio: "Shopify developer building custom themes, sections and apps that stay fast.",
-  role: "SHOPIFY & WORDPRESS DEVELOPER — DHAKA, BD",
+  role: "SHOPIFY & WORDPRESS DEVELOPER, DHAKA, BD",
   working: "Team lead @ Maktech",
   tagline: "Team lead at Maktech · still hands-on with the code.",
   quote: "Build it so the next developer thanks you.",

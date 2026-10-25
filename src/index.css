@@ -221,6 +221,7 @@ html::-webkit-scrollbar-thumb:hover {
   /*  9.8 — accent colour used AS TEXT */
   --c-text-invert: #04120d;
   /* on an accent fill */
+  --c-focus-ring: #5be49b;
 
   --c-accent: var(--g-700);
   --c-accent-soft: var(--g-400);
@@ -318,6 +319,7 @@ html::-webkit-scrollbar-thumb:hover {
   /* dark text on the bright green button, not white: white on #00a878 is 3.0,
      near-black is 6.3 — and it matches the dark theme's button */
   --c-text-invert: #04120d;
+  --c-focus-ring: #006b4c;
 
   --c-accent: var(--g-900);
   --c-accent-soft: var(--g-700);
@@ -419,7 +421,7 @@ html::-webkit-scrollbar-thumb:hover {
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   --text-step--1: clamp(12px, .8vw + 10px, 13px);
-  --text-step-0: clamp(14px, .9vw + 11px, 15px);
+  --text-step-0: 16px;
   --text-step-1: clamp(18px, 1.2vw + 14px, 21px);
   --text-step-2: clamp(24px, 2vw + 16px, 34px);
   --text-step-3: clamp(32px, 3.6vw + 18px, 58px);
@@ -561,7 +563,7 @@ html::-webkit-scrollbar-thumb:hover {
   }
 
   :where(a, button, input, textarea, [tabindex]):focus-visible {
-    outline: 2px solid var(--c-accent-soft);
+    outline: 2px solid var(--c-focus-ring);
     outline-offset: 4px;
     border-radius: 6px;
   }
@@ -667,7 +669,7 @@ html::-webkit-scrollbar-thumb:hover {
     border-color: var(--c-accent-soft);
   }
   .scroll-top:focus-visible {
-    outline: 2px solid var(--c-accent-soft);
+    outline: 2px solid var(--c-focus-ring);
     outline-offset: 4px;
   }
   .scroll-top__progress {

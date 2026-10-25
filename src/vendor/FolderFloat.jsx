@@ -252,7 +252,7 @@ export default function FolderFloat({
     const tick = now => {
       const s = world.current;
       if (!s.engine) return;
-      const dt = s.last ? Math.min(32, now - s.last) : 16;
+      const dt = s.last ? Math.min(1000 / 60, now - s.last) : 1000 / 60;
       s.last = now;
       const t = (now - s.t0) / 1000;
       const k = latest.current.drift * 0.00005 * Math.min(1, t / 2);
@@ -522,7 +522,7 @@ export default function FolderFloat({
         )}
         <button
           type="button"
-          className={`absolute right-0 bottom-0 left-0 z-[3] m-0 ${badge ? "h-full" : "h-[76%]"} cursor-pointer border-0 bg-transparent p-0 outline-none [border-radius:var(--ff-r)] [-webkit-tap-highlight-color:transparent] focus-visible:[outline:2px_solid_var(--ff-sub)] focus-visible:[outline-offset:3px]`}
+          className={`absolute right-0 bottom-0 left-0 z-[3] m-0 ${badge ? "h-full" : "h-[76%]"} cursor-pointer border-0 bg-transparent p-0 outline-none [border-radius:var(--ff-r)] [-webkit-tap-highlight-color:transparent] focus-visible:[outline:2px_solid_var(--c-focus-ring)] focus-visible:[outline-offset:3px]`}
           aria-expanded={open}
           aria-label={`${label}, ${sub}`}
           onClick={() => set(!open)}

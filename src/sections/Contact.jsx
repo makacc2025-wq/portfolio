@@ -225,7 +225,7 @@ injectCss("contact-3d", `
       background: color-mix(in srgb, var(--c-accent-soft) 7%, transparent);
       transform: translateX(3px);
     }
-    .ct-chan:focus-visible { outline: 2px solid var(--c-accent-soft); outline-offset: -2px; }
+    .ct-chan:focus-visible { outline: 2px solid var(--c-focus-ring); outline-offset: -2px; }
 
     .ct-chan__icon {
       display: grid; place-items: center;
@@ -245,7 +245,7 @@ injectCss("contact-3d", `
     .ct-chan__label {
       display: block;
       font-family: var(--font-display);
-      font-size: 11px; font-weight: 600;
+      font-size: 12px; font-weight: 600;
       letter-spacing: .18em; text-transform: uppercase;
       color: var(--c-text-faint);
     }
@@ -298,7 +298,7 @@ injectCss("contact-3d", `
       .ct-chan { gap: 12px; padding: 14px 12px; border-radius: 12px; }
       .ct-chan__icon { width: 38px; height: 38px; border-radius: 11px; }
       .ct-chan__icon svg { width: 17px; height: 17px; }
-      .ct-chan__value { font-size: 12.5px; }
+      .ct-chan__value { font-size: 13.5px; }
       .ct-chan--primary .ct-chan__value { font-size: 16px; }
       /* the stage would sit under the rail on a phone, so it goes */
       .ct-stage { display: none; }
@@ -378,11 +378,11 @@ export function Contact() {
             <dl className="ct-facts mt-[clamp(30px,4vw,44px)] border-t border-line pt-[clamp(26px,3vw,34px)]">
               {facts.map((fact) => (
                 <div key={fact.label}>
-                  <dt className="font-display text-[11px] font-semibold uppercase tracking-[.2em] text-faint">
+                  <dt className="font-display text-[12px] font-semibold uppercase tracking-[.2em] text-faint">
                     {fact.label}
                   </dt>
                   <dd
-                    className={`mt-2 font-mono text-[13px] leading-[1.55] text-primary ${
+                    className={`mt-2 font-mono text-[14px] leading-[1.55] text-primary ${
                       fact.live ? "ct-live flex items-center gap-2" : ""
                     }`}
                   >

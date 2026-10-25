@@ -119,7 +119,7 @@ export const REVEAL_AT = 0.22;
 export function Reveal({
   as = "div",
   delay = 0,
-  y = 22,
+  y = 12,
   blur = false,
   stagger = false,
   amount = REVEAL_AT,
@@ -144,7 +144,7 @@ export function Reveal({
         viewport={{ once: true, amount }}
         variants={{
           hidden: {},
-          shown: { transition: { staggerChildren: .1, delayChildren: delay } }
+          shown: { transition: { staggerChildren: .06, delayChildren: delay } }
         }}
       >
         {children}
@@ -158,7 +158,7 @@ export function Reveal({
       initial={{ opacity: 0, y, ...(blur ? { filter: "blur(6px)" } : null) }}
       whileInView={{ opacity: 1, y: 0, ...(blur ? { filter: "blur(0px)" } : null) }}
       viewport={{ once: true, amount }}
-      transition={{ duration: .75, delay, ease: EASE }}
+      transition={{ duration: .48, delay, ease: EASE }}
     >
       {children}
     </Tag>
@@ -181,7 +181,7 @@ export function RevealItem({ as = "div", y = 24, children, ...rest }) {
       {...rest}
       variants={{
         hidden: { opacity: 0, y },
-        shown: { opacity: 1, y: 0, transition: { duration: .7, ease: EASE } }
+        shown: { opacity: 1, y: 0, transition: { duration: .45, ease: EASE } }
       }}
     >
       {children}
@@ -191,7 +191,7 @@ export function RevealItem({ as = "div", y = 24, children, ...rest }) {
 
 /* ═══ SplitHeading — component  ·  was components/SplitHeading.jsx ═════════ */
 /* ==========================================================================
-   <SplitHeading> — headings whose letters arrive one at a time.
+   <SplitHeading> — a restrained, whole-line heading reveal.
 
      <SplitHeading as="h2" className="text-step-3">What I take on.</SplitHeading>
 
@@ -210,38 +210,9 @@ export function RevealItem({ as = "div", y = 24, children, ...rest }) {
        <Accent className="text-link">Shopify</Accent> &amp; WordPress Development
      </SplitHeading>
 
-   ---------------------------------------------------------------------------
-   Why each letter carries its own delay rather than using staggerChildren:
-
-   staggerChildren only schedules direct motion children, and the letters sit
-   three levels down (line → word → letter). Making every level a motion
-   element with its own stagger looks like it should work, and does while you
-   scroll normally — but if the heading enters the viewport in a single jump
-   (an anchor landing, scrollIntoView, a restored scroll position) the nested
-   schedule misfires and most letters stay at opacity 0 permanently. An
-   invisible heading is a far worse failure than a missing animation.
-
-   A flat index with an explicit delay is immune to that: every letter is an
-   independent animation that cannot be left unscheduled.
-   ---------------------------------------------------------------------------
-
-   Accessibility: the sentence is set as aria-label and every fragment is
-   aria-hidden, so a screen reader announces one heading instead of spelling
-   it out. Characters are grouped into words and the word is the
-   inline-block, so a line break can never fall mid-word.
+   Accessibility: the sentence is set as aria-label and its visual copy is
+   aria-hidden, so a screen reader announces the heading once.
    ========================================================================== */
-
-
-/* Letters drift in from the left and settle into place, in reading order.
-   The small negative x plus a blur reads as the letter sliding in from
-   off-frame; a larger offset would have letters crossing over their
-   neighbours, which looks like a glitch rather than an entrance.
-
-   No clipping window here. Clipping works for a vertical rise because the
-   line box is a natural edge, but a horizontal slide inside a word box
-   would cut each letter against its neighbour. */
-const HIDDEN = { x: "-0.55em", opacity: 0, filter: "blur(6px)" };
-const SHOWN  = { x: "0em",     opacity: 1, filter: "blur(0px)" };
 
 /* named wordStyle, not word: the map below binds `word` to the string it is
    splitting, which would shadow this and hand React a string for style */
@@ -260,14 +231,12 @@ export function Accent({ className, children }) {
 export function SplitHeading({
   as = "h2",
   delay = 0,
-  stagger = 0.02,
   amount = REVEAL_AT,
   className = "",
   children,
   ...rest
 }) {
   const reduce = useReducedMotion();
-  const [shown, setShown] = useState(false);
   const Tag = motion[as] || motion.h2;
   const Plain = as;
 
@@ -299,7 +268,7 @@ export function SplitHeading({
     }
   });
 
-  // flatten each line to words of styled characters, collapsing stray spaces
+  // Flatten each line to styled words while collapsing incidental whitespace.
   const model = lines.map(line => {
     const chars = [];
     line.segs.forEach(seg => [...seg.text.replace(/\s+/g, " ")].forEach(ch => chars.push({ ch, className: seg.className })));
@@ -315,34 +284,14 @@ export function SplitHeading({
     return <Plain className={className} {...rest}>{children}</Plain>;
   }
 
-  let index = 0;   // runs across the whole heading, not per line
-
-  const Char = ({ ch, className: cls }) => {
-    const i = index++;
-    return (
-      <motion.span
-        initial={HIDDEN}
-        animate={shown ? SHOWN : HIDDEN}
-        transition={{
-          duration: .42,
-          ease: EASE,
-          delay: delay + i * stagger,
-          opacity: { duration: .24, delay: delay + i * stagger }
-        }}
-        className={cls}
-        style={{ display: "inline-block", willChange: "transform, opacity" }}
-      >
-        {ch}
-      </motion.span>
-    );
-  };
-
   return (
     <Tag
       className={className}
       aria-label={label}
-      onViewportEnter={() => setShown(true)}
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount }}
+      transition={{ duration: .48, delay, ease: EASE }}
       {...rest}
     >
       <span aria-hidden="true">
@@ -350,8 +299,10 @@ export function SplitHeading({
           <span key={li} className={line.className} style={{ display: "block" }}>
             {line.words.map((word, wi) => (
               <span key={wi} style={wordStyle}>
-                {word.map((c, ci) => <Char key={ci} ch={c.ch} className={c.className} />)}
-                {wi < line.words.length - 1 && <Char ch={"\u00A0"} />}
+                {word.map((c, ci) => (
+                  <span key={ci} className={c.className}>{c.ch}</span>
+                ))}
+                {wi < line.words.length - 1 && "\u00A0"}
               </span>
             ))}
           </span>

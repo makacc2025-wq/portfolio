@@ -84,6 +84,8 @@ function CursorFeedback() {
   const y = useSpring(useMotionValue(-100), { stiffness: 650, damping: 45, mass: 0.25 });
 
   useEffect(() => {
+    if (reduceMotion) return undefined;
+
     const interactiveSelector = 'a[href], button:not(:disabled), [role="button"], [role="link"], summary, [tabindex]:not([tabindex="-1"])';
     const updatePointer = event => {
       if (event.pointerType !== "mouse") return;
@@ -109,7 +111,9 @@ function CursorFeedback() {
       document.removeEventListener("pointerout", hidePointer);
       window.removeEventListener("blur", hideOnBlur);
     };
-  }, [x, y]);
+  }, [x, y, reduceMotion]);
+
+  if (reduceMotion) return null;
 
   return (
     <motion.i
@@ -126,8 +130,8 @@ function CursorFeedback() {
 function ScrollToTop() {
   const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 180, damping: 30, mass: .35 });
-  const progressOffset = useTransform(progress, value => 1 - value);
   const reduceMotion = useReducedMotion();
+  const progressOffset = useTransform(reduceMotion ? scrollYProgress : progress, value => 1 - value);
   const [visible, setVisible] = React.useState(() => window.scrollY > 300);
 
   useMotionValueEvent(scrollY, "change", y => setVisible(y > 300));
@@ -136,6 +140,8 @@ function ScrollToTop() {
     <motion.a
       href="#top"
       aria-label="Scroll to top"
+      aria-hidden={!visible}
+      tabIndex={visible ? 0 : -1}
       className="scroll-top"
       initial={false}
       animate={{

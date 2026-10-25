@@ -21,7 +21,7 @@ import { nav, profile } from "../content";
 /* Long class strings pulled out as constants. Inline they bury the markup,
    and a shared constant is the Tailwind way to reuse without @apply. */
 const linkBase =
-  "relative z-10 inline-flex items-center rounded-pill px-4 py-2.5 " +
+  "relative z-10 inline-flex min-h-11 items-center rounded-pill px-4 py-2.5 " +
   "text-[13.5px] font-normal whitespace-nowrap transition-colors duration-300";
 
 const resumeBase =
@@ -30,7 +30,7 @@ const resumeBase =
   "transition-all duration-500 ease-out-expo";
 
 const resumeLook =
-  "h-[42px] border-accent-soft/40 bg-linear-to-b from-accent-soft/15 to-accent/10 text-accent-hi " +
+  "h-11 border-accent-soft/40 bg-linear-to-b from-accent-soft/15 to-accent/10 text-accent-hi " +
   "hover:-translate-y-px hover:border-accent-soft hover:from-accent-soft hover:to-[var(--g-500)] " +
   "hover:text-invert hover:shadow-[0_12px_28px_-14px_rgba(0,200,140,.9)]";
 
@@ -39,6 +39,8 @@ const panelVariants = {
   open:   { opacity: 1, transition: { duration: .35, ease: [.16, 1, .3, 1],
                                       staggerChildren: .055, delayChildren: .08 } }
 };
+const stillPanelVariants = { closed: { opacity: 1 }, open: { opacity: 1 } };
+const stillItemVariants = { closed: { opacity: 1, y: 0 }, open: { opacity: 1, y: 0 } };
 const itemVariants = {
   closed: { opacity: 0, y: 16, transition: { duration: .2 } },
   open:   { opacity: 1, y: 0, transition: { duration: .55, ease: [.16, 1, .3, 1] } }
@@ -86,22 +88,22 @@ export function Header() {
           className={
             "relative flex h-[62px] items-center gap-[clamp(14px,2vw,30px)] rounded-pill " +
             "border py-0 pr-2.5 pl-[18px] max-[920px]:w-full max-[920px]:pr-2 " +
-            "shadow-[inset_0_1px_0_rgba(190,255,225,.10),0_18px_40px_-22px_rgba(0,0,0,.9)] " +
-            "transition-[background-color,border-color,box-shadow] duration-500 ease-out-expo " +
+            "shadow-[0_10px_30px_-18px_rgba(0,0,0,.8)] " +
+            "transition-[background-color,border-color,box-shadow] duration-300 ease-out-expo " +
             // backdrop-filter makes an element the containing block for fixed
             // descendants, so it is dropped below the breakpoint where the
             // panel needs the viewport
-            "backdrop-blur-[18px] backdrop-saturate-150 max-[920px]:backdrop-blur-none " +
+            "backdrop-blur-[8px] max-[920px]:backdrop-blur-none " +
             (stuck
               ? "border-line-strong bg-glass-stuck"
               : "border-line bg-glass max-[920px]:bg-glass-stuck")
           }
           initial={reduce ? false : { y: -26, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: .7, ease: [.16, 1, .3, 1], delay: .15 }}
+          transition={{ duration: .42, ease: [.16, 1, .3, 1], delay: .1 }}
         >
 
-          <a href="#top" aria-label={`${profile.name} — home`}
+          <a href="#top" aria-label={`${profile.name} home`}
              className="group relative z-20 flex flex-none items-center gap-2.5 font-mono text-[13.5px] text-primary">
             <Monogram id="header"
               className="size-[26px] transition-transform duration-500 ease-out-expo group-hover:-rotate-6 group-hover:scale-107" />
@@ -115,9 +117,9 @@ export function Header() {
             type="button"
             aria-expanded={open}
             aria-controls="primary-nav"
-            aria-label="Menu"
+            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             onClick={() => setOpen(o => !o)}
-            className="group relative z-20 hidden size-[42px] place-items-center max-[920px]:grid"
+            className="group relative z-20 hidden size-11 place-items-center max-[920px]:grid"
           >
             <span className="relative block h-[11px] w-5">
               <i className={"absolute left-0 top-0 h-[1.5px] w-full rounded-sm bg-body transition-transform duration-500 ease-out-expo "
@@ -134,6 +136,7 @@ export function Header() {
                className="relative flex items-center gap-0.5 max-[920px]:hidden">
             {nav.map(item => (
               <a key={item.id} href={`#${item.id}`}
+                 aria-current={active === item.id ? "location" : undefined}
                  onPointerEnter={() => setHovered(item.id)}
                  className={linkBase + (active === item.id || hovered === item.id
                    ? " text-accent-hi" : " text-muted")}>
@@ -141,7 +144,9 @@ export function Header() {
                   <motion.span
                     layoutId="nav-pill"
                     className="absolute inset-0 -z-10 rounded-pill border border-accent-soft/30 bg-accent-soft/14"
-                    transition={{ type: "spring", stiffness: 420, damping: 36, mass: .7 }}
+                    transition={reduce
+                      ? { duration: 0 }
+                      : { type: "spring", stiffness: 420, damping: 36, mass: .7 }}
                   />
                 )}
                 <span className="relative z-10">{item.label}</span>
@@ -167,7 +172,7 @@ export function Header() {
             id="primary-nav"
             data-panel
             aria-label="Primary"
-            variants={panelVariants}
+            variants={reduce ? stillPanelVariants : panelVariants}
             initial="closed" animate="open" exit="closed"
             onClick={e => { if (e.target === e.currentTarget) setOpen(false); }}
             className="fixed inset-0 -z-10 flex flex-col items-start justify-center gap-0.5 bg-overlay
@@ -175,7 +180,9 @@ export function Header() {
                        pb-[calc(32px+env(safe-area-inset-bottom,0px))]"
           >
             {nav.map(item => (
-              <motion.a key={item.id} href={`#${item.id}`} variants={itemVariants}
+              <motion.a key={item.id} href={`#${item.id}`}
+                aria-current={active === item.id ? "location" : undefined}
+                variants={reduce ? stillItemVariants : itemVariants}
                 onClick={() => setOpen(false)}
                 className={"py-2.5 font-display text-[clamp(28px,9vw,40px)] font-light transition-colors "
                   + (active === item.id ? "text-accent-hi" : "text-body")}>
@@ -206,6 +213,7 @@ export function Header() {
 function ThemeToggle({ className = "" }) {
   const [theme, toggle] = useTheme();
   const light = theme === "light";
+  const reduce = useReducedMotion();
 
   return (
     <button
@@ -215,15 +223,15 @@ function ThemeToggle({ className = "" }) {
       aria-checked={light}
       aria-label={`Switch to ${light ? "dark" : "light"} theme`}
       title={`Switch to ${light ? "dark" : "light"} theme`}
-      className={"relative grid h-8 w-[58px] flex-none items-center rounded-pill border "
+      className={"relative grid h-11 w-[68px] flex-none items-center rounded-pill border "
         + "border-line bg-white/[.03] px-1 transition-colors duration-500 "
         + "hover:border-line-strong " + className}
     >
       <motion.span
         aria-hidden="true"
-        className="absolute left-1 size-6 rounded-full bg-accent-soft/20 ring-1 ring-accent-soft/40"
-        animate={{ x: light ? 26 : 0 }}
-        transition={{ type: "spring", stiffness: 500, damping: 34, mass: .6 }}
+        className="absolute left-1 size-7 rounded-full bg-accent-soft/20 ring-1 ring-accent-soft/40"
+        animate={{ x: light ? 30 : 0 }}
+        transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 34, mass: .6 }}
       />
       <span className="pointer-events-none relative flex w-full justify-between px-[5px]">
         {/* moon */}

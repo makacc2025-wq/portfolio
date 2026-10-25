@@ -16,42 +16,40 @@ import { Icon, Reveal, SplitHeading, Accent, useMediaQuery, injectCss } from "..
 /* ═══ content — the words on this section; edit them here ══════════════════ */
 const servicesIntro = {
   label: "My services",
-  sub: "Modern sites. Powerful features. Built to grow."
+  sub: "Custom stores and websites, built around your business."
 };
 
-/* Two scenes, four cards each. Copy is kept short on purpose: on desktop the
-   cards overlap, so only the left strip of each is visible at rest, and every
-   word has to earn its place there. Titles are one or two words, the line is
-   under eight, and each list item fits in about 20 characters. */
+/* Two scenes, four cards each. Content is kept practical and client-focused,
+   with direct service language that matches the work delivered. */
 const serviceScenes = [
   {
     id: "shopify", icon: "shopify", label: "Shopify",
     title: ["Custom stores,", "built to sell."],
-    lede: "Setup, custom features and dropshipping.",
+    lede: "Store setup, tailored design, and custom ecommerce features.",
     cards: [
-      { icon: "store", title: "Full Store Setup", line: "Live and selling, start to finish.",
-        items: ["Domain & theme", "Product catalog", "Payments & shipping"] },
-      { icon: "brush", title: "Custom Design", line: "Built in Liquid, tailored to you.",
-        items: ["Theme design", "Advanced animation", "Sections & features"] },
-      { icon: "code", title: "Theme Fixes", line: "Bugs found and fixed, fast.",
-        items: ["Liquid & CSS fixes", "JavaScript fixes", "Responsive fixes"] },
-      { icon: "box", title: "Dropshipping", line: "Set up to sell with less effort.",
-        items: ["Product sourcing", "App integrations", "Order automation"] }
+      { icon: "store", title: "Store Setup", line: "A complete storefront, ready to launch.",
+        items: ["Theme setup", "Product catalog", "Payments and shipping"] },
+      { icon: "brush", title: "Brand Design", line: "Layouts tailored to your business and audience.",
+        items: ["Theme styling", "Section layouts", "Responsive design"] },
+      { icon: "code", title: "Theme Customization", line: "Clean updates that improve performance and usability.",
+        items: ["Liquid updates", "Responsive fixes", "Feature refinements"] },
+      { icon: "box", title: "Custom Features", line: "Useful tools for product and customer experience.",
+        items: ["Bundles", "Product options", "App integrations"] }
     ]
   },
   {
     id: "wordpress", icon: "wordpress", label: "WordPress",
-    title: ["Flexible sites,", "built your way."],
-    lede: "Custom design, Elementor, WooCommerce and plugins.",
+    title: ["Flexible websites,", "built your way."],
+    lede: "Custom designs, Elementor builds, and WooCommerce support.",
     cards: [
-      { icon: "theme", title: "Custom Design", line: "Modern, responsive, on-brand.",
-        items: ["Business websites", "Landing pages", "Portfolios & blogs"] },
-      { icon: "gear", title: "Custom Plugins", line: "When none fits, I write one.",
-        items: ["Plugin development", "API integrations", "Forms & CRM"] },
-      { icon: "elementor", title: "Elementor Pro", line: "Fast layouts your team can edit.",
-        items: ["Drag & drop design", "Section templates", "Advanced widgets"] },
-      { icon: "cart", title: "WooCommerce", line: "Stores with a smooth checkout.",
-        items: ["Store setup", "Payments & shipping", "Product management"] }
+      { icon: "theme", title: "Website Design", line: "Professional websites built around your brand.",
+        items: ["Business websites", "Landing pages", "Responsive layouts"] },
+      { icon: "gear", title: "Custom Functionality", line: "Features designed to support your workflow and goals.",
+        items: ["Custom features", "Plugin setup", "Third-party integrations"] },
+      { icon: "elementor", title: "Elementor", line: "Flexible layouts that are simple to update and manage.",
+        items: ["Elementor setup", "Reusable sections", "Responsive tweaks"] },
+      { icon: "cart", title: "WooCommerce", line: "Sell products smoothly through your WordPress store.",
+        items: ["Product setup", "Catalog updates", "Checkout setup"] }
     ]
   }
 ];
@@ -113,7 +111,12 @@ function Scene({ scene, fan }) {
               </p>
               {/* slider controls: phones and tablets only. The hook wires them (data-rail-go) */}
               <div className="scene__ctrl">
-                <span className="scene__count" aria-hidden="true"><b /> / 0{scene.cards.length}</span>
+                <span className="scene__count">
+                  <b /> / 0{scene.cards.length}
+                  <span className="sr-only" role="status" aria-atomic="true"
+                    aria-hidden={fan ? "true" : undefined}
+                    data-rail-status>Slide 1 of {scene.cards.length}</span>
+                </span>
                 <button type="button" className="scene__btn" data-rail-go="prev"
                   aria-label={`Previous ${scene.label} service`}>
                   <Icon name="chevron" className="size-4 rotate-180" />
@@ -138,11 +141,11 @@ function Scene({ scene, fan }) {
                onPointerDown={onPointerDown} onPointerMove={onPointerMove}
                    onPointerUp={onPointerUp} onPointerCancel={onPointerUp}
                    style={!fan ? { cursor: "grab", userSelect: "none" } : undefined}>
-            <span className="fan__glow" aria-hidden="true" />
             {scene.cards.map((c, i) => (
               <article key={c.title} data-fan-card tabIndex={0} className="fan-card"
+                aria-roledescription="slide"
+                aria-label={`${c.title}, ${i + 1} of ${scene.cards.length}`}
                 style={{ "--tilt": `${TILT[i]}deg`, "--rise": `${RISE[i]}px` }}>
-                <span className="fan-card__sheen" aria-hidden="true" />
                 <div className="flex items-start justify-between">
                   <span className="fan-card__medal" aria-hidden="true">
                     <Icon name={c.icon} className="size-[21px]" />
@@ -191,7 +194,7 @@ export function Services() {
           </SplitHeading>
 
           <Reveal as="p" delay={0.14}
-            className="mx-auto mt-3 max-w-[66ch] text-[14px] text-muted sm:text-step-0">
+            className="mx-auto mt-3 max-w-[66ch] text-[15px] text-muted sm:text-step-0">
             {servicesIntro.sub}
           </Reveal>
         </div>
@@ -429,10 +432,8 @@ function useCardFan(ref, options = {}) {
         });
         if (hov >= 0 && rects[hov]) {
           scope.setAttribute("data-active", String(hov + 1));
-          root.style.setProperty("--glow-dx", (rects[hov].x + rects[hov].w / 2 - stageW / 2).toFixed(1) + "px");
         } else {
           scope.removeAttribute("data-active");
-          root.style.setProperty("--glow-dx", "0px");
         }
       }
 
@@ -526,8 +527,10 @@ function useCardFan(ref, options = {}) {
         scope.setAttribute("data-active", String(nearest + 1));
         scope.style.setProperty("--n", String(nearest + 1));
         cards.forEach((el, i) => el.toggleAttribute("data-active", i === nearest));
-        prevBtn?.setAttribute("aria-disabled", String(nearest === 0));
-        nextBtn?.setAttribute("aria-disabled", String(nearest === n - 1));
+        if (prevBtn) prevBtn.disabled = nearest === 0;
+        if (nextBtn) nextBtn.disabled = nearest === n - 1;
+        const status = scope.querySelector("[data-rail-status]");
+        if (status) status.textContent = `Slide ${nearest + 1} of ${n}`;
       }
     };
     const onRail = () => { if (!railTick) { railTick = true; requestAnimationFrame(paintRail); } };
@@ -541,7 +544,7 @@ function useCardFan(ref, options = {}) {
     const release = () => { aim = -1; };          // a finger or wheel takes over: forget the aim
     const onCtrl = e => {
       const btn = e.target.closest("[data-rail-go]");
-      if (!btn || !scope.contains(btn) || btn.getAttribute("aria-disabled") === "true") return;
+      if (!btn || !scope.contains(btn) || btn.disabled) return;
       goTo(here() + (btn.dataset.railGo === "next" ? 1 : -1));
     };
     const onRailKey = e => {
@@ -603,7 +606,6 @@ function useCardFan(ref, options = {}) {
       });
       scope.removeAttribute("data-active");
       scope.style.removeProperty("--n");
-      root.style.removeProperty("--glow-dx");
     };
   }, [ref, key]);
 }
@@ -641,15 +643,14 @@ injectCss("services", `
   /* the hook writes --n on the scene; a CSS counter turns it into "01", "02"… */
   .scene__count b::before { counter-reset: n var(--n, 1); content: counter(n, decimal-leading-zero); }
   .scene__btn {
-    display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
     color: var(--stage-title); background: var(--stage-medal-bg); border: 1px solid var(--stage-medal-line);
-    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
     -webkit-tap-highlight-color: transparent; cursor: pointer;
     transition: transform var(--dur-3) var(--ease-out-expo), opacity var(--dur-2) ease, background-color var(--dur-2) ease;
   }
   .scene__btn:active { transform: scale(.9); }
-  .scene__btn:focus-visible { outline: 2px solid var(--stage-mint); outline-offset: 3px; }
-  .scene__btn[aria-disabled="true"] { opacity: .32; pointer-events: none; }
+  .scene__btn:focus-visible { outline: 2px solid var(--c-focus-ring); outline-offset: 3px; }
+  .scene__btn:disabled { opacity: .55; }
   @media (min-width: 64rem) { .scene__ctrl { display: none; } }
 
   .scene__label {
@@ -696,54 +697,36 @@ injectCss("services", `
     -webkit-tap-highlight-color: transparent;
   }
   .fan::-webkit-scrollbar { display: none; }
-  .fan__glow { display: none; }
-
   .fan-card {
     position: relative; display: flex; flex-direction: column;
     flex: 0 0 min(78%, 290px); scroll-snap-align: start;
-    padding: 18px 20px 18px; border-radius: 19px;
+    padding: 18px 20px 18px; border-radius: 15px;
     color: var(--paper-ink);
-    background: linear-gradient(150deg, var(--paper-1), var(--paper-2));
-    border: 1px solid var(--paper-edge);
-    box-shadow: var(--paper-shadow);
+    background: var(--paper-1);
+    border: 1px solid var(--paper-line);
+    box-shadow: 0 12px 28px -20px rgba(0, 16, 10, .5);
     transform-origin: 50% 82%;
-    transition: box-shadow var(--dur-4) var(--ease-out-expo);
+    transition: box-shadow var(--dur-2) ease;
     outline: none;
   }
-  .fan-card:focus-visible { outline: 2px solid var(--stage-mint); outline-offset: 5px; }
-  .fan-card[data-active] { box-shadow: var(--paper-shadow-active); }
-
-  /* a slow mint sweep across the card that is active */
-  .fan-card__sheen { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; }
-  .fan-card__sheen::before {
-    content: ""; position: absolute; inset: -20% -60%; opacity: 0;
-    background: linear-gradient(105deg, transparent 40%, rgba(19, 121, 74, .16) 50%, transparent 60%);
-    transform: translateX(-70%);
-  }
-  .fan-card[data-active] .fan-card__sheen::before {
-    opacity: 1; transform: translateX(70%);
-    transition: transform var(--dur-5) var(--ease-out-expo), opacity var(--dur-3) ease;
-  }
+  .fan-card:focus-visible { outline: 2px solid var(--c-focus-ring); outline-offset: 5px; }
+  .fan-card[data-active] { box-shadow: 0 18px 32px -18px rgba(0, 16, 10, .42); }
 
   .fan-card__medal {
-    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
-    color: var(--g-050); background: linear-gradient(145deg, var(--g-800), var(--g-950));
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12);
-    transition: transform var(--dur-4) var(--ease-out-expo);
+    display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px;
+    color: var(--g-050); background: var(--g-950);
   }
-  .fan-card[data-active] .fan-card__medal { transform: rotate(-8deg) scale(1.1); }
-  /* big outlined numeral: decoration only, so the fill is transparent */
   .fan-card__no {
-    font-family: var(--font-display); font-weight: 700; font-size: 38px; line-height: .9;
-    color: transparent; -webkit-text-stroke: 1.2px rgba(6, 61, 45, .30);
+    font-family: var(--font-mono); font-weight: 500; font-size: 12px; line-height: .9;
+    color: var(--paper-muted);
   }
   .fan-card__title {
     margin-top: 16px; font-family: var(--font-display); font-weight: 600;
     font-size: 19px; line-height: 1.12; letter-spacing: -.01em; color: var(--paper-ink);
   }
-  .fan-card__line { margin-top: 7px; font-size: 12.5px; line-height: 1.5; color: var(--paper-muted); }
+  .fan-card__line { margin-top: 7px; font-size: 14px; line-height: 1.5; color: var(--paper-muted); }
   .fan-card__list { margin-top: auto; padding-top: 14px; display: grid; gap: 7px; }
-  .fan-card__list li { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.3; color: var(--paper-ink-2); }
+  .fan-card__list li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; line-height: 1.4; color: var(--paper-ink-2); }
   .fan-card__tick { flex: none; width: 13px; height: 13px; margin-top: 2px; color: var(--paper-accent); }
 
   /* ---- the slider: < 64rem ----
@@ -788,13 +771,6 @@ injectCss("services", `
       margin-inline: 0; padding: 30px 0 34px; scroll-padding-inline: 0;
       overflow: visible; scroll-snap-type: none;
     }
-    .fan__glow {
-      display: block; position: absolute; left: 50%; top: 50%; z-index: 0;
-      width: 62%; aspect-ratio: 1; border-radius: 50%; pointer-events: none;
-      background: radial-gradient(closest-side, var(--stage-spot), transparent 72%);
-      transform: translate(calc(-50% + var(--glow-dx, 0px)), -50%);
-      transition: transform var(--dur-5) var(--ease-out-expo);   /* the light follows the card you hover */
-    }
     .fan-card {
       flex: 0 0 var(--w); width: var(--w); min-height: 268px;   /* the fan wants a little more air than the rail */
       margin-left: calc(var(--o) * -1);
@@ -804,15 +780,15 @@ injectCss("services", `
       transform: rotate(var(--tilt, 0deg)) translateY(var(--rise, 0px));
       scroll-snap-align: none;
     }
-    .fan__glow + .fan-card { margin-left: 0; }
+    .fan-card:first-child { margin-left: 0; }
     .fan-card:last-child { padding-right: 20px; }
   }
 
   /* reduced motion: the JS does not run, so give a plain hover instead */
   @media (prefers-reduced-motion: reduce) and (hover: hover) and (min-width: 64rem) {
-    .fan-card { transition: transform var(--dur-4) var(--ease-out-expo), box-shadow var(--dur-4) var(--ease-out-expo); }
+    .fan-card { transition: none; }
     .fan-card:hover, .fan-card:focus-visible {
-      z-index: 20; box-shadow: var(--paper-shadow-active);
+      z-index: 20; box-shadow: 0 18px 32px -18px rgba(0, 16, 10, .42);
       transform: rotate(0deg) translateY(calc(var(--rise, 0px) - 12px));
     }
   }

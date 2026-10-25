@@ -8,7 +8,7 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { Icon, Reveal, RevealItem, SplitHeading, useMediaQuery } from "../shared";
+import { Icon, Reveal, SplitHeading, useMediaQuery } from "../shared";
 import { motion, useReducedMotion } from "motion/react";
 
 const Lanyard = lazy(() => import("../vendor/Lanyard"));
@@ -18,17 +18,17 @@ const Lanyard = lazy(() => import("../vendor/Lanyard"));
 const company = {
   name: "Maktech",
   url: "https://www.maktechgroup.com",
-  duration: "2 years",
-  summary: "Web, mobile, SaaS and e-commerce projects."
+  duration: "2025 to Present",
+  summary: "Shopify stores, WordPress websites, custom e-commerce features, and responsive theme development."
 };
 
 const skills = [
-  { mark: "SH", label: "Shopify Development" },
-  { mark: "WP", label: "WordPress & Woo" },
-  { mark: "LI", label: "Liquid & Theme Dev" },
-  { mark: "JS", label: "JavaScript & React" },
-  { mark: "UI", label: "Responsive UI / UX" },
-  { mark: "AN", label: "Motion & Animation" }
+  "Shopify development",
+    "WordPress & WooCommerce",
+    "Liquid & theme customization",
+    "AI-assisted custom features",
+    "Responsive UI",
+    "JavaScript fundamentals"
 ];
 
 export function About() {
@@ -79,7 +79,7 @@ export function About() {
           </SplitHeading>
 
           <Reveal as="p" delay={.16}
-            className="mt-5 max-w-[42ch] text-[13.5px] leading-[1.7] text-muted sm:text-[14.5px] sm:leading-[1.75]">
+            className="mt-5 max-w-[42ch] text-[15px] leading-[1.7] text-muted sm:text-step-0 sm:leading-[1.75]">
             I joined Maktech as an intern in 2025 and now lead web projects. I
             still build Shopify themes, WooCommerce stores, and WordPress plugins.
           </Reveal>
@@ -122,12 +122,12 @@ export function About() {
                                  group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </a>
 
-                  <p className="mt-2 text-[12px] font-medium leading-snug text-body sm:text-[13px]">
+                  <p className="mt-2 text-[13px] font-medium leading-snug text-body sm:text-[14px]">
                     Team Leader &amp; Project Coordinator
-                    <span className="text-muted"> — Web Development</span>
+                    <span className="text-muted"> - Web Development</span>
                   </p>
 
-                  <p className="mt-1.5 max-w-[46ch] text-[11.5px] leading-relaxed text-muted sm:text-[12.5px]">
+                  <p className="mt-1.5 max-w-[46ch] text-[13px] leading-relaxed text-muted sm:text-[14px]">
                     {company.summary}
                   </p>
 
@@ -159,32 +159,15 @@ export function About() {
                 </div>
               </Reveal>
 
-              <Reveal stagger delay={.08} className="grid gap-2 sm:grid-cols-2 sm:gap-2.5">
+              <div className="grid gap-x-6 sm:grid-cols-2">
                 {skills.map(skill => (
-                  <RevealItem key={skill.label} y={16}
-                    className={`group relative isolate overflow-hidden rounded-xl border border-line-strong
-                      bg-surface-raised/70 p-3 sm:p-3.5 ${
-                        reduceMotion ? "" : "hover:border-accent/45 hover:bg-surface-raised"
-                      }`}
-                    style={{ transformPerspective: 850 }}
-                    whileHover={reduceMotion ? undefined : {
-                    y: -2,
-                    transition: { duration: .2, ease: [.16, 1, .3, 1] }
-                    }}
-                    whileTap={reduceMotion ? undefined : { scale: .99 }}>
-                    <div className="relative z-10 flex min-w-0 items-center gap-2.5">
-                    <span aria-hidden="true"
-                      className="grid size-7 flex-none place-items-center rounded-lg border border-accent/25
-                                 bg-accent/[.08] font-mono text-[9px] font-semibold text-accent-hi">
-                      {skill.mark}
-                    </span>
-                    <p className="min-w-0 flex-1 truncate font-display text-[12px] font-semibold leading-tight text-primary sm:text-[13px]">
-                      {skill.label}
-                    </p>
-                    </div>
-                  </RevealItem>
+                  <p key={skill}
+                  className="border-t border-line py-2.5 font-display text-[14px]
+                             font-medium text-body">
+                    {skill}
+                  </p>
                 ))}
-              </Reveal>
+              </div>
             </div>
           </div>
         </div>

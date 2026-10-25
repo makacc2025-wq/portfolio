@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════════════════════════════
    Work.jsx
 
-   Two card fans — Shopify, then WordPress. Each is a header row (label on
+   Two six-card fans — Shopify, then WordPress. Each is a header row (label on
    the left, controls on the right) over a stack of cards that sweeps
    sideways. Drag, arrows, or wait for the auto-advance.
 
@@ -18,8 +18,8 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Icon, Reveal, SplitHeading, Accent, injectCss } from '../shared';
 
 /* ═══ Content ═══════════════════════════════════════════════════════════
-   Keep `blurb` to one line — it sits on a 350px card. Anything longer
-   wraps to three lines and pushes the tags out of the card.              */
+   Keep summaries concise: the cards show a short excerpt and the dialog
+   carries the full project context.                                      */
 
 const shopifyProjects = [
   {
@@ -75,30 +75,24 @@ const shopifyProjects = [
     technologies: ['Shopify', 'Liquid', 'Metafields', 'Product add-ons', 'Pickup'],
   },
   {
-    title: 'Shopify Demo Store 01',
-    blurb: 'Demo project card. Replace this copy with the real store details.',
+    title: 'OS 2.0 storefront study',
+    blurb: 'A clearly labeled visual concept exploring a Shopify storefront layout.',
     image: '/shopify-os-theme-preview.svg',
-    type: 'DEMO · SHOPIFY',
+    type: 'CONCEPT · NOT CLIENT WORK',
     icon: 'shopify',
-    tags: ['Demo placeholder', 'Shopify', 'Replace details'],
+    tags: ['Shopify', 'Layout study'],
     href: '#',
-    brief: 'Placeholder for a Shopify project brief.',
-    challenge: 'Replace this placeholder with the real project challenge.',
-    solution: 'Replace this placeholder with the work and outcome.',
-    technologies: ['Shopify', 'Replace with actual tools'],
+    concept: 'Static visual concept showing a storefront layout. This is not a client project or a shipped implementation.',
   },
   {
-    title: 'Shopify Demo Store 02',
-    blurb: 'Demo project card. Replace this copy with the real store details.',
+    title: 'Storefront performance study',
+    blurb: 'A visual concept for presenting a focused, responsive storefront.',
     image: '/shopify-performance-preview.svg',
-    type: 'DEMO · SHOPIFY',
+    type: 'CONCEPT · NOT CLIENT WORK',
     icon: 'shopify',
-    tags: ['Demo placeholder', 'Shopify', 'Replace details'],
+    tags: ['Shopify', 'Visual concept'],
     href: '#',
-    brief: 'Placeholder for a Shopify project brief.',
-    challenge: 'Replace this placeholder with the real project challenge.',
-    solution: 'Replace this placeholder with the work and outcome.',
-    technologies: ['Shopify', 'Replace with actual tools'],
+    concept: 'Static visual concept for a storefront presentation. This is not a client project or a shipped implementation.',
   },
 ];
 
@@ -119,7 +113,7 @@ const wordpressProjects = [
   {
     title: 'WooCommerce store',
     blurb: 'Multi-vendor marketplace with custom payment gateways, bulk import tooling and subscription products.',
-    result: '500+ products across 15k customers',
+    result: 'Multi-vendor catalog with subscription products',
     image: '/woocommerce-store-preview.svg',
     type: 'WordPress · WooCommerce',
     tags: ['WooCommerce', 'PHP', 'Gateways', 'Subs'],
@@ -132,7 +126,7 @@ const wordpressProjects = [
   {
     title: 'Creative portfolio',
     blurb: 'Filterable case studies and animated galleries on a custom child theme, built to survive the client adding work to it.',
-    result: 'Enquiries up 156%',
+    result: 'Filterable case studies on a custom child theme',
     image: '/wordpress-portfolio-preview.svg',
     type: 'WordPress · Portfolio',
     tags: ['Child theme', 'Filters', 'Motion', 'CPT'],
@@ -145,7 +139,7 @@ const wordpressProjects = [
   {
     title: 'Custom plugin platform',
     blurb: 'Four plugins handling team workflow, client records and automated reporting, wired to the CRM they already used.',
-    result: 'Saves 20+ hours a month per client',
+    result: 'Workflow and CRM reporting automation',
     image: '/wordpress-plugin-preview.svg',
     type: 'WordPress · Custom Plugin',
     tags: ['PHP', 'REST API', 'CRM', 'Cron'],
@@ -156,28 +150,22 @@ const wordpressProjects = [
     technologies: ['WordPress', 'PHP', 'REST API', 'CRM integration', 'Cron'],
   },
   {
-    title: 'WordPress Demo Site 01',
-    blurb: 'Demo project card. Replace this copy with the real website details.',
+    title: 'Business website layout study',
+    blurb: 'An illustrative WordPress layout concept for a service-based business.',
     image: '/wordpress-business-preview.svg',
-    type: 'DEMO · WORDPRESS',
-    tags: ['Demo placeholder', 'WordPress', 'Replace details'],
+    type: 'CONCEPT · NOT CLIENT WORK',
+    tags: ['WordPress', 'Layout study'],
     href: '#',
-    brief: 'Placeholder for a WordPress project brief.',
-    challenge: 'Replace this placeholder with the real project challenge.',
-    solution: 'Replace this placeholder with the work and outcome.',
-    technologies: ['WordPress', 'Replace with actual tools'],
+    concept: 'Static visual concept showing a business website layout. This is not a client project or a shipped implementation.',
   },
   {
-    title: 'WordPress Demo Site 02',
-    blurb: 'Demo project card. Replace this copy with the real website details.',
+    title: 'Portfolio website layout study',
+    blurb: 'An illustrative layout concept for presenting editorial and portfolio content.',
     image: '/wordpress-portfolio-preview.svg',
-    type: 'DEMO · WORDPRESS',
-    tags: ['Demo placeholder', 'WordPress', 'Replace details'],
+    type: 'CONCEPT · NOT CLIENT WORK',
+    tags: ['WordPress', 'Visual concept'],
     href: '#',
-    brief: 'Placeholder for a WordPress project brief.',
-    challenge: 'Replace this placeholder with the real project challenge.',
-    solution: 'Replace this placeholder with the work and outcome.',
-    technologies: ['WordPress', 'Replace with actual tools'],
+    concept: 'Static visual concept showing a portfolio-style layout. This is not a client project or a shipped implementation.',
   },
 ];
 
@@ -213,7 +201,7 @@ injectCss('work-fan', `
       --fan-x: 125px;    /* horizontal offset per card behind the front */
       --fan-z: -35px;    /* depth offset per card */
       position: relative;
-      width: calc(var(--card-w) + (var(--fan-x) * 5));
+      width: calc(var(--card-w) + (var(--fan-x) * var(--fan-steps, 5)));
       height: var(--card-h);
       margin-inline: auto;
       perspective: 1200px;
@@ -238,18 +226,18 @@ injectCss('work-fan', `
       background: var(--c-paper);
       color: var(--c-paper-ink);
       padding: 12px;
-      box-shadow: 0 25px 55px rgba(0, 0, 0, .28);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, .22);
       transform-origin: 50% 85%;
       overflow: hidden;
       user-select: none;
-      transition: transform var(--dur-4) var(--ease-out-expo),
+      transition: transform var(--dur-3) var(--ease-out-expo),
                   opacity .65s ease,
                   filter .65s ease;
       cursor: pointer;
     }
     .work-card * { cursor: pointer; }
     .work-card:focus-visible {
-      outline: 3px solid var(--c-accent-soft);
+      outline: 3px solid var(--c-focus-ring);
       outline-offset: 5px;
     }
 
@@ -288,7 +276,37 @@ injectCss('work-fan', `
       display: block;
       transition: transform var(--dur-4);
     }
-    .work-card:hover .work-card__img img { transform: scale(1.06); }
+    .work-card__artwork {
+      display: grid;
+      align-content: end;
+      width: 100%;
+      height: 100%;
+      padding: clamp(18px, 3vw, 30px);
+      background:
+        linear-gradient(135deg, transparent 54%, rgba(91, 228, 155, .13)),
+        var(--c-surface-sunken);
+      color: var(--c-text-primary);
+    }
+    .work-card__artwork span {
+      color: var(--c-text-accent);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .work-card__artwork strong {
+      max-width: 18ch;
+      margin-top: 8px;
+      font-family: var(--font-display);
+      font-size: clamp(18px, 2.3vw, 28px);
+      line-height: 1.15;
+      letter-spacing: -.03em;
+    }
+    .work-card__img--artwork .work-card__artwork {
+      position: absolute;
+      inset: 0;
+    }
+    .work-card:hover .work-card__img img { transform: scale(1.025); }
     .work-card__type {
       position: absolute;
       z-index: 1;
@@ -304,7 +322,6 @@ injectCss('work-fan', `
       letter-spacing: .12em;
       font-weight: 800;
       text-transform: uppercase;
-      backdrop-filter: blur(8px);
     }
 
     .work-card__body {
@@ -325,7 +342,7 @@ injectCss('work-fan', `
     }
 
     .work-card__blurb {
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.5;
       color: var(--c-paper-ink-2);
       margin: 7px 0 0;
@@ -343,7 +360,7 @@ injectCss('work-fan', `
       padding-top: 10px;
       border-top: 1px solid rgba(6, 61, 45, .12);
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: .01em;
       line-height: 1.5;
       color: var(--c-paper-link);
@@ -377,8 +394,15 @@ injectCss('work-fan', `
       font-size: 13px;
       font-weight: 700;
       white-space: nowrap;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      font-family: inherit;
+      appearance: none;
+      cursor: pointer;
     }
     .work-card__link:hover { text-decoration: underline; }
+    .work-card__link:focus-visible { outline: 2px solid var(--c-focus-ring); outline-offset: 3px; }
 
     .work-nav { display: flex; align-items: center; gap: 14px; }
     .work-nav button { transition: border-color var(--dur-2) ease, color var(--dur-2) ease, transform var(--dur-2) ease; }
@@ -392,7 +416,6 @@ injectCss('work-fan', `
       place-items: center;
       padding: clamp(12px, 3vw, 36px);
       background: rgba(2, 8, 5, .78);
-      backdrop-filter: blur(0);
       overflow-y: auto;
     }
     .project-dialog__panel {
@@ -407,7 +430,7 @@ injectCss('work-fan', `
       border-radius: 28px;
       background: var(--c-surface-raised);
       color: var(--c-text-body);
-      box-shadow: 0 32px 100px rgba(0, 0, 0, .48), 0 0 0 1px rgba(91, 228, 155, .08);
+      box-shadow: 0 24px 72px rgba(0, 0, 0, .4);
     }
     .project-dialog__visual {
       min-height: 100%;
@@ -429,6 +452,23 @@ injectCss('work-fan', `
       height: 100%;
       object-fit: cover;
     }
+    .project-dialog__artwork {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: clamp(24px, 4vw, 42px);
+      background:
+        linear-gradient(135deg, transparent 46%, rgba(91, 228, 155, .16)),
+        var(--n-850);
+      color: var(--c-text-primary);
+      font-family: var(--font-display);
+      font-size: clamp(56px, 10vw, 112px);
+      font-weight: 700;
+      letter-spacing: -.08em;
+      line-height: 1;
+    }
+    .project-dialog__visual--artwork::after { display: none; }
     .project-dialog__visual-copy {
       position: absolute;
       z-index: 1;
@@ -480,12 +520,12 @@ injectCss('work-fan', `
       transition: transform var(--dur-2) var(--ease-out-expo), background var(--dur-2) ease;
     }
     .project-dialog__close:hover { transform: rotate(90deg); background: rgba(5, 15, 10, .9); }
-    .project-dialog__close:focus-visible,
-    .project-dialog__link:focus-visible { outline: 2px solid var(--c-accent-soft); outline-offset: 4px; }
+    .project-dialog__close:focus-visible { outline: 2px solid var(--c-accent-soft); outline-offset: 4px; }
+    .project-dialog__link:focus-visible { outline: 2px solid var(--c-focus-ring); outline-offset: 4px; }
     .project-dialog__intro {
       margin: 10px 0 26px;
       color: var(--c-text-secondary);
-      font-size: 14px;
+      font-size: 16px;
       line-height: 1.75;
     }
     .project-dialog__section {
@@ -498,7 +538,7 @@ injectCss('work-fan', `
       gap: 10px;
       margin: 0 0 8px;
       color: var(--c-text-primary);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
       letter-spacing: .02em;
     }
@@ -516,7 +556,7 @@ injectCss('work-fan', `
     .project-dialog__section p {
       margin: 0;
       color: var(--c-text-secondary);
-      font-size: 13px;
+      font-size: 16px;
       line-height: 1.75;
     }
     .project-dialog__stack {
@@ -588,7 +628,7 @@ injectCss('work-fan', `
         /* card + 5 fan steps must stay inside the gutter, capped so a
            640px device does not get a 520px card */
         --fan-x: 16px;
-        --card-w: min(330px, calc(100% - (var(--fan-x) * 5)));
+        --card-w: min(330px, calc(100% - (var(--fan-x) * var(--fan-steps, 5))));
         --fan-z: -16px;
         --card-h: 444px;
       }
@@ -619,8 +659,8 @@ injectCss('work-fan', `
         display: -webkit-box;
         flex: none;
         -webkit-line-clamp: 2;
-        font-size: 11px;
-        line-height: 1.4;
+        font-size: 13px;
+        line-height: 1.45;
         margin-top: 5px;
       }
       .work-card__result { margin-top: 8px; padding-top: 8px; }
@@ -641,11 +681,14 @@ injectCss('work-fan', `
 
 /* ═══ ProjectCard ═══════════════════════════════════════════════════════ */
 
-const ProjectCard = ({ project, position, isExiting, onBringToFront }) => (
+const ProjectCard = ({ project, position, slideNumber, slideCount, isExiting, onBringToFront }) => (
   <article
     className={`work-card pos-${position} ${isExiting ? 'exit' : ''}`}
-    tabIndex={0}
-    aria-label={`${project.title}. Open project details.`}
+    tabIndex={position === 'hidden' ? -1 : 0}
+    aria-hidden={position === 'hidden' ? 'true' : undefined}
+    inert={position === 'hidden' ? '' : undefined}
+    aria-roledescription="slide"
+    aria-label={`${project.title}, ${slideNumber} of ${slideCount}. Open project details.`}
     aria-haspopup="dialog"
     onClick={event => {
       if (!event.target.closest('a, button')) onBringToFront();
@@ -658,16 +701,29 @@ const ProjectCard = ({ project, position, isExiting, onBringToFront }) => (
       }
     }}
   >
-    <div className="work-card__img">
+    <div className={`work-card__img${project.image.endsWith('.svg') ? ' work-card__img--artwork' : ''}`}>
       <span className="work-card__type">
         {project.icon && <Icon name={project.icon} className="size-[14px] flex-none" />}
         {project.type}
       </span>
-      <img
-        src={project.image}
-        alt=""
-        loading={project.image.startsWith('/') ? 'eager' : 'lazy'}
-      />
+      {project.concept ? (
+        <img
+          src={project.image}
+          alt={project.concept ? `Visual concept: ${project.title}` : `Preview of ${project.title}`}
+          loading="lazy"
+        />
+      ) : project.image.endsWith('.svg') ? (
+        <div className="work-card__artwork" aria-hidden="true">
+          <span>Selected WordPress work</span>
+          <strong>{project.title}</strong>
+        </div>
+      ) : (
+        <img
+          src={project.image}
+          alt={project.concept ? `Visual concept: ${project.title}` : `Preview of ${project.title}`}
+          loading="lazy"
+        />
+      )}
     </div>
 
     <div className="work-card__body">
@@ -684,14 +740,9 @@ const ProjectCard = ({ project, position, isExiting, onBringToFront }) => (
             <span key={tag}>{tag}</span>
           ))}
         </div>
-        <a
-          className="work-card__link"
-          href={project.href}
-          target={project.href.startsWith('https://') ? '_blank' : undefined}
-          rel={project.href.startsWith('https://') ? 'noreferrer' : undefined}
-        >
-          View &#8599;
-        </a>
+        <button className="work-card__link" type="button" onClick={onBringToFront}>
+          Details &#8599;
+        </button>
       </div>
     </div>
   </article>
@@ -746,11 +797,11 @@ const ProjectDialog = ({ project, onClose }) => {
         <motion.div
           className="project-dialog"
           role="presentation"
-          initial={reduceMotion ? false : { opacity: 0, backdropFilter: 'blur(0px)' }}
-          animate={{ opacity: 1, backdropFilter: 'blur(14px)' }}
-          exit={reduceMotion ? undefined : { opacity: 0, backdropFilter: 'blur(0px)' }}
-          transition={{ duration: reduceMotion ? 0 : 0.48, ease: [0.22, 1, 0.36, 1] }}
-          onMouseDown={(event) => {
+          initial={reduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={reduceMotion ? undefined : { opacity: 0 }}
+          transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+          onClick={(event) => {
             if (event.target === event.currentTarget) onClose(null);
           }}
         >
@@ -763,33 +814,36 @@ const ProjectDialog = ({ project, onClose }) => {
             initial={reduceMotion ? false : {
               opacity: 0,
               y: 34,
-              scale: 0.94,
-              rotateX: 7,
-              rotateY: -2,
-              filter: 'blur(10px)',
+              scale: 0.99,
             }}
-            animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0, rotateY: 0, filter: 'blur(0px)' }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduceMotion ? undefined : {
               opacity: 0,
-              y: 18,
-              scale: 0.97,
-              rotateX: -3,
-              filter: 'blur(5px)',
+              y: 8,
+              scale: 0.995,
             }}
             transition={{
-              duration: reduceMotion ? 0 : 0.72,
+              duration: reduceMotion ? 0 : 0.38,
               ease: [0.16, 1, 0.3, 1],
             }}
-            style={{ transformPerspective: 1200, transformOrigin: '50% 35%' }}
           >
-            <div className="project-dialog__visual">
-              <motion.img
-                src={project.image}
-                alt=""
-                initial={reduceMotion ? false : { scale: 1.12 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: reduceMotion ? 0 : 1.1, delay: reduceMotion ? 0 : 0.08, ease: [0.16, 1, 0.3, 1] }}
-              />
+            <div className={`project-dialog__visual${project.image.endsWith('.svg') && !project.concept ? ' project-dialog__visual--artwork' : ''}`}>
+              {project.concept ? (
+                <img
+                  src={project.image}
+                  alt={project.concept ? `Visual concept: ${project.title}` : `Preview of ${project.title}`}
+                />
+              ) : project.image.endsWith('.svg') ? (
+                <div className="project-dialog__artwork" aria-hidden="true">WordPress</div>
+              ) : (
+                <motion.img
+                  src={project.image}
+                  alt={project.concept ? `Visual concept: ${project.title}` : `Preview of ${project.title}`}
+                  initial={reduceMotion ? false : { scale: 1.04 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: reduceMotion ? 0 : .6, delay: reduceMotion ? 0 : .05, ease: [0.16, 1, 0.3, 1] }}
+                />
+              )}
               <motion.div
                 className="project-dialog__visual-copy"
                 initial={reduceMotion ? false : { opacity: 0, y: 16 }}
@@ -806,6 +860,9 @@ const ProjectDialog = ({ project, onClose }) => {
 
             <motion.div
               className="project-dialog__content"
+              role="region"
+              aria-label={`${project.title} project details`}
+              tabIndex={0}
               initial={reduceMotion ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.48, delay: reduceMotion ? 0 : 0.12, ease: [0.16, 1, 0.3, 1] }}
@@ -819,29 +876,37 @@ const ProjectDialog = ({ project, onClose }) => {
               >
                 &times;
               </button>
-              <p className="label">Project breakdown</p>
+              <p className="label">{project.concept ? 'Visual concept' : 'Project breakdown'}</p>
               <p className="project-dialog__intro">{project.blurb}</p>
 
-              <motion.div className="project-dialog__section" initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.42, delay: reduceMotion ? 0 : 0.22 }}>
-                <h3><span>01</span> The brief</h3>
-                <p>{project.brief}</p>
-              </motion.div>
-              <motion.div className="project-dialog__section" initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.42, delay: reduceMotion ? 0 : 0.3 }}>
-                <h3><span>02</span> The challenge</h3>
-                <p>{project.challenge}</p>
-              </motion.div>
-              <motion.div className="project-dialog__section" initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.42, delay: reduceMotion ? 0 : 0.38 }}>
-                <h3><span>03</span> The solution</h3>
-                <p>{project.solution}</p>
-              </motion.div>
-              <motion.div className="project-dialog__section" initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.42, delay: reduceMotion ? 0 : 0.46 }}>
-                <h3><span>04</span> Tools &amp; technology</h3>
-                <div className="project-dialog__stack">
-                  {project.technologies.map((technology) => (
-                    <span key={technology}>{technology}</span>
-                  ))}
+              {project.concept ? (
+                <div className="project-dialog__section">
+                  <p>{project.concept}</p>
                 </div>
-              </motion.div>
+              ) : (
+                <>
+                  <div className="project-dialog__section">
+                    <h3><span>01</span> The brief</h3>
+                    <p>{project.brief}</p>
+                  </div>
+                  <div className="project-dialog__section">
+                    <h3><span>02</span> The challenge</h3>
+                    <p>{project.challenge}</p>
+                  </div>
+                  <div className="project-dialog__section">
+                    <h3><span>03</span> The solution</h3>
+                    <p>{project.solution}</p>
+                  </div>
+                  <div className="project-dialog__section">
+                    <h3><span>04</span> Tools &amp; technology</h3>
+                    <div className="project-dialog__stack">
+                      {project.technologies.map((technology) => (
+                        <span key={technology}>{technology}</span>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
 
               {project.href.startsWith('https://') ? (
                 <a
@@ -852,11 +917,11 @@ const ProjectDialog = ({ project, onClose }) => {
                 >
                   Visit live project <span aria-hidden="true">&#8599;</span>
                 </a>
-              ) : (
+              ) : !project.concept ? (
                 <span className="project-dialog__link project-dialog__link--disabled">
                   Live project not available
                 </span>
-              )}
+              ) : null}
             </motion.div>
           </motion.div>
         </motion.div>
@@ -889,7 +954,6 @@ const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialog
     const slot = order.indexOf(i);
     return slot < 6 ? slot : 'hidden';
   };
-
   const changeOrder = (update) => {
     const nextOrder = update(orderRef.current);
     orderRef.current = nextOrder;
@@ -1005,7 +1069,7 @@ const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialog
     setProgressRun((run) => run + 1);
     play();
   };
-  const bringToFront = (index, project) => {
+  const bringToFront = (project) => {
     if (suppressClick.current) {
       suppressClick.current = false;
       clearTimeout(suppressClickTimer.current);
@@ -1015,7 +1079,6 @@ const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialog
     clearTimeout(advanceTimer.current);
     advanceTimer.current = null;
     setExiting(-1);
-    changeOrder((current) => [index, ...current.filter((item) => item !== index)]);
     remaining.current = delay;
     setProgressRun((run) => run + 1);
     onOpenProject(project);
@@ -1042,7 +1105,7 @@ const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialog
             type="button"
             onClick={stepPrev}
             aria-label="Previous project"
-            className="grid size-10 place-items-center rounded-full border border-line text-muted"
+            className="grid size-11 place-items-center rounded-full border border-line text-muted"
           >
             &#8592;
           </button>
@@ -1050,7 +1113,7 @@ const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialog
             type="button"
             onClick={stepNext}
             aria-label="Next project"
-            className="grid size-10 place-items-center rounded-full border border-line text-muted"
+            className="grid size-11 place-items-center rounded-full border border-line text-muted"
           >
             &#8594;
           </button>
@@ -1067,6 +1130,13 @@ const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialog
 
       <div
         className="work-stage"
+        role="group"
+        aria-roledescription="carousel"
+        aria-label={`${label} projects`}
+        onFocusCapture={pause}
+        onBlurCapture={event => {
+          if (!event.currentTarget.contains(event.relatedTarget)) play();
+        }}
         onMouseEnter={() => {
           hovered.current = true;
           pause();
@@ -1083,14 +1153,16 @@ const Fan = ({ projects, label, description, delay = 3000, onOpenProject, dialog
         onPointerCancel={cancelDrag}
         style={{ userSelect: 'none', touchAction: 'pan-y' }}
       >
-        <div className="work-fan">
+        <div className="work-fan" style={{ '--fan-steps': projects.length - 1 }}>
           {projects.map((project, i) => (
             <ProjectCard
               key={project.title}
               project={project}
               position={position(i)}
+              slideNumber={order.indexOf(i) + 1}
+              slideCount={projects.length}
               isExiting={exiting === i}
-              onBringToFront={() => bringToFront(i, project)}
+              onBringToFront={() => bringToFront(project)}
             />
           ))}
         </div>
@@ -1122,16 +1194,16 @@ export function Work() {
 
         <Fan
           projects={shopifyProjects}
-          label="Shopify · 200+ live stores"
-          description="Custom themes, speed work and private apps, built on Liquid and OS 2.0."
+          label="Shopify · Builds & concepts"
+          description="Four selected builds, with two clearly labeled visual layout concepts."
           onOpenProject={setSelectedProject}
           dialogOpen={Boolean(selectedProject)}
         />
 
         <Fan
           projects={wordpressProjects}
-          label="WordPress · 200+ custom sites"
-          description="Bespoke plugins, WooCommerce builds and design systems a client can run themselves."
+          label="WordPress · Builds & concepts"
+          description="Four selected builds, with two clearly labeled visual layout concepts."
           onOpenProject={setSelectedProject}
           dialogOpen={Boolean(selectedProject)}
         />

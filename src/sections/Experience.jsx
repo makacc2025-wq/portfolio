@@ -28,7 +28,7 @@ const work = [
     title: "Team Leader & Project Coordinator",
     org: "Maktech",
     orgUrl: "https://www.maktechgroup.com",
-    period: "Jan 2026 — Present",
+    period: "Jan 2026 to Present",
     current: true,
     description:
       "Lead the Shopify and WordPress build team, owning scoping, code review and launch from first call through post-launch support.",
@@ -37,7 +37,7 @@ const work = [
     title: "Shopify & WordPress Developer",
     org: "Maktech",
     orgUrl: "https://www.maktechgroup.com",
-    period: "Sep 2025 — Dec 2025",
+    period: "Sep 2025 to Dec 2025",
     description:
       "Joined the permanent team building custom themes and WooCommerce stores, taking client work from brief to live site.",
   },
@@ -45,7 +45,7 @@ const work = [
     title: "Intern",
     org: "Maktech",
     orgUrl: "https://www.maktechgroup.com",
-    period: "Jun 2025 — Aug 2025",
+    period: "Jun 2025 to Aug 2025",
     description:
       "Started on theme fixes and small client tickets, shipping to production inside the first month.",
   },
@@ -396,7 +396,7 @@ function Timeline({ label, items }) {
                   {item.current && <span className="xp-pill">Current</span>}
                 </div>
 
-                <p className="mt-2 font-mono text-[13px] tracking-[.03em] text-link">
+                <p className="mt-2 font-mono text-[14px] tracking-[.03em] text-link">
                   {item.orgUrl ? (
                     <a href={item.orgUrl} target="_blank" rel="noreferrer" className="link-sweep">
                       {item.org}
@@ -404,7 +404,7 @@ function Timeline({ label, items }) {
                   ) : item.org}
                 </p>
 
-                <p className="mt-1 font-mono text-[12.5px] tracking-[.04em] text-faint">
+                <p className="mt-1 font-mono text-[13px] tracking-[.04em] text-faint">
                   {item.period}
                 </p>
 

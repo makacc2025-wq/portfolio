@@ -41,13 +41,13 @@ const EASE = [.16, 1, .3, 1];
 /* ==========================================================================
    The two platforms, as two badges: the Shopify mark and the WordPress mark.
 
-   They enter with a bounce, then float gently. Hover one (tap on a phone) and its
+   They settle in gently. Hover one (tap on a phone) and its
    tags float out of it as pills you can drag and throw; move away and they tuck
    back in. The mechanics are FolderFloat's; the badge replaces its folder.
 
-   Timing is deliberately slow and soft. Opening takes ~1.1s with an 85ms stagger,
-   closing ~1s, and a pill takes 380ms to fade. The pointer also has to rest on a
-   badge for 90ms before it opens and leave for 320ms before it closes, so
+   Opening takes ~680ms with a short stagger, closing stays quick, and a pill
+   fades in 220ms. The pointer rests briefly before opening and leaves before
+   closing, so
    sweeping across them does not make them flicker. Change OPEN_MS / STAGGER /
    CLOSE_RATIO below to make it quicker or slower.
 
@@ -63,8 +63,8 @@ const SLOTS = [
    SLOTS[1].top + UNIT under the stage height minus the hint, or the second
    pill lands on the chip — which is exactly what happened when the folder
    grew from 132 to 178 and these numbers did not move with it. */
-const OPEN_MS = 1150, STAGGER = 85, CLOSE_RATIO = 0.85, FADE_MS = 380;
-const HOVER_IN = 90, HOVER_OUT = 320;       // ms the pointer must rest / be gone
+const OPEN_MS = 680, STAGGER = 48, CLOSE_RATIO = 0.82, FADE_MS = 220;
+const HOVER_IN = 70, HOVER_OUT = 180;       // ms the pointer must rest / be gone
 
 function PlatformBadges({ reduce }) {
   const [openId, setOpenId] = useState(null);
@@ -129,12 +129,11 @@ function PlatformBadges({ reduce }) {
           style={desktop
             ? { left: SLOTS[i].left, top: SLOTS[i].top, width: size.badge }
             : { width: size.badge }}
-          /* in with a bounce: up from below, tilted, then it settles */
-          initial={reduce ? false : { opacity: 0, y: 70, scale: 0.55, rotate: i ? 9 : -9 }}
+          initial={reduce ? false : { opacity: 0, y: 18, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
           transition={{
-            default: { type: "spring", stiffness: 105, damping: 12, mass: 0.9, delay: 0.35 + i * 0.2 },
-            opacity: { duration: 0.7, delay: 0.35 + i * 0.2 }
+            default: { type: "spring", stiffness: 220, damping: 26, mass: 0.8, delay: 0.12 + i * 0.1 },
+            opacity: { duration: 0.42, delay: 0.12 + i * 0.1 }
           }}
         >
           <span className="block w-full">
@@ -204,9 +203,10 @@ export function Hero() {
           </Reveal>
 
           <SplitHeading as="h1" delay={.1} data-copy-block
-            className="mt-3 max-w-[14ch] text-balance text-[clamp(32px,5.2vw,66px)] leading-[1.03] tracking-[.005em]">
-            Custom builds on
-            <span className="text-link">Shopify &amp; WordPress</span>
+            className="mt-3 max-w-[16ch] text-balance text-[clamp(32px,5.2vw,66px)] leading-[1.03] tracking-[.005em]">
+            Thoughtful Design.
+            <span className="text-link">Practical Development.</span>
+            Better Online Stores.
           </SplitHeading>
 
           <Reveal as="div" delay={.2} data-copy-block className="mt-5 flex items-center gap-3 sm:gap-4">
@@ -216,7 +216,7 @@ export function Hero() {
             </p>
           </Reveal>
 
-          <Reveal as="p" delay={.26} data-copy-block className="mt-4 max-w-[48ch] text-[13.5px] leading-relaxed text-muted sm:text-step-0">
+          <Reveal as="p" delay={.26} data-copy-block className="mt-4 max-w-[48ch] text-[15px] leading-relaxed text-muted sm:text-step-0">
             At Maktech, I take projects from planning through launch. I also
             build Shopify themes, WooCommerce stores, and WordPress plugins.
           </Reveal>
