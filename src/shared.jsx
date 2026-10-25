@@ -68,21 +68,14 @@ export function Icon({ name, ...rest }) {
 }
 
 export function Monogram({ id = "mark", className }) {
-  // the gradient needs a unique id per instance, or the second one inherits
-  const grad = `${id}-grad`;
   return (
-    <svg className={className} viewBox="0 0 64 64" aria-hidden="true">
-      <defs>
-        <linearGradient id={grad} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#5be49b" />
-          <stop offset="1" stopColor="#016a4e" />
-        </linearGradient>
-      </defs>
-      <rect x="3" y="3" width="58" height="58" rx="16" fill="none" stroke={`url(#${grad})`} strokeWidth="2.5" />
-      <path d="M16 19h21" fill="none" stroke={`url(#${grad})`} strokeWidth="4" strokeLinecap="round" />
-      <path d="M26.5 19v26" fill="none" stroke={`url(#${grad})`} strokeWidth="4" strokeLinecap="round" />
-      <path d="M46 19v18.5c0 5-3.3 7.8-8 7.8-3.4 0-6-1.4-7.6-3.8" fill="none" stroke="#8cffc6" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img
+      src="/logo.png"
+      alt=""
+      aria-hidden="true"
+      className={className}
+      draggable="false"
+    />
   );
 }
 
