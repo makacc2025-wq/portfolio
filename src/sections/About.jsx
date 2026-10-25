@@ -184,7 +184,6 @@ export function About() {
                 <Lanyard
                   frontImage="/card-front.png"
                   backImage="/card-back.png"
-                  strapImage="/band.svg"
                   cardColor="var(--n-850)"
                   finish="metallic"
                   metal="graphite"
