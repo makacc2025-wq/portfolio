@@ -136,8 +136,6 @@ Deploy the generated `dist/` directory to a static host. `base: "./"` in
 
 ## Asset references to review
 
-The files above list assets that actually exist in the repository. Two current
-references point to files that are not present in `public/`: About passes
-`/band.svg` to the Lanyard component, and `site.webmanifest` declares three
-icons under `/assets/img/`. These are noted here rather than listed as
-existing files.
+The files above list assets that actually exist in the repository. The current
+review is focused on keeping public asset references aligned with actual files
+in `public/` and removing any stale paths that are no longer used.

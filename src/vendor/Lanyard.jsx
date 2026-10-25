@@ -710,7 +710,7 @@ const Lanyard = ({
   size = 0.6,
   anchor = 'center',
   strapLength = 0.5,
-  strapImage,
+  strapImage = null,
   strapColor = '#111111',
   strapWidth = 0.65,
   metal = 'silver',
@@ -963,13 +963,14 @@ const Lanyard = ({
         }
       }
 
-      const imageKey = `${s.frontImage}|${s.backImage}|${s.strapImage}`;
+      const imageKey = `${s.frontImage}|${s.backImage}|${s.strapImage ?? 'none'}`;
       if (imageKey !== applied.imageKey) {
         const token = ++imageToken;
+        const strapLoad = s.strapImage ? loadImage(imageCache, s.strapImage) : Promise.resolve(null);
         Promise.all([
           loadImage(imageCache, s.frontImage),
           loadImage(imageCache, s.backImage),
-          loadImage(imageCache, s.strapImage)
+          strapLoad
         ]).then(([front, back, strap]) => {
           if (!alive || token !== imageToken) return;
           images.front = front;
