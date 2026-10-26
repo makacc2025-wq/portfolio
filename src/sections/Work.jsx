@@ -55,7 +55,7 @@ const shopifyProjects = [
     image: '/Luxury-E-Commerce-Showcase.png',
     type: 'SHOPIFY · LUXURY',
     tags: ['Shopify Liquid', 'Motion Design', 'Email Capture', 'Luxury UX'],
-    href: '#',
+    href: 'https://shopsamat.com',
     brief: 'Turn a luxury weaving label’s Shopify password page into a pre-launch waitlist.',
     challenge: 'The experience needed to build anticipation and collect interest while keeping the products hidden until visitors chose to reveal them.',
     solution: 'I made the wardrobe open on tap to reveal the collection in shadow, then used the password page to collect waitlist signups.',
@@ -75,24 +75,32 @@ const shopifyProjects = [
     technologies: ['Shopify', 'Liquid', 'Metafields', 'Product add-ons', 'Pickup'],
   },
   {
-    title: 'OS 2.0 storefront study',
-    blurb: 'A clearly labeled visual concept exploring a Shopify storefront layout.',
-    image: '/shopify-os-theme-preview.svg',
-    type: 'CONCEPT · NOT CLIENT WORK',
+    title: 'Bundle-Safe Cart Limit System',
+    blurb: 'Customized a Shopify theme for Fitvexa, adding a cart-wide quantity cap that works alongside app-driven bundle pricing.',
+    image: '/Bundle-Safe Cart Limit System.png',
+    type: 'SHOPIFY · BUNDLE LOGIC',
     icon: 'shopify',
-    tags: ['Shopify', 'Layout study'],
-    href: '#',
-    concept: 'Static visual concept showing a storefront layout. This is not a client project or a shipped implementation.',
+    tags: ['Shopify', 'Liquid', 'Bundle Logic'],
+    href: 'https://fitvexa.at/products/fitvexa-at',
+    brief: 'Cap orders at 10 items due to limited stock, and show a clear "was/now" savings price—without disturbing the existing bundle tiers.',
+    challenge: 'Compare-at price broke the bundle apps checkout savings. And since each bundle is its own line item, a per-line cap could be bypassed — 10 plus 3 reached 13 items.',
+
+    solution: 'I rebuilt the price display as static markup, leaving the discount app untouched. For the cap, I wrote a cart-wide layer in Liquid and JavaScript that intercepts add-to-cart, counts the whole cart, and locks the quantity controls at the limit.',
+
+    technologies: ['Shopify', 'Liquid', 'JavaScript', 'Bundle Logic', 'Cart API', 'i18n (DE)'],
   },
   {
-    title: 'Storefront performance study',
-    blurb: 'A visual concept for presenting a focused, responsive storefront.',
-    image: '/shopify-performance-preview.svg',
-    type: 'CONCEPT · NOT CLIENT WORK',
+    title: 'Single-Product Store Launch',
+    blurb: 'Planned, designed and launched a 5-page Shopify store for a first-time founder with one product, in 7 days.',
+    image: '/LUNËX Beauty E-Commerce Showcase.png',
+    type: 'SHOPIFY · LAUNCH STORE',
     icon: 'shopify',
-    tags: ['Shopify', 'Visual concept'],
-    href: '#',
-    concept: 'Static visual concept for a storefront presentation. This is not a client project or a shipped implementation.',
+    tags: ['Shopify', 'EComposer', 'Custom Code', 'SEO', 'Responsive UI'],
+    href: 'https://lunexwellness.com/',
+    brief: 'The client had one product and didn’t know how to start selling. She needed a complete store, with SEO and marketing included, in 7 days.',
+    challenge: 'One product had to carry the whole store and build trust on its own. Everything, from planning to launch, had to fit in a 7-day deadline.',
+    solution: 'I planned the site structure first, then built a 5-page store (Home, Product, About, FAQ, Contact) with EComposer. I added custom code for a higher-quality design and built SEO and marketing setup into the process. The store launched on time, within the 7 days.',
+    technologies: ['Shopify', 'EComposer', 'Custom Code', 'SEO', 'Responsive UI'],
   },
 ];
 
@@ -740,9 +748,15 @@ const ProjectCard = ({ project, position, slideNumber, slideCount, isExiting, on
             <span key={tag}>{tag}</span>
           ))}
         </div>
-        <button className="work-card__link" type="button" onClick={onBringToFront}>
-          Details &#8599;
-        </button>
+        {project.href.startsWith('https://') ? (
+          <a className="work-card__link" href={project.href} target="_blank" rel="noreferrer">
+            Visit &#8599;
+          </a>
+        ) : (
+          <button className="work-card__link" type="button" onClick={onBringToFront}>
+            Details &#8599;
+          </button>
+        )}
       </div>
     </div>
   </article>
