@@ -16,7 +16,7 @@ export const profile = {
   timeZone: "Asia/Dhaka",
   status: "Currently working at Maktech",
   statusUrl: "https://www.maktechgroup.com",
-  resume: "/resume.pdf",
+  resume: "/Towker_Ahmed_Joy_Resume.pdf",
   bio: "Shopify developer building custom themes, sections and apps that stay fast.",
   role: "SHOPIFY & WORDPRESS DEVELOPER, DHAKA, BD",
   working: "Team lead @ Maktech",
