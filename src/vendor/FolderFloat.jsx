@@ -138,6 +138,7 @@ export default function FolderFloat({
   const [live, setLive] = useState(false);
   const [sizes, setSizes] = useState([]);
   const anchorRef = useRef(null);
+  const triggerRef = useRef(null);
   const pillRefs = useRef([]);
   const world = useRef({
     engine: null,
@@ -279,7 +280,10 @@ export default function FolderFloat({
 
   const set = useCallback(
     next => {
-      if (!next) stopPhysics();
+      if (!next) {
+        stopPhysics();
+        if (pillRefs.current.includes(document.activeElement)) triggerRef.current?.focus();
+      }
       if (controlled) {
         if (next !== openRef.current) latest.current.onOpenChange?.(next);
         return;
@@ -292,6 +296,10 @@ export default function FolderFloat({
     },
     [stopPhysics, controlled]
   );
+
+  useLayoutEffect(() => {
+    if (!open && pillRefs.current.includes(document.activeElement)) triggerRef.current?.focus();
+  }, [open]);
 
   useEffect(() => {
     clearTimeout(liveTimer.current);
@@ -440,6 +448,7 @@ export default function FolderFloat({
       <div className="relative [width:var(--ff-w)] [height:var(--ff-h)]">
       <div
         ref={anchorRef}
+        inert={!open}
         className="absolute top-0 left-1/2 z-[1] h-0 w-0 group-data-[open]:z-[4] group-data-[open]:before:absolute group-data-[open]:before:top-[calc(-1*(var(--ff-lift)+120px))] group-data-[open]:before:left-[calc(-1*(var(--ff-spread)+100px))] group-data-[open]:before:h-[calc(var(--ff-lift)+120px)] group-data-[open]:before:w-[calc(2*var(--ff-spread)+200px)] group-data-[open]:before:content-['']"
       >
         {list.map((item, i) => {
@@ -453,7 +462,6 @@ export default function FolderFloat({
               type="button"
               className="pointer-events-none absolute top-0 left-1/2 m-0 h-[34px] cursor-pointer rounded-[17px] border-0 px-3.5 whitespace-nowrap opacity-0 shadow-[0_4px_12px_rgba(0,0,0,0.14)] outline-none [background:var(--ff-item)] [color:var(--ff-item-ink)] [font:inherit] [transform:translate(-50%,44px)_scale(0.6)] [transform-origin:50%_50%] [-webkit-tap-highlight-color:transparent] [transition:transform_var(--ff-close)_var(--ff-ease-out)_calc((var(--ff-n)-1-var(--i))*var(--ff-stagger)*0.5),opacity_var(--ff-fade)_ease_calc((var(--ff-n)-1-var(--i))*var(--ff-stagger)*0.5+var(--ff-close)*0.45),scale_160ms_var(--ff-ease-out)] group-data-[open]:pointer-events-auto group-data-[open]:opacity-100 group-data-[open]:[transform:translate(calc(-50%+var(--x)),var(--y))_rotate(var(--r))_scale(1)] group-data-[open]:[transition:transform_var(--ff-open)_var(--ff-spring)_calc(var(--i)*var(--ff-stagger)),opacity_var(--ff-fade)_ease_calc(var(--i)*var(--ff-stagger)),scale_160ms_var(--ff-ease-out)] group-data-[live]:cursor-grab group-data-[live]:touch-none group-data-[live]:[transition:scale_160ms_var(--ff-ease-out)] data-[drag]:cursor-grabbing! group-data-[open]:hover:[scale:1.05] group-data-[open]:active:[scale:0.97] data-[pop]:[animation:folder-float-pop_320ms_var(--ff-ease-out)] motion-reduce:[transition:opacity_200ms_ease] motion-reduce:group-data-[open]:[transition:opacity_200ms_ease_calc(var(--i)*var(--ff-stagger))]"
               tabIndex={open ? 0 : -1}
-              aria-hidden={!open}
               data-pop={popped === i ? '' : undefined}
               style={{
                 '--i': i,
@@ -521,6 +529,7 @@ export default function FolderFloat({
           </>
         )}
         <button
+          ref={triggerRef}
           type="button"
           className={`absolute right-0 bottom-0 left-0 z-[3] m-0 ${badge ? "h-full" : "h-[76%]"} cursor-pointer border-0 bg-transparent p-0 outline-none [border-radius:var(--ff-r)] [-webkit-tap-highlight-color:transparent] focus-visible:[outline:2px_solid_var(--c-focus-ring)] focus-visible:[outline-offset:3px]`}
           aria-expanded={open}

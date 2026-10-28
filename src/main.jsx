@@ -149,7 +149,7 @@ function ScrollToTop() {
       ref={scrollTopRef}
       href="#top"
       aria-label="Scroll to top"
-      aria-hidden={!visible}
+      inert={!visible}
       tabIndex={visible ? 0 : -1}
       className="scroll-top"
       onClick={event => event.currentTarget.blur()}
