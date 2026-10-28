@@ -206,7 +206,6 @@ export function Hero() {
             className="mt-3 max-w-[16ch] text-balance text-[clamp(32px,5.2vw,66px)] leading-[1.03] tracking-[.005em]">
             Thoughtful Design.
             <span className="text-link">Practical Development.</span>
-            Better Online Stores.
           </SplitHeading>
 
           <Reveal as="div" delay={.2} data-copy-block className="mt-5 flex items-center gap-3 sm:gap-4">
