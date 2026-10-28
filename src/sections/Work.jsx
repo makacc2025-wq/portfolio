@@ -23,10 +23,11 @@ import { Icon, Reveal, SplitHeading, Accent, injectCss } from '../shared';
 
 const shopifyProjects = [
   {
-    title: 'Custom Theme Design',
+    title: 'Custom T-Shirt Shopify Store',
     blurb: 'A custom Shopify theme for a T-shirt label, with its artwork and music built into the storefront.',
     result: 'Custom Shopify Experience',
     image: '/MIRΛI.png',
+    imageAlt: 'T-shirt product customizer mockup with a shirt preview, color and size options, and design controls.',
     type: 'SHOPIFY · CUSTOM DESIGN',
     icon: 'shopify',
     tags: ['Shopify', 'T-Shirt Design', 'Music System', 'Responsive'],
@@ -37,9 +38,10 @@ const shopifyProjects = [
     technologies: ['Shopify', 'Liquid', 'Custom theme design', 'Responsive UI'],
   },
   {
-    title: 'Prestige Theme Design',
+    title: 'Shopify Prestige Theme Customization',
     blurb: 'Customized Shopify’s Prestige theme for Riosense and built a Liquid bundle flow for products and subscriptions.',
     image: '/Prestige_Theme_Design_Showcase.png',
+    imageAlt: 'Riosense Shopify storefront showcase across desktop and mobile, featuring fragrance diffusers and bundle options.',
     type: 'SHOPIFY · PREMIUM THEME',
     icon: 'shopify',
     tags: ['Prestige Theme', 'Custom Liquid', 'Bundle System', 'Subscriptions', 'Responsive Design'],
@@ -50,9 +52,10 @@ const shopifyProjects = [
     technologies: ['Shopify', 'Prestige theme', 'Liquid', 'Subscriptions', 'Responsive UI'],
   },
   {
-    title: 'Luxury label pre-launch',
+    title: 'Luxury Shopify Pre-Launch Store',
     blurb: 'An animated entrance for a luxury weaves label — a wardrobe that opens on tap to reveal its contents only as shadows. Turns Shopify’s password page into a first-access waitlist.',
     image: '/Luxury-E-Commerce-Showcase.png',
+    imageAlt: 'Luxury woven accessories storefront showcase displayed on desktop and mobile.',
     type: 'SHOPIFY · LUXURY',
     tags: ['Shopify Liquid', 'Motion Design', 'Email Capture', 'Luxury UX'],
     href: 'https://shopsamat.com',
@@ -62,10 +65,11 @@ const shopifyProjects = [
     technologies: ['Shopify', 'Liquid', 'Motion design', 'Email capture'],
   },
   {
-    title: 'Cafe order-ahead menu',
+    title: 'Coffee Shop Shopify Order-Ahead Menu',
     blurb: 'A coffee menu rebuilt as a storefront. Size, hot or iced, and nine tea add-ins chosen without leaving the grid.',
     result: 'Custom Product Add-ons',
     image: '/The_Honeypot_Coffee_Shop_Showcase.png',
+    imageAlt: 'The Honeypot coffee and tea storefront showcase with a menu, product grid, and mobile layout.',
     type: 'Shopify · Custom Design',
     tags: ['Shopify', 'Liquid', 'Metafields', 'Add-ons', 'Pickup'],
     href: 'https://cq3kjk-w4.myshopify.com',
@@ -78,9 +82,10 @@ const shopifyProjects = [
     title: 'Bundle-Safe Cart Limit System',
     blurb: 'Customized a Shopify theme for Fitvexa, adding a cart-wide quantity cap that works alongside app-driven bundle pricing.',
     image: '/Bundle-Safe Cart Limit System.png',
+    imageAlt: 'Beauty product storefront mockup across desktop, tablet, and mobile, showing Single, Duo, and Trio bundle prices.',
     type: 'SHOPIFY · BUNDLE LOGIC',
     icon: 'shopify',
-    tags: ['Shopify', 'Liquid', 'Bundle Logic'],
+    tags: ['Shopify', 'Liquid', 'Cart Quantity Limit', 'Bundle Logic'],
     href: 'https://fitvexa.at/products/fitvexa-at',
     brief: 'Cap orders at 10 items due to limited stock, and show a clear "was/now" savings price—without disturbing the existing bundle tiers.',
     challenge: 'Compare-at price broke the bundle apps checkout savings. And since each bundle is its own line item, a per-line cap could be bypassed — 10 plus 3 reached 13 items.',
@@ -93,9 +98,10 @@ const shopifyProjects = [
     title: 'Single-Product Store Launch',
     blurb: 'Planned, designed and launched a 5-page Shopify store for a first-time founder with one product, in 7 days.',
     image: '/LUNËX Beauty E-Commerce Showcase.png',
+    imageAlt: 'LUNËX beauty and wellness storefront showcase displayed across desktop, tablet, and mobile.',
     type: 'SHOPIFY · LAUNCH STORE',
     icon: 'shopify',
-    tags: ['Shopify', 'EComposer', 'Custom Code', 'SEO', 'Responsive UI'],
+    tags: ['Shopify', 'Single-Product Store', 'EComposer', 'SEO', 'Responsive Design'],
     href: 'https://lunexwellness.com/',
     brief: 'The client had one product and didn’t know how to start selling. She needed a complete store, with SEO and marketing included, in 7 days.',
     challenge: 'One product had to carry the whole store and build trust on its own. Everything, from planning to launch, had to fit in a 7-day deadline.',
@@ -106,10 +112,11 @@ const shopifyProjects = [
 
 const wordpressProjects = [
   {
-    title: 'Modern business website',
+    title: 'Custom WordPress Business Website',
     blurb: 'Custom blocks for team, case studies and testimonials, put together so the client can add a page without calling anyone.',
     result: 'First page for eight target terms',
     image: '/wordpress-business-preview.svg',
+    imageAlt: 'Illustrated business website layout with service navigation, company introduction, and contact links.',
     type: 'WordPress · Business',
     tags: ['Gutenberg', 'Schema', 'SEO', 'ACF'],
     href: '#',
@@ -119,10 +126,11 @@ const wordpressProjects = [
     technologies: ['WordPress', 'Gutenberg', 'ACF', 'Schema', 'SEO'],
   },
   {
-    title: 'WooCommerce store',
+    title: 'WooCommerce Multi-Vendor Store',
     blurb: 'Multi-vendor marketplace with custom payment gateways, bulk import tooling and subscription products.',
     result: 'Multi-vendor catalog with subscription products',
     image: '/woocommerce-store-preview.svg',
+    imageAlt: 'Illustrative admin dashboard with project activity, task totals, and team productivity metrics.',
     type: 'WordPress · WooCommerce',
     tags: ['WooCommerce', 'PHP', 'Gateways', 'Subs'],
     href: '#',
@@ -132,10 +140,11 @@ const wordpressProjects = [
     technologies: ['WordPress', 'WooCommerce', 'PHP', 'Payment gateways', 'Subscriptions'],
   },
   {
-    title: 'Creative portfolio',
+    title: 'Custom WordPress Portfolio Theme',
     blurb: 'Filterable case studies and animated galleries on a custom child theme, built to survive the client adding work to it.',
     result: 'Filterable case studies on a custom child theme',
     image: '/wordpress-portfolio-preview.svg',
+    imageAlt: 'Illustrated creative studio portfolio page with selected work and project imagery.',
     type: 'WordPress · Portfolio',
     tags: ['Child theme', 'Filters', 'Motion', 'CPT'],
     href: '#',
@@ -145,10 +154,11 @@ const wordpressProjects = [
     technologies: ['WordPress', 'PHP', 'Custom post types', 'Child theme', 'Motion'],
   },
   {
-    title: 'Custom plugin platform',
+    title: 'WordPress Plugin and CRM Integration',
     blurb: 'Four plugins handling team workflow, client records and automated reporting, wired to the CRM they already used.',
     result: 'Workflow and CRM reporting automation',
     image: '/wordpress-plugin-preview.svg',
+    imageAlt: 'Illustrative workflow dashboard with project activity and team productivity metrics.',
     type: 'WordPress · Custom Plugin',
     tags: ['PHP', 'REST API', 'CRM', 'Cron'],
     href: '#',
@@ -161,6 +171,7 @@ const wordpressProjects = [
     title: 'Business website layout study',
     blurb: 'An illustrative WordPress layout concept for a service-based business.',
     image: '/wordpress-business-preview.svg',
+    imageAlt: 'Static business website concept featuring service navigation and a company introduction.',
     type: 'CONCEPT · NOT CLIENT WORK',
     tags: ['WordPress', 'Layout study'],
     href: '#',
@@ -170,6 +181,7 @@ const wordpressProjects = [
     title: 'Portfolio website layout study',
     blurb: 'An illustrative layout concept for presenting editorial and portfolio content.',
     image: '/wordpress-portfolio-preview.svg',
+    imageAlt: 'Static creative portfolio concept featuring a selected-work gallery.',
     type: 'CONCEPT · NOT CLIENT WORK',
     tags: ['WordPress', 'Visual concept'],
     href: '#',
@@ -717,7 +729,7 @@ const ProjectCard = ({ project, position, slideNumber, slideCount, isExiting, on
       {project.concept ? (
         <img
           src={project.image}
-          alt={project.concept ? `Visual concept: ${project.title}` : `Preview of ${project.title}`}
+          alt={project.imageAlt}
           loading="lazy"
         />
       ) : project.image.endsWith('.svg') ? (
@@ -728,7 +740,7 @@ const ProjectCard = ({ project, position, slideNumber, slideCount, isExiting, on
       ) : (
         <img
           src={project.image}
-          alt={project.concept ? `Visual concept: ${project.title}` : `Preview of ${project.title}`}
+          alt={project.imageAlt}
           loading="lazy"
         />
       )}
@@ -845,14 +857,14 @@ const ProjectDialog = ({ project, onClose }) => {
               {project.concept ? (
                 <img
                   src={project.image}
-                  alt={project.concept ? `Visual concept: ${project.title}` : `Preview of ${project.title}`}
+                  alt={project.imageAlt}
                 />
               ) : project.image.endsWith('.svg') ? (
                 <div className="project-dialog__artwork" aria-hidden="true">WordPress</div>
               ) : (
                 <motion.img
                   src={project.image}
-                  alt={project.concept ? `Visual concept: ${project.title}` : `Preview of ${project.title}`}
+                  alt={project.imageAlt}
                   initial={reduceMotion ? false : { scale: 1.04 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: reduceMotion ? 0 : .6, delay: reduceMotion ? 0 : .05, ease: [0.16, 1, 0.3, 1] }}

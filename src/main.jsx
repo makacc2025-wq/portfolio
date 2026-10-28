@@ -133,16 +133,26 @@ function ScrollToTop() {
   const reduceMotion = useReducedMotion();
   const progressOffset = useTransform(reduceMotion ? scrollYProgress : progress, value => 1 - value);
   const [visible, setVisible] = React.useState(() => window.scrollY > 300);
+  const scrollTopRef = useRef(null);
+  const visibleRef = useRef(visible);
 
-  useMotionValueEvent(scrollY, "change", y => setVisible(y > 300));
+  useMotionValueEvent(scrollY, "change", y => {
+    const nextVisible = y > 300;
+    if (visibleRef.current === nextVisible) return;
+    if (!nextVisible) scrollTopRef.current?.blur();
+    visibleRef.current = nextVisible;
+    setVisible(nextVisible);
+  });
 
   return (
     <motion.a
+      ref={scrollTopRef}
       href="#top"
       aria-label="Scroll to top"
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
       className="scroll-top"
+      onClick={event => event.currentTarget.blur()}
       initial={false}
       animate={{
         opacity: visible ? 1 : 0,
